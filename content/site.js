@@ -63,11 +63,11 @@ window.LEGACY.site = {
   chapters: [
     { id: 'prologue', num: '', title: { ru: 'Пролог', uz: 'Muqaddima', en: 'Prologue' } },
     { id: 'man', num: 'I', title: { ru: 'Человек за наследием', uz: 'Meros ortidagi inson', en: 'The man behind the legacy' } },
-    { id: 'walls', num: 'II', title: { ru: 'Архитектура вне времени', uz: 'Vaqtga bo‘ysunmas me’morchilik', en: 'Architecture that defies time' } },
-    { id: 'detail', num: 'III', title: { ru: 'Искусство вечности', uz: 'Abadiyat san’ati', en: 'The art of eternity' } },
-    { id: 'country', num: 'IV', title: { ru: 'За пределами империи', uz: 'Saltanatdan narida', en: 'Beyond the empire' } },
-    { id: 'people', num: 'V', title: { ru: 'Живое наследие', uz: 'Barhayot meros', en: 'The living legacy' } },
-    { id: 'journey', num: 'VI', title: { ru: 'Путешествие', uz: 'Sayohat', en: 'The journey' } },
+    { id: 'journey', num: 'II', title: { ru: 'Путешествие', uz: 'Sayohat', en: 'The journey' } },
+    { id: 'walls', num: 'III', title: { ru: 'Архитектура вне времени', uz: 'Vaqtga bo‘ysunmas me’morchilik', en: 'Architecture that defies time' } },
+    { id: 'detail', num: 'IV', title: { ru: 'Искусство вечности', uz: 'Abadiyat san’ati', en: 'The art of eternity' } },
+    { id: 'country', num: 'V', title: { ru: 'За пределами империи', uz: 'Saltanatdan narida', en: 'Beyond the empire' } },
+    { id: 'people', num: 'VI', title: { ru: 'Живое наследие', uz: 'Barhayot meros', en: 'The living legacy' } },
     { id: 'finale', num: '', title: { ru: 'Наследие продолжается', uz: 'Meros davom etadi', en: 'The legacy continues' } }
   ],
 
@@ -75,9 +75,9 @@ window.LEGACY.site = {
   man: {
     title: { ru: 'Одно видение.<br>Непреходящее наследие.', uz: 'Bitta orzu.<br>Mangu meros.', en: 'One vision.<br>An enduring legacy.' },
     lead: {
-      ru: 'Шесть с половиной веков назад один человек решил, что его столица должна поражать мир. Мир до сих пор приезжает на неё посмотреть.',
-      uz: 'Olti yarim asr avval bir inson poytaxti dunyoni hayratga solishi kerak, deb qaror qildi. Dunyo hamon uni ko‘rgani keladi.',
-      en: 'Six and a half centuries ago, one man decided that his capital should astonish the world. The world still comes to see it.'
+      ru: 'Он решил, что его столица должна поражать мир. Мир до сих пор приезжает на неё посмотреть.',
+      uz: 'U poytaxti dunyoni hayratga solishi kerak, deb qaror qildi. Dunyo hamon uni ko‘rgani keladi.',
+      en: 'He decided his capital should astonish the world. The world still comes to see it.'
     },
     portraitNote: {
       ru: 'Художественная интерпретация образа. Не историческое портретное сходство.',
@@ -87,56 +87,29 @@ window.LEGACY.site = {
     moments: [
       {
         mark: '1336', image: 'temur_think',
-        head: { ru: 'Жизнь начинается', uz: 'Hayot boshlanadi', en: 'A life begins' },
+        head: { ru: 'Родом из Шахрисабза', uz: 'Shahrisabzlik', en: 'Born in Shahrisabz' },
         text: {
-          ru: 'Темур родился 9 апреля 1336 года близ Кеша — нынешнего Шахрисабза, в семье из рода барлас.',
-          uz: 'Temur 1336-yil 9-aprelda Kesh — hozirgi Shahrisabz yaqinida, barlos urug‘idan bo‘lgan oilada tug‘ildi.',
-          en: 'Temur was born on 9 April 1336 near Kesh, today’s Shahrisabz, into a family of the Barlas tribe.'
-        }
-      },
-      {
-        mark: '1370', image: 'temur_profile',
-        head: { ru: 'Новая эра власти', uz: 'Qudratning yangi davri', en: 'A new era of power' },
-        text: {
-          ru: 'На курултае в Балхе его провозгласили правителем Мавераннахра. Своей столицей он сделал Самарканд.',
-          uz: 'Balxdagi qurultoyda u Movarounnahr hukmdori deb e’lon qilindi. Samarqandni o‘z poytaxtiga aylantirdi.',
-          en: 'At an assembly in Balkh he was proclaimed ruler of Transoxiana. He made Samarkand his capital.'
+          ru: 'Темур родился 9 апреля 1336 года близ Кеша — нынешнего Шахрисабза. Сюда ведёт третий день нашего тура.',
+          uz: 'Temur 1336-yil 9-aprelda Kesh — hozirgi Shahrisabz yaqinida tug‘ildi. Turimizning uchinchi kuni shu yerga olib boradi.',
+          en: 'Temur was born on 9 April 1336 near Kesh, today’s Shahrisabz. Day three of our tour takes you there.'
         }
       },
       {
         mark: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' }, image: 'samarqand_8',
-        head: { ru: 'Сердце империи', uz: 'Saltanat yuragi', en: 'The heart of an empire' },
+        head: { ru: 'Столица, которая поражает мир', uz: 'Dunyoni lol qoldiradigan poytaxt', en: 'A capital to astonish the world' },
         text: {
-          ru: 'Из походов Темур привозил в столицу зодчих, мастеров и ремесленников. Их руками Самарканд стал городом бирюзовых куполов.',
-          uz: 'Temur yurishlardan poytaxtga me’mor, usta va hunarmandlarni olib kelardi. Ularning qo‘li bilan Samarqand moviy gumbazlar shahriga aylandi.',
-          en: 'From his campaigns Temur brought architects, masters and craftsmen to the capital. Their hands made Samarkand a city of turquoise domes.'
+          ru: 'В 1370 году Темур стал правителем и сделал столицей Самарканд. Мастера со всей его державы превратили город в город бирюзовых куполов.',
+          uz: '1370-yilda Temur hukmdor bo‘ldi va Samarqandni poytaxt qildi. Butun saltanatdan kelgan ustalar uni moviy gumbazlar shahriga aylantirdi.',
+          en: 'In 1370 Temur became ruler and made Samarkand his capital. Masters from across his realm turned it into a city of turquoise domes.'
         }
       },
       {
-        mark: { ru: 'Карта', uz: 'Xarita', en: 'The map' }, image: 'map', fit: 'contain',
-        head: { ru: 'От Малой Азии до Индии', uz: 'Kichik Osiyodan Hindistongacha', en: 'From Anatolia to India' },
+        mark: '1405', image: 'gur_day',
+        head: { ru: 'Гур-Эмир', uz: 'Go‘ri Amir', en: 'Gur-e Amir' },
         text: {
-          ru: 'За тридцать пять лет походов держава Темура раскинулась от Кавказа и Малой Азии до границ Индии.',
-          uz: 'O‘ttiz besh yillik yurishlar davomida Temur davlati Kavkaz va Kichik Osiyodan Hindiston chegaralarigacha yoyildi.',
-          en: 'Over thirty-five years of campaigns, Temur’s realm stretched from the Caucasus and Anatolia to the borders of India.'
-        }
-      },
-      {
-        mark: '1405', image: 'gur_in',
-        head: { ru: 'Конец пути', uz: 'Yo‘l nihoyasi', en: 'The end of the road' },
-        text: {
-          ru: 'Темур умер 18 февраля 1405 года в Отраре, в начале похода на Китай. Его похоронили в Самарканде, в мавзолее Гур-Эмир.',
-          uz: 'Temur 1405-yil 18-fevralda Xitoyga yurish boshida O‘trorda vafot etdi. U Samarqanddagi Go‘ri Amir maqbarasiga dafn etildi.',
-          en: 'Temur died on 18 February 1405 at Otrar, at the start of a campaign against China. He was buried in Samarkand, in the Gur-e Amir mausoleum.'
-        }
-      },
-      {
-        mark: { ru: 'Наследники', uz: 'Vorislar', en: 'The heirs' }, image: 'ulug',
-        head: { ru: 'Наследие продолжили потомки', uz: 'Merosni avlodlar davom ettirdi', en: 'His descendants carried it on' },
-        text: {
-          ru: 'Многое из того, что называют тимуридским, создали его наследники. Внук Улугбек построил в Самарканде медресе на Регистане (1417–1420) и обсерваторию.',
-          uz: 'Temuriylar davri deb ataladigan merosning ko‘pini uning vorislari yaratdi. Nabirasi Ulug‘bek Samarqandda Registondagi madrasani (1417–1420) va rasadxonani qurdirdi.',
-          en: 'Much of what we call Timurid was created by his heirs. His grandson Ulugh Beg built the madrasa on the Registan (1417–1420) and an observatory in Samarkand.'
+          ru: 'Темур умер в 1405 году и похоронен в Самарканде, в мавзолее Гур-Эмир. Теперь — увидеть всё своими глазами.',
+          uz: 'Temur 1405-yilda vafot etdi va Samarqanddagi Go‘ri Amir maqbarasiga dafn etildi. Endi hammasini o‘z ko‘zing bilan ko‘r.',
+          en: 'Temur died in 1405 and lies in Samarkand, in the Gur-e Amir mausoleum. Now see it for yourself.'
         }
       }
     ]
@@ -153,7 +126,7 @@ window.LEGACY.site = {
     },
     monuments: [
       {
-        id: 'gur', image: 'gur_eve', more: ['gur_in', 'gur_day'],
+        id: 'gur', image: 'gur_day', more: [],
         label: { ru: 'Самарканд · 1403–1404', uz: 'Samarqand · 1403–1404', en: 'Samarkand · 1403–1404' },
         name: { ru: 'Гур-Эмир', uz: 'Go‘ri Amir', en: 'Gur-e Amir' },
         head: { ru: 'Купол, под которым покоится эпоха', uz: 'Bir davr mangu uyquda yotgan gumbaz', en: 'A dome that shelters an era' },
@@ -207,12 +180,12 @@ window.LEGACY.site = {
       {
         image: 'det_geo',
         head: { ru: 'Мозаика', uz: 'Koshin', en: 'Mosaic' },
-        text: { ru: 'Тысячи кусочков глазури, собранные в геометрию. Шахи-Зинда.', uz: 'Minglab sirli bo‘lakchalar geometriyaga jamlangan. Shohi Zinda.', en: 'Thousands of glazed pieces set into geometry. Shah-i-Zinda.' }
+        text: { ru: 'Тысячи кусочков глазури, собранные в геометрию. Самарканд.', uz: 'Minglab sirli bo‘lakchalar geometriyaga jamlangan. Samarqand.', en: 'Thousands of glazed pieces set into geometry. Samarkand.' }
       },
       {
         image: 'det_star',
-        head: { ru: 'Каллиграфия', uz: 'Xattotlik', en: 'Calligraphy' },
-        text: { ru: 'Слово, ставшее орнаментом, и звезда, ставшая словом. Шахи-Зинда.', uz: 'Naqshga aylangan so‘z va so‘zga aylangan yulduz. Shohi Zinda.', en: 'A word turned into ornament, a star turned into a word. Shah-i-Zinda.' }
+        head: { ru: 'Мукарнасы', uz: 'Muqarnaslar', en: 'Muqarnas' },
+        text: { ru: 'Свод портала, собранный из изразцовых сот.', uz: 'Koshinli kataklardan yig‘ilgan peshtoq gumbazi.', en: 'A portal vault built from tiled honeycomb cells.' }
       },
       {
         image: 'samarqand_8',
@@ -242,7 +215,7 @@ window.LEGACY.site = {
       {
         image: 'det_door',
         head: { ru: 'Резное дерево', uz: 'Yog‘och o‘ymakorligi', en: 'Carved wood' },
-        text: { ru: 'Деревянные ворота западных ворот Ичан-Калы. Хива.', uz: 'Ichan qal’aning g‘arbiy darvozasidagi o‘ymakor tabaqalar. Xiva.', en: 'The carved wooden doors of Itchan Kala’s west gate. Khiva.' }
+        text: { ru: 'Резная дверь, за которой открывается Регистан. Самарканд.', uz: 'Ortida Registon ochiladigan o‘ymakor eshik. Samarqand.', en: 'A carved door that opens onto the Registan. Samarkand.' }
       },
       {
         image: 'det_column',
@@ -311,9 +284,9 @@ window.LEGACY.site = {
     kicker: { ru: 'Карта наследия', uz: 'Meros xaritasi', en: 'Map of the legacy' },
     title: { ru: 'Выбери свой ключ к стране', uz: 'Mamlakatga o‘z kalitingni tanla', en: 'Choose your key to the country' },
     lead: {
-      ru: 'Отметьте, что вам интересно, и карта покажет, куда ехать. Нажмите на город, чтобы узнать больше и получить штамп в паспорт.',
-      uz: 'Sizga nima qiziqligini belgilang, xarita qayerga borishni ko‘rsatadi. Batafsil bilish va pasportga muhr olish uchun shaharni bosing.',
-      en: 'Pick what interests you and the map shows where to go. Tap a city to learn more and earn a passport stamp.'
+      ru: 'Отметьте, что вам интересно, и карта покажет, куда ехать. Нажмите на город, чтобы узнать больше.',
+      uz: 'Sizga nima qiziqligini belgilang, xarita qayerga borishni ko‘rsatadi. Batafsil bilish uchun shaharni bosing.',
+      en: 'Pick what interests you and the map shows where to go. Tap a city to learn more.'
     },
     all: { ru: 'Всё', uz: 'Hammasi', en: 'All' },
     route: { ru: 'Условная линия Великого шёлкового пути', uz: 'Buyuk ipak yo‘lining shartli chizig‘i', en: 'Indicative line of the Silk Road' },
@@ -347,29 +320,35 @@ window.LEGACY.site = {
     ]
   },
 
-  /* ---------- Heritage passport (stamps) ---------- */
-  passport: {
-    title: { ru: 'Паспорт наследия', uz: 'Meros pasporti', en: 'Heritage passport' },
-    rules: {
-      ru: 'Штамп ставится, когда вы проходите главу или открываете город на карте. Всё хранится только в вашем браузере.',
-      uz: 'Bobni o‘tganingizda yoki xaritada shaharni ochganingizda muhr qo‘yiladi. Hammasi faqat brauzeringizda saqlanadi.',
-      en: 'You get a stamp when you finish a chapter or open a city on the map. Everything stays in your browser only.'
+  /* ---------- Master's Star: loyalty programme (inside the journey) ---------- */
+  star: {
+    kicker: { ru: 'Программа лояльности', uz: 'Sodiqlik dasturi', en: 'Loyalty programme' },
+    title: { ru: 'Звезда мастера', uz: 'Usta yulduzi', en: 'The Master’s Star' },
+    lead: {
+      ru: 'Мастера Темура строили узор из одной восьмиконечной звезды. Ваша звезда собирается так же — луч за лучом. Каждый участник получает именную карточку-звезду.',
+      uz: 'Temur ustalari naqshni bitta sakkiz qirrali yulduzdan qurgan. Sizning yulduzingiz ham shunday — nurma-nur yig‘iladi. Har bir ishtirokchi nomli yulduz-karta oladi.',
+      en: 'Temur’s masters built their patterns from a single eight-pointed star. Yours comes together the same way, ray by ray. Every traveller gets a named star card.'
     },
-    got: { ru: 'Новый штамп', uz: 'Yangi muhr', en: 'New stamp' },
-    done: { ru: 'Путь наследия пройден. Теперь — увидеть всё вживую.', uz: 'Meros yo‘li bosib o‘tildi. Endi hammasini o‘z ko‘zing bilan ko‘r.', en: 'The legacy trail is complete. Now see it for real.' },
-    share: { ru: 'Поделиться', uz: 'Ulashish', en: 'Share' },
-    copied: { ru: 'Ссылка скопирована', uz: 'Havola nusxalandi', en: 'Link copied' },
-    reset: { ru: 'Начать заново', uz: 'Qaytadan boshlash', en: 'Start over' },
-    stamps: [
-      { id: 'man', name: { ru: 'Темур', uz: 'Temur', en: 'Temur' } },
-      { id: 'walls', name: { ru: 'Порталы', uz: 'Peshtoqlar', en: 'Portals' } },
-      { id: 'detail', name: { ru: 'Узоры', uz: 'Naqshlar', en: 'Patterns' } },
-      { id: 'samarkand', name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
-      { id: 'shahrisabz', name: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' } },
-      { id: 'bukhara', name: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' } },
-      { id: 'khiva', name: { ru: 'Хива', uz: 'Xiva', en: 'Khiva' } },
-      { id: 'tashkent', name: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' } }
-    ]
+    groups: [
+      { id: 'city', n: 4,
+        head: { ru: '4 луча — города маршрута', uz: '4 nur — yo‘nalish shaharlari', en: '4 rays: the cities of the route' },
+        text: { ru: 'Ташкент, Самарканд, Шахрисабз, Бухара. Гид отмечает луч в каждом городе.', uz: 'Toshkent, Samarqand, Shahrisabz, Buxoro. Gid har bir shaharda nurni belgilaydi.', en: 'Tashkent, Samarkand, Shahrisabz, Bukhara. Your guide marks a ray in each city.' } },
+      { id: 'friend', n: 3,
+        head: { ru: '3 луча — друзья', uz: '3 nur — do‘stlar', en: '3 rays: friends' },
+        text: { ru: 'Каждый друг, который поедет в тур по вашей рекомендации, добавляет луч.', uz: 'Tavsiyangiz bilan turga borgan har bir do‘st bitta nur qo‘shadi.', en: 'Each friend who joins the tour on your recommendation adds a ray.' } },
+      { id: 'return', n: 1,
+        head: { ru: '1 луч — возвращение', uz: '1 nur — qaytish', en: '1 ray: coming back' },
+        text: { ru: 'Следующая поездка с TSTU Travel замыкает звезду.', uz: 'TSTU Travel bilan navbatdagi safar yulduzni yakunlaydi.', en: 'Your next trip with TSTU Travel completes the star.' } }
+    ],
+    rewards: [
+      { at: 4, text: { ru: 'Маршрут пройден: именной сертификат «Хранитель узора».', uz: 'Yo‘nalish bosib o‘tildi: «Naqsh posboni» nomli sertifikati.', en: 'Route complete: a named “Keeper of the Pattern” certificate.' } },
+      { at: 8, text: { ru: 'Звезда собрана: скидка на следующий тур TSTU Travel.', uz: 'Yulduz to‘liq: TSTU Travel’ning keyingi turiga chegirma.', en: 'Star complete: a discount on your next TSTU Travel tour.' } }
+    ],
+    note: {
+      ru: 'Размер скидки и условия подтверждает команда TSTU Travel.',
+      uz: 'Chegirma miqdori va shartlarni TSTU Travel jamoasi tasdiqlaydi.',
+      en: 'The discount and terms are confirmed by the TSTU Travel team.'
+    }
   },
 
   /* ---------- V. The living legacy ---------- */
@@ -383,12 +362,12 @@ window.LEGACY.site = {
     },
     photos: [
       { image: 'buxoro_7', size: 'tall', cap: { ru: 'Ковровщица за станком, Бухара', uz: 'Gilamdo‘z dastgoh ortida, Buxoro', en: 'A carpet weaver at her loom, Bukhara' } },
-      { image: 'ppl_plov', size: 'wide', cap: { ru: 'Плов на свадьбе: одно блюдо на всех гостей', uz: 'To‘y oshi: barcha mehmonlar uchun bir qozon', en: 'Wedding plov: one dish for every guest' } },
+      { image: 'ppl_plov', size: 'wide', cap: { ru: 'Плов: одно блюдо на всех гостей', uz: 'Osh: barcha mehmonlar uchun bir qozon', en: 'Plov: one dish for every guest' } },
       { placeholder: 'students', size: 'square', cap: { ru: 'Студенты TSTU и друзья из других стран', uz: 'TSTU talabalari va xorijlik do‘stlari', en: 'TSTU students and friends from abroad' },
         note: { ru: 'Добавьте собственное фото команды: здесь нужен настоящий снимок, а не сток.', uz: 'Jamoaning o‘z suratini qo‘shing: bu yerga stok emas, haqiqiy surat kerak.', en: 'Add the team’s own photo here: this needs a real picture, not stock.' } },
       { image: 'mato_4', size: 'wide', cap: { ru: 'Мастер ткёт атлас', uz: 'Usta atlas to‘qimoqda', en: 'A master weaving atlas silk' } },
       { image: 'mato_6', size: 'square', cap: { ru: 'Лавка атласа и адраса', uz: 'Atlas va adras do‘koni', en: 'An atlas and adras shop' } },
-      { image: 'ppl_bazaar', size: 'square', cap: { ru: 'Базар Чорсу, Ташкент', uz: 'Chorsu bozori, Toshkent', en: 'Chorsu Bazaar, Tashkent' } },
+      { image: 'ppl_bazaar', size: 'square', cap: { ru: 'Рынок у Кальта-Минара, Хива', uz: 'Kalta minor yonidagi bozor, Xiva', en: 'A market by the Kalta Minor, Khiva' } },
       { image: 'mato_5', size: 'tall', cap: { ru: 'Атлас и адрас в повседневной жизни', uz: 'Kundalik hayotda atlas va adras', en: 'Atlas and adras in everyday life' } },
       { placeholder: 'makers', size: 'square', cap: { ru: 'Молодые предприниматели и креаторы', uz: 'Yosh tadbirkorlar va ijodkorlar', en: 'Young entrepreneurs and creatives' },
         note: { ru: 'Добавьте реальное фото: стартап, студия, мастерская.', uz: 'Haqiqiy surat qo‘shing: startap, studiya, ustaxona.', en: 'Add a real photo: a startup, a studio, a workshop.' } },
