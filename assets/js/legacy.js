@@ -181,6 +181,11 @@
     vid.addEventListener('error', function () { if (film.open && film.phase === 'film') unlock(true); });
     vid.addEventListener('volumechange', controls);
     ['mousemove', 'touchstart', 'keydown'].forEach(function (ev) { box.addEventListener(ev, wake, { passive: true }); });
+    // a tap on the picture itself turns the sound on (the film starts muted: browsers block autoplay with sound)
+    ui.addEventListener('click', function (e) {
+      if (e.target.closest('button, a') || film.phase !== 'film' || box.classList.contains('waiting')) return;
+      if (vid.muted) { vid.muted = false; vid.volume = 1; }
+    });
   }
   function renderPlayer() {
     var cues = (F.cues || []).map(function (c, i) {
@@ -376,7 +381,7 @@
       if (a === 'start') start(true);
       else if (a === 'play') togglePlay();
       else if (a === 'replay') replay();
-      else if (a === 'sound') { vid.muted = !vid.muted; if (vid.paused && film.phase === 'film' && !box.classList.contains('waiting')) controls(); }
+      else if (a === 'sound') { vid.muted = !vid.muted; vid.volume = 1; if (vid.paused && film.phase === 'film' && !box.classList.contains('waiting')) controls(); }
       else if (a === 'skip') skip();
       return;
     }

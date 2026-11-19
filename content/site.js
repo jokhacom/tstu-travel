@@ -79,7 +79,7 @@ window.LEGACY.site = {
    * scene starts 0, 5.7, 11.1, 16.5, 21.9, 27.3, 32.7, 37.3, 41.9, 46.1, 50.3. */
   film: {
     standIn: true,
-    src: { landscape: 'video/temur-film-1080.mp4', portrait: 'video/temur-film-720v.mp4' },
+    src: { landscape: 'video/temur-film-1080.mp4?v=2', portrait: 'video/temur-film-720v.mp4?v=2' },   // bump ?v= when the file changes (browsers cache video for 7 days)
     poster: { landscape: 'img/film-poster.webp', portrait: 'img/film-poster-v.webp' },
     endFrame: { landscape: 'img/film-end.webp', portrait: 'img/film-end-v.webp' },
     letterbox: 0.11,   // height of each black bar in the landscape cut (share of the frame); 0 = none
