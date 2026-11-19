@@ -345,7 +345,7 @@
     var days = '';
     if (TOUR.days && TOUR.days.length) {
       days = TOUR.days.map(function (d, i) {
-        return '<li class="jd"><div class="jd-img">' + (d.image ? pic(d.image, { sizes: '(max-width:760px) 100vw, 40vw' }) : '') + '</div><div class="jd-body">' +
+        return (d.image ? '<li class="jd"><div class="jd-img">' + pic(d.image, { sizes: '(max-width:760px) 100vw, 40vw' }) : '<li class="jd"><div class="jd-img jd-noimg"><span class="jd-place">' + esc(t(d.place)) + '</span>') + '</div><div class="jd-body">' +
           '<p class="jd-n">' + esc(t(L.day)) + ' ' + (i + 1) + '</p><h4>' + esc(t(d.place)) + '</h4><p class="jd-text">' + esc(t(d.text)) + '</p>' +
           (d.activities && d.activities.length ? '<p class="jd-l">' + esc(t(L.activities)) + '</p><ul>' + d.activities.map(function (a) { return '<li>' + esc(t(a)) + '</li>'; }).join('') + '</ul>' : '') +
           (d.practical ? '<p class="jd-l">' + esc(t(L.practical)) + '</p><p>' + esc(t(d.practical)) + '</p>' : '') + '</div></li>';
@@ -363,6 +363,7 @@
       '<div class="jo-portrait">' + pic('temur_front', { sizes: '(max-width:760px) 80vw, 30vw' }) + '</div>' +
       '</header>' +
       '<div class="jt">' +
+      (TOUR.note ? '<p class="jt-note"><em>' + esc(t(S.ui.draft)) + '</em>' + esc(t(TOUR.note)) + '</p>' : '') +
       '<h3 class="jt-title">' + esc(t(TOUR.title)) + '</h3>' +
       '<p class="jt-desc">' + (TOUR.description ? esc(t(TOUR.description)) : tbd()) + '</p>' +
       '<dl class="jt-facts">' + fact(L.duration, TOUR.duration) + fact(L.travelers, TOUR.travelers) + fact(L.price, TOUR.price) +

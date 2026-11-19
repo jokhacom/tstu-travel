@@ -30,6 +30,7 @@ window.LEGACY.site = {
       en: 'All photographs are real and used under free licences. Thank you to the photographers.'
     },
     placeholder: { ru: 'Плейсхолдер', uz: 'Vaqtinchalik', en: 'Placeholder' },
+    draft: { ru: 'Проект', uz: 'Loyiha', en: 'Draft' },
     photoSoon: { ru: 'Плейсхолдер · фото будет добавлено', uz: 'Vaqtinchalik · surat qo‘shiladi', en: 'Placeholder · photo coming' },
     noscript: {
       ru: 'Для просмотра сайта включите JavaScript.',
