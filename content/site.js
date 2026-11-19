@@ -78,14 +78,28 @@ window.LEGACY.site = {
    * Cue options: pos = bl | br | tl | tr | l | r | c (where in the frame); look = year (big number `n`),
    * place (kicker as a big word), quote (large italic, centred). Leave them out for the plain style.
    *
-   * Now: a TEMPORARY clip made from the site's own photos (58 s, temporary score), 19 shots.
+   * Now: a TEMPORARY clip made from the site's own photos (58 s, no sound of its own), 19 shots.
    * Shot starts: 0, 1.7, 6.3, 7.4, 11.6, 12.5, 15.9, 18.9, 23.1, 24.2, 27.1, 29.1, 32.8, 35.85, 38.5, 41.5, 43.0, 45.8, 46.3. */
   film: {
     standIn: true,
-    src: { landscape: 'video/temur-film-1080.mp4?v=3', portrait: 'video/temur-film-720v.mp4?v=3' },   // bump ?v= when the file changes (browsers cache video for 7 days)
-    poster: { landscape: 'img/film-poster.webp?v=3', portrait: 'img/film-poster-v.webp?v=3' },
-    endFrame: { landscape: 'img/film-end.webp?v=3', portrait: 'img/film-end-v.webp?v=3' },
-    letterbox: 0.11,   // height of each black bar in the landscape cut (share of the frame); 0 = none
+    src: { landscape: 'video/temur-film-1080.mp4?v=4', portrait: 'video/temur-film-720v.mp4?v=4' },   // bump ?v= when the file changes (browsers cache video for 7 days)
+    poster: { landscape: 'img/film-poster.webp?v=4', portrait: 'img/film-poster-v.webp?v=4' },
+    endFrame: { landscape: 'img/film-end.webp?v=4', portrait: 'img/film-end-v.webp?v=4' },
+    letterbox: 0.11,
+    /* SOUND
+     * voice: true when the video file has its own sound (narration). The stand-in has none.
+     * music: background MP3, e.g. 'audio/film-music.mp3' (put the file in audio/). null = no music.
+     *   It plays only when the viewer turns the sound on, follows the picture (pause, replay),
+     *   dips to `duckTo` of its level while the narrator speaks and rises to full at `swellAt`
+     *   (default: when the motto appears), then fades as the site opens.
+     * duck: optional narration times by hand, e.g. [[3.0, 9.5], [12, 20]], if automatic detection
+     *   is not enough. With no voice and no music, the sound button is hidden. */
+    voice: false,
+    music: 'audio/film-music.mp3?v=1',   // now: the TEMPORARY score; replace the file with the real track
+    musicVolume: 0.75,
+    duckTo: 0.3,
+    swellAt: null,
+    duck: [],   // height of each black bar in the landscape cut (share of the frame); 0 = none
     cues: [
       { from: 2.2, to: 6.0, look: 'year', n: '1336', pos: 'bl', k: { ru: 'Кеш', uz: 'Kesh', en: 'Kesh' },
         text: { ru: 'Близ Кеша, нынешнего Шахрисабза, рождается Темур.', uz: 'Kesh, hozirgi Shahrisabz yaqinida Temur dunyoga keladi.', en: 'Near Kesh, today’s Shahrisabz, Temur is born.' } },

@@ -63,7 +63,7 @@ window.LEGACY.tour = {
   ],
   days: [
     {
-      place: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' }, image: 'toshkent_1',
+      place: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' }, image: 'toshkent_cic',
       text: { ru: 'Знакомство со столицей.', uz: 'Poytaxt bilan tanishuv.', en: 'Meeting the capital.' },
       activities: [
         { ru: 'встреча в аэропорту, заселение', uz: 'aeroportda kutib olish, joylashish', en: 'airport pick-up, check-in' },

@@ -487,3 +487,5 @@ body.unlocked .uh-scroll { opacity: .6; }
 .fm-cw { flex: 0 1 auto; min-width: min(22ch, 60vw); max-width: 30ch; }
 .fm-cue.l-year.p-l { max-width: min(920px, 72%); }
 @media (max-width: 760px) { .fm-big { font-size: clamp(38px, 11.5vw, 64px); } .fm-cw { min-width: 0; } }
+
+.fm-ui.no-sound .fm-sound { display: none; }

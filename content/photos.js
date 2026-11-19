@@ -478,6 +478,22 @@ window.LEGACY.photos = {
   "src": "",
   "url": ""
  },
+ "toshkent_cic": {
+  "pos": "47% 38%",
+  "w": [
+   1080,
+   1200
+  ],
+  "alt": {
+   "ru": "Центр исламской цивилизации в Узбекистане, вид сверху, Ташкент",
+   "uz": "O‘zbekistondagi Islom sivilizatsiyasi markazi, yuqoridan ko‘rinish, Toshkent",
+   "en": "The Center of Islamic Civilization in Uzbekistan from above, Tashkent"
+  },
+  "by": "TSTU Travel",
+  "lic": "фото предоставлено командой",
+  "src": "",
+  "url": ""
+ },
  "toshkent_1": {
   "w": [
    1080,

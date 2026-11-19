@@ -40,6 +40,13 @@ grain, letterbox, synthesized ambient sound). To put in the real documentary:
 4. If the film has no black bars, set `film.letterbox: 0`.
 Nothing else changes. `film.src: null` switches the film off and the site opens on the tour.
 
+### Film music
+The background music is a separate file: `audio/film-music.mp3` (now a TEMPORARY synthesized score).
+To use the real track, replace the file (same name) and bump `?v=` in `film.music` (`content/site.js`).
+It plays when the viewer turns the sound on, follows pause and replay, dips under the narrator
+(set `film.voice: true` once the video has its own narration; times can also be listed in `film.duck`)
+and rises to full at the motto (`film.swellAt`), then fades as the site opens.
+
 ## Notes
 - Portraits of Amir Temur are an artistic interpretation, not a historical likeness.
 - The motto is shown as traditionally attributed to Amir Temur, not as a verified quotation.
