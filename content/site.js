@@ -304,6 +304,73 @@ window.LEGACY.site = {
     ]
   },
 
+
+  /* ---------- Map of the legacy (inside chapter IV) ---------- */
+  atlas: {
+    kicker: { ru: 'Карта наследия', uz: 'Meros xaritasi', en: 'Map of the legacy' },
+    title: { ru: 'Выбери свой ключ к стране', uz: 'Mamlakatga o‘z kalitingni tanla', en: 'Choose your key to the country' },
+    lead: {
+      ru: 'Отметьте, что вам интересно, и карта покажет, куда ехать. Нажмите на город, чтобы узнать больше и получить штамп в паспорт.',
+      uz: 'Sizga nima qiziqligini belgilang, xarita qayerga borishni ko‘rsatadi. Batafsil bilish va pasportga muhr olish uchun shaharni bosing.',
+      en: 'Pick what interests you and the map shows where to go. Tap a city to learn more and earn a passport stamp.'
+    },
+    all: { ru: 'Всё', uz: 'Hammasi', en: 'All' },
+    route: { ru: 'Условная линия Великого шёлкового пути', uz: 'Buyuk ipak yo‘lining shartli chizig‘i', en: 'Indicative line of the Silk Road' },
+    fromTashkent: { ru: 'км от Ташкента по прямой', uz: 'km Toshkentdan to‘g‘ri chiziqda', en: 'km from Tashkent as the crow flies' },
+    capital: { ru: 'Столица', uz: 'Poytaxt', en: 'Capital' },
+    more: { ru: 'Открыть историю города', uz: 'Shahar hikoyasini ochish', en: 'Open the city’s story' },
+    pick: { ru: 'Выберите город на карте', uz: 'Xaritadan shaharni tanlang', en: 'Choose a city on the map' },
+    themes: [
+      { id: 'history', name: { ru: 'История Темура', uz: 'Temur tarixi', en: 'Temur’s history' } },
+      { id: 'architecture', name: { ru: 'Архитектура', uz: 'Me’morchilik', en: 'Architecture' } },
+      { id: 'crafts', name: { ru: 'Ремёсла', uz: 'Hunarmandchilik', en: 'Crafts' } },
+      { id: 'taste', name: { ru: 'Вкусы', uz: 'Ta’mlar', en: 'Flavours' } },
+      { id: 'modern', name: { ru: 'Современность', uz: 'Zamonaviylik', en: 'Modern life' } }
+    ],
+    cities: [
+      { id: 'samarkand', place: 'samarkand', image: 'samarqand_0', km: 266, themes: ['history', 'architecture', 'crafts', 'taste'],
+        name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' },
+        text: { ru: 'Столица Темура: Гур-Эмир, Биби-Ханым, Шахи-Зинда и Регистан.', uz: 'Temur poytaxti: Go‘ri Amir, Bibixonim, Shohi Zinda va Registon.', en: 'Temur’s capital: Gur-e Amir, Bibi-Khanym, Shah-i-Zinda and the Registan.' } },
+      { id: 'shahrisabz', image: null, km: 323, themes: ['history', 'architecture'],
+        name: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' },
+        text: { ru: 'Родина Темура. Руины дворца Ак-Сарай, который он начал строить в 1380 году. Исторический центр в списке ЮНЕСКО с 2000 года.', uz: 'Temurning vatani. U 1380-yilda qura boshlagan Oqsaroy saroyi xarobalari. Tarixiy markaz 2000-yildan YuNESKO ro‘yxatida.', en: 'Temur’s homeland. The ruins of the Ak-Saray palace he began in 1380. Its historic centre has been on UNESCO’s list since 2000.' } },
+      { id: 'bukhara', place: 'bukhara', image: 'buxoro_3', km: 440, themes: ['architecture', 'crafts', 'taste'],
+        name: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' },
+        text: { ru: 'Торговые купола, медресе и мастерские старого города: золотое шитьё, ковры, чеканка.', uz: 'Savdo gumbazlari, madrasalar va eski shahar ustaxonalari: zardo‘zlik, gilamdo‘zlik, misgarlik.', en: 'Trading domes, madrasas and old-city workshops: gold embroidery, carpets, metal chasing.' } },
+      { id: 'khiva', place: 'khiva', image: 'xiva_0', km: 741, themes: ['history', 'architecture', 'crafts'],
+        name: { ru: 'Хива', uz: 'Xiva', en: 'Khiva' },
+        text: { ru: 'Ичан-Кала: город за глиняными стенами и мастера резьбы по дереву.', uz: 'Ichan qal’a: loy devorlar ortidagi shahar va yog‘och o‘ymakorligi ustalari.', en: 'Itchan Kala: a city behind clay walls, and masters of wood carving.' } },
+      { id: 'tashkent', place: 'tashkent', image: 'toshkent_4', km: 0, capital: true, themes: ['modern', 'taste', 'architecture'],
+        name: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' },
+        text: { ru: 'Метро, Ташкент-Сити, базар Чорсу и комплекс Хазрати Имам.', uz: 'Metro, Tashkent City, Chorsu bozori va Hazrati Imom majmuasi.', en: 'The metro, Tashkent City, Chorsu Bazaar and the Hazrati Imam complex.' } }
+    ]
+  },
+
+  /* ---------- Heritage passport (stamps) ---------- */
+  passport: {
+    title: { ru: 'Паспорт наследия', uz: 'Meros pasporti', en: 'Heritage passport' },
+    rules: {
+      ru: 'Штамп ставится, когда вы проходите главу или открываете город на карте. Всё хранится только в вашем браузере.',
+      uz: 'Bobni o‘tganingizda yoki xaritada shaharni ochganingizda muhr qo‘yiladi. Hammasi faqat brauzeringizda saqlanadi.',
+      en: 'You get a stamp when you finish a chapter or open a city on the map. Everything stays in your browser only.'
+    },
+    got: { ru: 'Новый штамп', uz: 'Yangi muhr', en: 'New stamp' },
+    done: { ru: 'Путь наследия пройден. Теперь — увидеть всё вживую.', uz: 'Meros yo‘li bosib o‘tildi. Endi hammasini o‘z ko‘zing bilan ko‘r.', en: 'The legacy trail is complete. Now see it for real.' },
+    share: { ru: 'Поделиться', uz: 'Ulashish', en: 'Share' },
+    copied: { ru: 'Ссылка скопирована', uz: 'Havola nusxalandi', en: 'Link copied' },
+    reset: { ru: 'Начать заново', uz: 'Qaytadan boshlash', en: 'Start over' },
+    stamps: [
+      { id: 'man', name: { ru: 'Темур', uz: 'Temur', en: 'Temur' } },
+      { id: 'walls', name: { ru: 'Порталы', uz: 'Peshtoqlar', en: 'Portals' } },
+      { id: 'detail', name: { ru: 'Узоры', uz: 'Naqshlar', en: 'Patterns' } },
+      { id: 'samarkand', name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
+      { id: 'shahrisabz', name: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' } },
+      { id: 'bukhara', name: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' } },
+      { id: 'khiva', name: { ru: 'Хива', uz: 'Xiva', en: 'Khiva' } },
+      { id: 'tashkent', name: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' } }
+    ]
+  },
+
   /* ---------- V. The living legacy ---------- */
   people: {
     kicker: { ru: 'Живое наследие', uz: 'Barhayot meros', en: 'The living legacy' },
@@ -341,6 +408,11 @@ window.LEGACY.site = {
       duration: { ru: 'Длительность', uz: 'Davomiyligi', en: 'Duration' },
       travelers: { ru: 'Путешественников', uz: 'Sayohatchilar', en: 'Travellers' },
       price: { ru: 'Стоимость', uz: 'Narxi', en: 'Price' },
+      season: { ru: 'Сезон', uz: 'Mavsum', en: 'Season' },
+      level: { ru: 'Физическая нагрузка', uz: 'Jismoniy yuklama', en: 'Physical level' },
+      transport: { ru: 'Транспорт', uz: 'Transport', en: 'Transport' },
+      outcomes: { ru: 'Что получит участник', uz: 'Ishtirokchi nima oladi', en: 'What participants take home' },
+      updated: { ru: 'Обновлено', uz: 'Yangilangan', en: 'Updated' },
       destinations: { ru: 'Маршрут', uz: 'Yo‘nalish', en: 'Route' },
       included: { ru: 'Включено', uz: 'Narxga kiritilgan', en: 'Included' },
       excluded: { ru: 'Не включено', uz: 'Narxga kiritilmagan', en: 'Not included' },
