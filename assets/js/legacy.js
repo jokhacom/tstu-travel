@@ -39,7 +39,7 @@
     ulug: ['samarqand_0'], shah_wide: ['shah_street', 'shah_dusk'], ppl_plov: ['ppl_palov']
   };
   /* The opening image: Gur-e Amir when available, otherwise a real Samarkand view. */
-  var INTRO_KEYS = ['gur_eve', 'gur_day', 'samarqand_7'];
+  var INTRO_KEYS = ['gur_eve', 'samarqand_7', 'gur_day'];
   function introKey() { for (var i = 0; i < INTRO_KEYS.length; i++) if (PH[INTRO_KEYS[i]]) return INTRO_KEYS[i]; return 'gur_eve'; }
   function resolve(key) {
     if (PH[key]) return key;
@@ -272,51 +272,26 @@
     });
     var card = $('#atCard'); if (card) card.innerHTML = atlasCard();
   }
-  function pickCity(id) { atlasCity = id; applyAtlas(); stamp(id); }
+  function pickCity(id) { atlasCity = id; applyAtlas(); }
 
-  /* ---------- heritage passport ---------- */
-  var pass = {};
-  try { pass = JSON.parse(localStorage.getItem('lot-pass') || '{}') || {}; } catch (e) { pass = {}; }
-  function passTotal() { return S.passport.stamps.length; }
-  function passCount() { return S.passport.stamps.filter(function (x) { return pass[x.id]; }).length; }
-  function updatePassBtn() {
-    var el = $('#passCount'); if (el) el.textContent = passCount() + '/' + passTotal();
-    var b = $('#passBtn'); if (b) b.setAttribute('aria-label', t(S.passport.title) + ' ' + passCount() + '/' + passTotal());
-  }
-  var toastTimer = null;
-  function toast(msg) {
-    var el = $('#toast'); if (!el) return;
-    el.innerHTML = msg; el.classList.add('show');
-    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
-  }
-  function stamp(id) {
-    var st = S.passport.stamps.filter(function (x) { return x.id === id; })[0];
-    if (!st || pass[id]) return;
-    pass[id] = new Date().toISOString().slice(0, 10);
-    try { localStorage.setItem('lot-pass', JSON.stringify(pass)); } catch (e) {}
-    updatePassBtn();
-    var b = $('#passBtn'); if (b) { b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse'); }
-    toast('<span>' + esc(t(S.passport.got)) + '</span><strong>' + esc(t(st.name)) + '</strong><em>' + passCount() + '/' + passTotal() + '</em>');
-  }
-  function sealSVG(st, on) {
-    return '<svg viewBox="0 0 120 120" aria-hidden="true"><path d="' + starPath(60, 60, 52) + '" class="sl-star"/><circle cx="60" cy="60" r="34" class="sl-ring"/>' +
-      '<text x="60" y="63" text-anchor="middle" class="sl-t" style="font-size:' + Math.min(10, Math.floor(52 / Math.max(1, t(st.name).length) * 1.45)) + 'px">' + esc(t(st.name).toUpperCase()) + '</text></svg>';
-  }
-  function openPassport() {
-    var P = S.passport, done = passCount() === passTotal();
-    var grid = P.stamps.map(function (st) {
-      var on = !!pass[st.id];
-      return '<li class="seal' + (on ? ' on' : '') + '">' + sealSVG(st, on) + '<span>' + esc(t(st.name)) + (on ? '<small>' + esc(pass[st.id]) + '</small>' : '') + '</span></li>';
+  /* ---------- Master's Star (loyalty) ---------- */
+  function renderStar() {
+    var Z = S.star; if (!Z) return '';
+    var cx = 60, cy = 60, R = 56, r = R * 0.42, rays = '', k = 0;
+    function pt(i, rad) { var a = Math.PI / 8 * i - Math.PI / 2; return (cx + rad * Math.cos(a)).toFixed(2) + ' ' + (cy + rad * Math.sin(a)).toFixed(2); }
+    Z.groups.forEach(function (g) {
+      for (var n = 0; n < g.n; n++, k++) {
+        rays += '<path class="zs-ray zs-' + g.id + '" d="M' + cx + ' ' + cy + 'L' + pt(2 * k - 1, r) + 'L' + pt(2 * k, R) + 'L' + pt(2 * k + 1, r) + 'Z"/>';
+      }
+    });
+    var legend = Z.groups.map(function (g) {
+      return '<li class="zs-' + g.id + '"><i aria-hidden="true"></i><div><strong>' + esc(t(g.head)) + '</strong><p>' + esc(t(g.text)) + '</p></div></li>';
     }).join('');
-    openLightbox('<div class="passport"><p class="loc">' + passCount() + ' / ' + passTotal() + '</p><h3 class="lb-title">' + esc(t(P.title)) + '</h3>' +
-      '<p class="lb-text">' + esc(t(P.rules)) + '</p>' + (done ? '<p class="pass-done">' + esc(t(P.done)) + '</p>' : '') +
-      '<ul class="seals">' + grid + '</ul><div class="pass-actions"><button type="button" class="cta ghost" id="passShare"><span>' + esc(t(P.share)) + '</span><i aria-hidden="true"></i></button>' +
-      '<button type="button" class="linkish" id="passReset">' + esc(t(P.reset)) + '</button></div></div>');
-  }
-  function sharePass() {
-    var url = location.origin + location.pathname, text = t(S.passport.title) + ': ' + passCount() + '/' + passTotal() + ' · The Legacy of Temur';
-    if (navigator.share) { navigator.share({ title: 'The Legacy of Temur', text: text, url: url }).catch(function () {}); return; }
-    try { navigator.clipboard.writeText(text + ' ' + url).then(function () { toast('<strong>' + esc(t(S.passport.copied)) + '</strong>'); }); } catch (e) {}
+    var rewards = Z.rewards.map(function (w) { return '<li><b>' + w.at + '/8</b>' + esc(t(w.text)) + '</li>'; }).join('');
+    return '<div class="zs"><div class="zs-art"><svg viewBox="0 0 120 120" role="img" aria-label="' + esc(t(Z.title)) + '">' + rays +
+      '<circle cx="60" cy="60" r="7" class="zs-core"/></svg></div>' +
+      '<div class="zs-body"><p class="jd-l">' + esc(t(Z.kicker)) + '</p><h4 class="zs-title">' + esc(t(Z.title)) + '</h4><p class="zs-lead">' + esc(t(Z.lead)) + '</p>' +
+      '<ul class="zs-legend">' + legend + '</ul><ul class="zs-rewards">' + rewards + '</ul><p class="note">' + esc(t(Z.note)) + '</p></div></div>';
   }
 
   function renderPeople() {
@@ -371,7 +346,7 @@
       '<div class="jt-route"><p class="jd-l">' + esc(t(L.destinations)) + '</p><p class="jt-route-v">' + (route || tbd()) + '</p></div>' +
       '<h4 class="jt-sub">' + esc(t(L.itinerary)) + '</h4><ol class="jt-days">' + days + '</ol>' +
       '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(TOUR.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(TOUR.excluded) + '</div></div>' +
-      '<h4 class="jt-sub">' + esc(t(L.outcomes)) + '</h4>' + list(TOUR.outcomes) +
+      '<h4 class="jt-sub">' + esc(t(L.outcomes)) + '</h4>' + list(TOUR.outcomes) + renderStar() +
       (TOUR.updated ? '<p class="note">' + esc(t(L.updated)) + ': ' + esc(TOUR.updated) + '</p>' : '') +
       '<div class="jt-cta"><a class="cta" href="' + esc(TOUR.bookingUrl || '#') + '" target="_blank" rel="noopener"><span>' + esc(t(J.cta)) + '</span><i aria-hidden="true"></i></a><p class="note">' + esc(t(J.ctaNote)) + '</p></div>' +
       '</div></section>';
@@ -407,11 +382,10 @@
       return '<li><a href="#' + c.id + '" data-jump="' + c.id + '" aria-label="' + esc(t(c.title)) + '"><span>' + esc(t(c.title)) + '</span></a></li>';
     }).join('') + '</ol>';
     $('#soundBtn .sr').textContent = t(sound.on ? S.ui.soundOff : S.ui.soundOn);
-    updatePassBtn();
   }
 
   function renderAll() {
-    main.innerHTML = renderPrologue() + renderMan() + renderWalls() + renderDetail() + renderCountry() + renderPeople() + renderJourney() + renderFinale();
+    main.innerHTML = renderPrologue() + renderMan() + renderJourney() + renderWalls() + renderDetail() + renderCountry() + renderPeople() + renderFinale();
     renderChrome();
   }
 
@@ -431,11 +405,6 @@
     $$('.ch', main).forEach(function (sec) { var r = sec.getBoundingClientRect(); if (r.top < vh * 0.5) active = sec.id; });
     $$('#progress a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-jump') === active); });
     document.body.classList.toggle('on-light', active === 'people');
-    // passport: a chapter counts once its end has been reached
-    ['man', 'walls', 'detail'].forEach(function (id) {
-      var sec = document.getElementById(id); if (!sec || pass[id]) return;
-      var r = sec.getBoundingClientRect(); if (r.bottom < vh * 0.9 && r.bottom > -vh) stamp(id);
-    });
     var place = null;
     $$('.place', main).forEach(function (pl) { var r = pl.getBoundingClientRect(); if (r.top < vh * 0.6 && r.bottom > vh * 0.4) place = pl.getAttribute('data-place'); });
     var idx = $('.pl-index', main);
@@ -443,10 +412,6 @@
       var cr = $('#country').getBoundingClientRect();
       idx.classList.toggle('show', !!place && cr.top < 0 && cr.bottom > vh);
       $$('a', idx).forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-place') === place); });
-    }
-    if (place && introDone) {
-      var pl = document.getElementById('place-' + place);
-      if (pl && pl.getBoundingClientRect().top < vh * 0.2) stamp(place);
     }
   }
   var ticking = false;
@@ -736,15 +701,12 @@
 
   /* ---------- events ---------- */
   document.addEventListener('click', function (e) {
-    var el = e.target.closest('[data-lang],[data-jump],[data-explore],#menuBtn,#soundBtn,.skip,#creditsBtn,[data-close],.scroll-cue,.wordmark,a[href="#journey"],[data-theme],.am-pin,[data-goplace],#passBtn,#passShare,#passReset');
+    var el = e.target.closest('[data-lang],[data-jump],[data-explore],#menuBtn,#soundBtn,.skip,#creditsBtn,[data-close],.scroll-cue,.wordmark,a[href="#journey"],[data-theme],.am-pin,[data-goplace]');
     if (!el) { if (e.target.id === 'lightbox') closeLightbox(); return; }
     if (el.hasAttribute('data-lang')) { setLang(el.getAttribute('data-lang')); return; }
     if (el.hasAttribute('data-theme')) { atlasTheme = el.getAttribute('data-theme'); applyAtlas(); return; }
     if (el.classList.contains('am-pin')) { pickCity(el.getAttribute('data-city')); return; }
     if (el.hasAttribute('data-goplace')) { e.preventDefault(); jump('place-' + el.getAttribute('data-goplace')); return; }
-    if (el.id === 'passBtn') { openPassport(); return; }
-    if (el.id === 'passShare') { sharePass(); return; }
-    if (el.id === 'passReset') { pass = {}; try { localStorage.removeItem('lot-pass'); } catch (e2) {} updatePassBtn(); openPassport(); return; }
     if (el.hasAttribute('data-jump')) { e.preventDefault(); jump(el.getAttribute('data-jump')); return; }
     if (el.hasAttribute('data-explore')) { explore(el.getAttribute('data-explore')); return; }
     if (el.id === 'menuBtn') { toggleMenu(); return; }

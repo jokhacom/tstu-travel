@@ -455,33 +455,26 @@ body.static .fn-sticky > .fn-line.f2 { display: none; }
   .am-pin text { font-size: 24px; }
 }
 
-/* ================= PASSPORT ================= */
-.pass-btn { position: relative; width: auto; padding: 0 10px; gap: 6px; display: inline-flex; border-radius: 22px; }
-.pass-count { font-size: 11px; font-weight: 700; letter-spacing: .06em; }
-.pass-btn.pulse { animation: pulse .9s ease; }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(230,106,50,.7); } 100% { box-shadow: 0 0 0 16px rgba(230,106,50,0); } }
-body.intro-running .pass-btn { visibility: hidden; }
-.toast { position: fixed; left: 50%; bottom: 26px; z-index: 50; transform: translate(-50%, 30px); opacity: 0; pointer-events: none; display: flex; align-items: baseline; gap: 12px; background: var(--ivory); color: var(--ink); padding: 12px 18px; font-size: 13px; transition: opacity .4s, transform .4s; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
-.toast span { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #B5481C; }
-.toast strong { font-family: var(--serif); font-size: 20px; font-weight: 600; text-transform: uppercase; }
-.toast em { font-style: normal; font-size: 11px; opacity: .6; }
-.seals { list-style: none; padding: 0; margin: 34px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 26px; }
-.seal { text-align: center; }
-.seal svg { width: 100%; max-width: 150px; margin: 0 auto; display: block; }
-.sl-star { fill: none; stroke: rgba(242,233,218,.25); stroke-width: 1.5; stroke-dasharray: 4 4; }
-.sl-ring { fill: none; stroke: rgba(242,233,218,.18); stroke-width: 1; }
-.sl-t { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: .12em; fill: rgba(242,233,218,.3); }
-.seal.on .sl-star { stroke: var(--cobalt); stroke-dasharray: none; stroke-width: 2.4; fill: rgba(36,87,216,.14); }
-.seal.on .sl-ring { stroke: var(--orange); stroke-width: 1.6; }
-.seal.on .sl-t { fill: var(--ivory); }
-.seal.on svg { transform: rotate(-8deg); }
-.seal span { display: block; margin-top: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ivory-dim); }
-.seal.on span { color: var(--ivory); }
-.seal small { display: block; font-size: 10px; letter-spacing: .06em; color: var(--ivory-dim); margin-top: 2px; }
-.pass-done { font-family: var(--serif); font-size: 26px; color: var(--orange); margin: 18px 0 0; }
-.pass-actions { display: flex; flex-wrap: wrap; gap: 26px; align-items: center; margin-top: 40px; }
-@media (max-width: 520px) { .seals { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
+/* ================= MASTER'S STAR (loyalty) ================= */
+.zs { display: grid; grid-template-columns: minmax(180px, 300px) 1fr; gap: clamp(28px, 5vw, 70px); align-items: center; margin: 70px 0 10px; padding: clamp(26px, 4vw, 50px); border: 1px solid rgba(36,87,216,.4); background: radial-gradient(70% 90% at 15% 50%, rgba(36,87,216,.22), transparent 70%), var(--midnight); }
+.zs-art svg { width: 100%; display: block; overflow: visible; }
+.zs-ray { stroke: var(--ivory); stroke-width: .6; stroke-linejoin: round; transition: opacity .3s; }
+.zs-city { fill: var(--cobalt); }
+.zs-friend { fill: var(--orange); }
+.zs-return { fill: var(--turquoise); }
+.zs-core { fill: var(--obsidian); stroke: var(--ivory); stroke-width: .6; }
+.zs-title { font-family: var(--serif); font-size: clamp(34px, 4vw, 54px); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin: 4px 0 12px; color: var(--ivory); }
+.zs-lead { color: var(--ivory-dim); margin: 0 0 24px; max-width: 56ch; }
+.zs-legend, .zs-rewards { list-style: none; padding: 0; margin: 0; }
+.zs-legend li { display: flex; gap: 14px; align-items: flex-start; margin: 0 0 16px; }
+.zs-legend i { flex: none; width: 14px; height: 14px; margin-top: 4px; transform: rotate(45deg); border: 1px solid var(--ivory); }
+.zs-legend .zs-city i { background: var(--cobalt); } .zs-legend .zs-friend i { background: var(--orange); } .zs-legend .zs-return i { background: var(--turquoise); }
+.zs-legend strong { display: block; font-size: 14px; letter-spacing: .04em; color: var(--ivory); }
+.zs-legend p { margin: 2px 0 0; font-size: 14px; color: var(--ivory-dim); }
+.zs-rewards { margin-top: 22px; border-top: 1px solid rgba(242,233,218,.15); padding-top: 18px; }
+.zs-rewards li { display: flex; gap: 14px; align-items: baseline; margin: 0 0 10px; font-size: 15px; color: var(--ivory); }
+.zs-rewards b { flex: none; font-family: var(--serif); font-size: 22px; color: var(--orange); min-width: 44px; }
+@media (max-width: 760px) { .zs { grid-template-columns: 1fr; } .zs-art { max-width: 220px; margin: 0 auto; } }
 
 /* tour draft */
 .jt-note{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;color:var(--ivory-dim);margin:0 0 22px}

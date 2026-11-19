@@ -2,6 +2,171 @@
  * by / lic / src / url are the credit shown on the site. */
 window.LEGACY = window.LEGACY || {};
 window.LEGACY.photos = {
+ "gur_day": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Мавзолей Гур-Эмир, Самарканд",
+   "uz": "Go‘ri Amir maqbarasi, Samarqand",
+   "en": "Gur-e Amir mausoleum, Samarkand"
+  },
+  "by": "Ildar Garifullin",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1585403842962-4af1e160ee18"
+ },
+ "shah_wide": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Ансамбль Шахи-Зинда, Самарканд",
+   "uz": "Shohi Zinda majmuasi, Samarqand",
+   "en": "Shah-i-Zinda ensemble, Samarkand"
+  },
+  "by": "Alexander Gluschenko",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1715540335591-8c7db66f7a41"
+ },
+ "shah_street": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Порталы Шахи-Зинда, Самарканд",
+   "uz": "Shohi Zinda peshtoqlari, Samarqand",
+   "en": "Portals of Shah-i-Zinda, Samarkand"
+  },
+  "by": "Snowscat",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1558185730-e5b096912bbd"
+ },
+ "reg_light": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Регистан ночью, Самарканд",
+   "uz": "Registon tunda, Samarqand",
+   "en": "The Registan at night, Samarkand"
+  },
+  "by": "Snowscat",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1557841089-d82280fcc341"
+ },
+ "det_geo": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Изразцы и ребристый купол, Самарканд",
+   "uz": "Koshinlar va qovurg‘ali gumbaz, Samarqand",
+   "en": "Tilework and a ribbed dome, Samarkand"
+  },
+  "by": "Alena Yzhanina",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1759518158486-59839bfc01b5"
+ },
+ "det_star": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Изразцовые мукарнасы портала",
+   "uz": "Peshtoqning koshinli muqarnaslari",
+   "en": "Tiled muqarnas of a portal"
+  },
+  "by": "Far Chinberdiev",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1626552727238-473e25d1a0a5"
+ },
+ "det_door": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Резная дверь и вид на Регистан, Самарканд",
+   "uz": "O‘ymakor eshik va Registon manzarasi, Samarqand",
+   "en": "A carved door and a view of the Registan, Samarkand"
+  },
+  "by": "Alexander Gluschenko",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1715540335594-2ad77795ba09"
+ },
+ "det_column": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Резные колонны Джума-мечети, Хива",
+   "uz": "Juma masjidining o‘ymakor ustunlari, Xiva",
+   "en": "Carved columns of the Juma Mosque, Khiva"
+  },
+  "by": "Farkhod Saydullaev",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1728281522192-b9718eff3041"
+ },
+ "ppl_plov": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Узбекский плов",
+   "uz": "O‘zbek oshi",
+   "en": "Uzbek plov"
+  },
+  "by": "otabek xatipov",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1671048116810-6f885b2b35a5"
+ },
+ "ppl_bazaar": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Рынок у Кальта-Минара, Хива",
+   "uz": "Kalta minor yonidagi bozor, Xiva",
+   "en": "A market by the Kalta Minor, Khiva"
+  },
+  "by": "Farkhod Saydullaev",
+  "lic": "Unsplash License",
+  "src": "Unsplash",
+  "url": "https://images.unsplash.com/photo-1728115214399-ad40d93eb935"
+ },
+ "shahr_aks": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Портал дворца Ак-Сарай на закате, Шахрисабз",
+   "uz": "Oqsaroy saroyi peshtoqi quyosh botishida, Shahrisabz",
+   "en": "The Ak-Saray palace portal at sunset, Shahrisabz"
+  },
+  "by": "TSTU Travel",
+  "lic": "Фото предоставлено командой, обработано / team photo, edited",
+  "src": "",
+  "url": ""
+ },
  "buxoro_1": {
   "w": [
    1080,
