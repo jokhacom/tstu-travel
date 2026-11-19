@@ -33,7 +33,9 @@ values when the package is ready; an example of a day is at the top of `content/
 The current clip is TEMPORARY: made from the site's own photos (slow push-ins, crossfades,
 grain, letterbox, synthesized ambient sound). To put in the real documentary:
 1. Copy the file to `video/` and set `film.src` in `content/site.js` (one path string, or `{ landscape, portrait }`).
-2. If the film has its own narration or subtitles, set `film.cues: []`; otherwise re-time the cues.
+2. If the film has its own narration or subtitles, set `film.cues: []`; otherwise re-time the cues
+   (each cue can set `pos` and `look`, see the comment in `site.js`).
+   Bump the `?v=` in the paths when a file changes: browsers cache video and posters for 7 days.
 3. Replace the posters: `poster` (an early frame) and `endFrame` (the last frame, also the background of the opened site).
 4. If the film has no black bars, set `film.letterbox: 0`.
 Nothing else changes. `film.src: null` switches the film off and the site opens on the tour.
