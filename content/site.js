@@ -75,37 +75,40 @@ window.LEGACY.site = {
    * set `letterbox: 0`. Nothing else needs to change.
    * Set `src: null` to switch the film off: the site then opens straight onto the tour.
    *
-   * Now: a TEMPORARY clip made from the site's own photos (60 s, ambient sound),
-   * scene starts 0, 5.7, 11.1, 16.5, 21.9, 27.3, 32.7, 37.3, 41.9, 46.1, 50.3. */
+   * Cue options: pos = bl | br | tl | tr | l | r | c (where in the frame); look = year (big number `n`),
+   * place (kicker as a big word), quote (large italic, centred). Leave them out for the plain style.
+   *
+   * Now: a TEMPORARY clip made from the site's own photos (58 s, temporary score), 19 shots.
+   * Shot starts: 0, 1.7, 6.3, 7.4, 11.6, 12.5, 15.9, 18.9, 23.1, 24.2, 27.1, 29.1, 32.8, 35.85, 38.5, 41.5, 43.0, 45.8, 46.3. */
   film: {
     standIn: true,
-    src: { landscape: 'video/temur-film-1080.mp4', portrait: 'video/temur-film-720v.mp4' },
-    poster: { landscape: 'img/film-poster.webp', portrait: 'img/film-poster-v.webp' },
-    endFrame: { landscape: 'img/film-end.webp', portrait: 'img/film-end-v.webp' },
+    src: { landscape: 'video/temur-film-1080.mp4?v=3', portrait: 'video/temur-film-720v.mp4?v=3' },   // bump ?v= when the file changes (browsers cache video for 7 days)
+    poster: { landscape: 'img/film-poster.webp?v=3', portrait: 'img/film-poster-v.webp?v=3' },
+    endFrame: { landscape: 'img/film-end.webp?v=3', portrait: 'img/film-end-v.webp?v=3' },
     letterbox: 0.11,   // height of each black bar in the landscape cut (share of the frame); 0 = none
     cues: [
-      { from: 0.9, to: 5.3, k: { ru: '1336 · Кеш', uz: '1336 · Kesh', en: '1336 · Kesh' },
+      { from: 2.2, to: 6.0, look: 'year', n: '1336', pos: 'bl', k: { ru: 'Кеш', uz: 'Kesh', en: 'Kesh' },
         text: { ru: 'Близ Кеша, нынешнего Шахрисабза, рождается Темур.', uz: 'Kesh, hozirgi Shahrisabz yaqinida Temur dunyoga keladi.', en: 'Near Kesh, today’s Shahrisabz, Temur is born.' } },
-      { from: 6.3, to: 10.7, k: { ru: 'Начало пути', uz: 'Yo‘l boshi', en: 'The road begins' },
+      { from: 7.9, to: 11.4, pos: 'tl', k: { ru: 'Начало пути', uz: 'Yo‘l boshi', en: 'The road begins' },
         text: { ru: 'Сын рода барлас, с юности в седле — воин и стратег.', uz: 'Barlos urug‘ining o‘g‘li, yoshligidan egarda — jangchi va sarkarda.', en: 'A son of the Barlas clan, in the saddle from youth: a warrior and a strategist.' } },
-      { from: 11.7, to: 16.1, k: { ru: '1370 · Самарканд', uz: '1370 · Samarqand', en: '1370 · Samarkand' },
+      { from: 13.0, to: 18.6, look: 'year', n: '1370', pos: 'l', k: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' },
         text: { ru: 'Его провозглашают правителем. Столицей он делает Самарканд.', uz: 'U hukmdor deb e’lon qilinadi. Samarqandni poytaxt qiladi.', en: 'He is proclaimed ruler, and he makes Samarkand his capital.' } },
-      { from: 17.1, to: 21.5, k: { ru: 'Империя', uz: 'Saltanat', en: 'An empire' },
+      { from: 19.4, to: 22.9, look: 'place', pos: 'l', k: { ru: 'Империя', uz: 'Saltanat', en: 'An empire' },
         text: { ru: 'Его держава протянется от Кавказа и Малой Азии до границ Индии.', uz: 'Uning davlati Kavkaz va Kichik Osiyodan Hindiston chegaralarigacha yoyiladi.', en: 'His realm will stretch from the Caucasus and Anatolia to the borders of India.' } },
-      { from: 22.5, to: 26.9, k: { ru: 'Шахи-Зинда', uz: 'Shohi Zinda', en: 'Shah-i-Zinda' },
+      { from: 24.7, to: 29.0, pos: 'br', k: { ru: 'Шахи-Зинда', uz: 'Shohi Zinda', en: 'Shah-i-Zinda' },
         text: { ru: 'Лучшие зодчие державы строят в Самарканде улицу бирюзовых мавзолеев.', uz: 'Saltanatning eng yaxshi me’morlari Samarqandda moviy maqbaralar ko‘chasini quradi.', en: 'The finest architects of his realm raise a street of turquoise mausoleums in Samarkand.' } },
-      { from: 27.9, to: 32.3, k: { ru: 'Гур-Эмир · 1405', uz: 'Go‘ri Amir · 1405', en: 'Gur-e Amir · 1405' },
+      { from: 29.8, to: 32.8, look: 'year', n: '1405', pos: 'tr', k: { ru: 'Гур-Эмир', uz: 'Go‘ri Amir', en: 'Gur-e Amir' },
         text: { ru: 'Под этим ребристым куполом покоится сам Темур.', uz: 'Bu qovurg‘ali gumbaz ostida Temurning o‘zi yotibdi.', en: 'Beneath this ribbed dome lies Temur himself.' } },
-      { from: 33.3, to: 36.9, k: { ru: 'Шесть веков спустя', uz: 'Olti asr o‘tib', en: 'Six centuries later' },
+      { from: 33.4, to: 36.0, look: 'quote', pos: 'c', k: { ru: 'Шесть веков спустя', uz: 'Olti asr o‘tib', en: 'Six centuries later' },
         text: { ru: 'Самарканд по-прежнему поражает мир.', uz: 'Samarqand hamon dunyoni hayratga soladi.', en: 'Samarkand still astonishes the world.' } },
-      { from: 37.9, to: 41.5, k: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' },
+      { from: 36.3, to: 38.6, look: 'place', pos: 'bl', k: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' },
         text: { ru: 'Порталы его дворца Ак-Сарай стоят до сих пор.', uz: 'Uning Oqsaroy saroyi peshtoqlari hamon tik turibdi.', en: 'The portals of his Ak-Saray palace still stand.' } },
-      { from: 42.5, to: 45.7, k: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' },
+      { from: 38.9, to: 41.3, look: 'place', pos: 'tr', k: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' },
         text: { ru: 'Купола и минареты древнего города.', uz: 'Qadimiy shaharning gumbaz va minoralari.', en: 'The domes and minarets of an ancient city.' } },
-      { from: 46.7, to: 49.9, k: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' },
+      { from: 41.8, to: 45.5, look: 'place', pos: 'br', k: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' },
         text: { ru: 'Столица современного Узбекистана.', uz: 'Zamonaviy O‘zbekiston poytaxti.', en: 'The capital of modern Uzbekistan.' } },
-      { from: 51.0, to: 55.8, motto: true },
-      { from: 56.3, to: 60.3, invite: true }
+      { from: 47.2, to: 53.0, motto: true },
+      { from: 53.6, to: 57.8, invite: true }
     ],
     motto: {
       ru: ['Если ты сомневаешься в нашем могуществе —', 'взгляни на наши творения'],
@@ -118,7 +121,7 @@ window.LEGACY.site = {
       uz: 'Suratlardan yig‘ilgan vaqtinchalik rolik. To‘liq hujjatli film tayyorlanmoqda.',
       en: 'A temporary clip made from photographs. The full documentary is in production.'
     },
-    unlockLead: { ru: 'Хочешь увидеть это вживую? Вот наше путешествие.', uz: 'Buni jonli ko‘rishni xohlaysanmi? Mana bizning sayohatimiz.', en: 'Want to see it for real? Here is our journey.' }
+    unlockLead: { ru: '«Сомневаешься в нашем могуществе? Взгляни на наши творения!»', uz: '«Agar bizning qudratimizga shubha qilsang, biz qurgan imoratlarga boq»', en: '“If you doubt our power, look at our buildings.”' }
   },
 
   /* ---------- chapters (menu + progress) ---------- */
