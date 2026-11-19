@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='10' fill='%23111'/%3E%3Cpath d='M10 34 12 19Q24 9 36 19L38 34Z' fill='%23F2B33D'/%3E%3Crect x='9' y='33' width='30' height='5' rx='2' fill='%23F2B33D'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F3F1EC;--surface:#FFFFFF;--ink:#121212;--muted:#5E5B55;--line:#DAD5CB;--accent:#0E6E73;--accent2:#C4512B;--on-accent:#fff;
  --serif:'Instrument Serif',Georgia,serif;--sans:Manrope,system-ui,-apple-system,'Segoe UI',sans-serif;--gut:clamp(16px,4vw,56px);--max:1360px;--r:10px}
@@ -379,6 +379,55 @@ html.xfs-lock,html.xfs-lock body{overflow:hidden}
 .uzb-cr{margin:14px 0 0;font-size:12px;color:var(--muted)}.uzb-cr a{color:inherit}
 @media (max-width:720px){.uzb-top{grid-template-columns:1fr 1fr}.uzb-kick{grid-column:1/-1;grid-row:1;justify-content:center;margin-bottom:6px}
  .uzb-word{background-image:url(s/uzb_cic.jpg);font-size:calc((100vw - 2 * var(--gut)) / 6.24)}.uzb-note{font-size:12.5px}}
+
+/* landing poster */
+.kzh{--kz:#B3261E;padding:calc(var(--hdh,76px) + 18px) 0 0;background:var(--bg)}
+:root[data-theme="dark"] .kzh{--kz:#E0574A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .kzh{--kz:#E0574A}}
+.kzw{width:min(1500px,100% - 2 * var(--gut));margin-inline:auto;position:relative}
+.kz-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-top:1px solid color-mix(in srgb,var(--kz) 55%,transparent);padding-top:12px}
+.kz-kick{margin:0;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--kz)}
+.kz-yr{margin:0;display:flex;flex-direction:column;align-items:flex-end;font-family:Anton,Impact,sans-serif;font-size:22px;line-height:1;color:var(--kz);letter-spacing:.02em}.kz-yr span{font-size:14px;font-family:var(--sans);font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.kz-grid{display:grid;grid-template-columns:150px minmax(0,1fr) 150px;gap:clamp(14px,1.6vw,26px);align-items:end;margin-top:6px}
+.kz-side{margin:0 0 34%;font-size:12.5px;line-height:1.5;color:var(--kz);font-weight:600}
+.kz-art{position:relative}
+.kz{display:block;width:100%;height:auto}.kz-m{display:none}
+.kz-r0{stop-color:var(--kz);stop-opacity:1}.kz-r1{stop-color:var(--kz);stop-opacity:.9}.kz-r2{stop-color:var(--kz);stop-opacity:0}
+.kz-art image{}
+.kz-box{position:absolute;left:0;bottom:48px;display:flex;gap:14px;align-items:flex-start;max-width:min(380px,52%);padding:16px 18px;background:var(--kz);color:#fff}
+.kz-box svg{width:38px;height:38px;flex:none;opacity:.95}.kz-box b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}.kz-box span{font-size:12.5px;line-height:1.45;opacity:.95}
+.kz-geo{position:absolute;right:0;bottom:48px;margin:0;padding:12px 16px;background:var(--bg);font-family:Anton,Impact,sans-serif;font-size:clamp(16px,1.6vw,24px);line-height:1.1;color:var(--kz);text-align:right}
+.kz-facts{list-style:none;margin:0 0 30%;padding:0;display:grid;gap:22px}
+.kz-facts li{display:grid;gap:3px;color:var(--kz)}.kz-facts svg{width:30px;height:30px}.kz-facts b{font-size:11px;letter-spacing:.16em;text-transform:uppercase}.kz-facts span{font-size:12px;line-height:1.45;color:var(--muted)}
+.tp-hd .h2{font-size:clamp(40px,4.2vw,62px)}
+.kz-cr{margin:10px auto 0;max-width:1100px;padding:0 24px;font-size:11px;color:var(--muted);text-align:right}.kz-cr a{color:inherit}
+.sbar{position:relative;z-index:3;margin:-34px auto 0;max-width:1100px;display:grid;grid-template-columns:1.3fr 1fr .8fr auto;align-items:center;gap:0;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 8px 8px 12px;box-shadow:0 18px 50px -20px rgba(0,0,0,.35)}
+.sb-f{display:flex;align-items:center;gap:12px;padding:6px 18px;min-width:0;cursor:pointer}.sb-f+.sb-f{border-left:1px solid var(--line)}
+.sb-f>svg{width:34px;height:34px;padding:8px;border-radius:50%;background:var(--bg);flex:none}
+.sb-f>span{display:grid;min-width:0;flex:1}.sb-f b{font-size:12px;font-weight:700}
+.sb-f select,.sb-f input{border:0;background:transparent;font:inherit;font-size:14px;color:var(--muted);padding:2px 0;min-width:0;width:100%;outline-offset:3px}
+.sb-go{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border:0;border-radius:999px;background:#17483F;color:#fff;font:inherit;font-weight:700;cursor:pointer}.sb-go svg{width:18px;height:18px}
+.sb-go:hover{filter:brightness(1.12)}
+.tp-in{display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:clamp(20px,3vw,48px);align-items:center}
+.tp-rule{display:block;width:46px;height:2px;background:var(--accent2);margin-bottom:22px}
+.tp-hd .lead{margin-top:12px}
+.tp-nav{display:flex;gap:12px;margin-top:34px}
+.tp-b{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer}.tp-b svg{width:20px;height:20px}
+.tp-b.on{background:#17483F;border-color:#17483F;color:#fff}
+.tp-track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 32px)/3);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.tp-track::-webkit-scrollbar{display:none}
+.tp-card{position:relative;display:block;aspect-ratio:3/4;border-radius:16px;overflow:hidden;scroll-snap-align:start;color:#fff;background:#222}
+.tp-card img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}.tp-card:hover img{transform:scale(1.04)}
+.tp-card::after{content:"";position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.tp-ne{position:absolute;top:14px;right:14px;z-index:1;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.88);color:#111}.tp-ne svg{width:18px;height:18px}
+.tp-t{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;display:grid;gap:3px}.tp-t b{font-size:19px}.tp-t span{font-size:13px;opacity:.9}
+@media (max-width:1100px){.kz-grid{grid-template-columns:minmax(0,1fr)}.sbar{margin-top:22px}.kz-box,.kz-geo{bottom:0}.kz-side{display:none}.kz-facts{grid-template-columns:repeat(3,1fr);margin:18px 0 0;grid-row:2}
+ .tp-in{grid-template-columns:1fr}.tp-nav{margin-top:20px}.tp-track{grid-auto-columns:calc((100% - 16px)/2.2)}}
+@media (max-width:720px){.kz-d{display:none}.kz-m{display:block}.kz-box{position:relative;max-width:none;margin-top:-1px}.kz-geo{top:auto;bottom:auto;right:0;top:calc(100% - 200px);display:none}
+ .kz-facts{grid-template-columns:1fr;gap:14px}.kz-facts li{grid-template-columns:30px 1fr;column-gap:12px;align-items:start}.kz-facts li svg{grid-row:span 2}
+ .kz-cr{text-align:left}
+ .sbar{margin-top:18px;grid-template-columns:1fr;border-radius:20px;padding:10px}.sb-f+.sb-f{border-left:0;border-top:1px solid var(--line)}.sb-f{padding:10px 8px}.sb-go{justify-content:center;margin-top:6px}
+ .tp-track{grid-auto-columns:78%}}
 </style>
 <style>/* Pannellum 2.5.6, https://github.com/mpetroff/pannellum */
 .pnlm-container{margin:0;padding:0;overflow:hidden;position:relative;cursor:default;width:100%;height:100%;font-family:Helvetica,"Nimbus Sans L","Liberation Sans",Arial,sans-serif;background:#f4f4f4 url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2267%22%20height%3D%22100%22%20viewBox%3D%220%200%2067%20100%22%3E%0A%3Cpath%20stroke%3D%22%23ccc%22%20fill%3D%22none%22%20d%3D%22M33.5%2C50%2C0%2C63%2C33.5%2C75%2C67%2C63%2C33.5%2C50m-33.5-50%2C67%2C25m-0.5%2C0%2C0%2C75m-66.5-75%2C67-25m-33.5%2C75%2C0%2C25m0-100%2C0%2C50%22%2F%3E%0A%3C%2Fsvg%3E%0A') repeat;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-o-user-select:none;-ms-user-select:none;user-select:none;outline:0;line-height:1.4;contain:content}.pnlm-container *{box-sizing:content-box}.pnlm-ui{position:absolute;width:100%;height:100%;z-index:1}.pnlm-grab{cursor:grab;cursor:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2226%22%20width%3D%2226%22%3E%0A%3Cpath%20stroke%3D%22%23000%22%20stroke-width%3D%221px%22%20fill%3D%22%23fff%22%20d%3D%22m15.3%2020.5s6.38-6.73%204.64-8.24-3.47%201.01-3.47%201.01%203.61-5.72%201.41-6.49c-2.2-0.769-3.33%204.36-3.33%204.36s0.873-5.76-1.06-5.76-1.58%205.39-1.58%205.39-0.574-4.59-2.18-4.12c-1.61%200.468-0.572%205.51-0.572%205.51s-1.58-4.89-2.93-3.79c-1.35%201.11%200.258%205.25%200.572%206.62%200.836%202.43%202.03%202.94%202.17%205.55%22%2F%3E%0A%3C%2Fsvg%3E%0A') 12 8,default}.pnlm-grabbing{cursor:grabbing;cursor:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2226%22%20width%3D%2226%22%3E%0A%3Cpath%20stroke%3D%22%23000%22%20stroke-width%3D%221px%22%20fill%3D%22%23fff%22%20d%3D%22m15.3%2020.5s5.07-5.29%203.77-6.74c-1.31-1.45-2.53%200.14-2.53%200.14s2.74-3.29%200.535-4.06c-2.2-0.769-2.52%201.3-2.52%201.3s0.81-2.13-1.12-2.13-1.52%201.77-1.52%201.77-0.261-1.59-1.87-1.12c-1.61%200.468-0.874%202.17-0.874%202.17s-0.651-1.55-2-0.445c-1.35%201.11-0.68%202.25-0.365%203.62%200.836%202.43%202.03%202.94%202.17%205.55%22%2F%3E%0A%3C%2Fsvg%3E%0A') 12 8,default}.pnlm-sprite{background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2226%22%20height%3D%22208%22%3E%0A%3Ccircle%20fill-opacity%3D%22.78%22%20cy%3D%22117%22%20cx%3D%2213%22%20r%3D%2211%22%20fill%3D%22%23fff%22%2F%3E%0A%3Ccircle%20fill-opacity%3D%22.78%22%20cy%3D%22143%22%20cx%3D%2213%22%20r%3D%2211%22%20fill%3D%22%23fff%22%2F%3E%0A%3Ccircle%20cy%3D%22169%22%20cx%3D%2213%22%20r%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%2F%3E%0A%3Ccircle%20cy%3D%22195%22%20cx%3D%2213%22%20r%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23000%22%20stroke-width%3D%222%22%2F%3E%0A%3Ccircle%20cx%3D%2213%22%20cy%3D%22195%22%20r%3D%222.5%22%2F%3E%0A%3Cpath%20d%3D%22m5%2083v6h2v-4h4v-2zm10%200v2h4v4h2v-6zm-5%205v6h6v-6zm-5%205v6h6v-2h-4v-4zm14%200v4h-4v2h6v-6z%22%2F%3E%0A%3Cpath%20d%3D%22m13%20110a7%207%200%200%200%20-7%207%207%207%200%200%200%207%207%207%207%200%200%200%207%20-7%207%207%200%200%200%20-7%20-7zm-1%203h2v2h-2zm0%203h2v5h-2z%22%2F%3E%0A%3Cpath%20d%3D%22m5%2057v6h2v-4h4v-2zm10%200v2h4v4h2v-6zm-10%2010v6h6v-2h-4v-4zm14%200v4h-4v2h6v-6z%22%2F%3E%0A%3Cpath%20d%3D%22m17%2038v2h-8v-2z%22%2F%3E%0A%3Cpath%20d%3D%22m12%209v3h-3v2h3v3h2v-3h3v-2h-3v-3z%22%2F%3E%0A%3Cpath%20d%3D%22m13%20136-6.125%206.125h4.375v7.875h3.5v-7.875h4.375z%22%2F%3E%0A%3Cpath%20d%3D%22m10.428%20173.33v-5.77l5-2.89v5.77zm1-1.73%203-1.73-3.001-1.74z%22%2F%3E%0A%3C%2Fsvg%3E%0A')}.pnlm-container:-moz-full-screen{height:100%!important;width:100%!important;position:static!important}.pnlm-container:-webkit-full-screen{height:100%!important;width:100%!important;position:static!important}.pnlm-container:-ms-fullscreen{height:100%!important;width:100%!important;position:static!important}.pnlm-container:fullscreen{height:100%!important;width:100%!important;position:static!important}.pnlm-render-container{cursor:inherit;position:absolute;height:100%;width:100%}.pnlm-controls{margin-top:4px;background-color:#fff;border:1px solid #999;border-color:rgba(0,0,0,0.4);border-radius:3px;cursor:pointer;z-index:2;-webkit-transform:translateZ(9999px);transform:translateZ(9999px)}.pnlm-control:hover{background-color:#f8f8f8}.pnlm-controls-container{position:absolute;top:0;left:4px;z-index:1}.pnlm-zoom-controls{width:26px;height:52px}.pnlm-zoom-in{width:100%;height:50%;position:absolute;top:0;border-radius:3px 3px 0 0}.pnlm-zoom-out{width:100%;height:50%;position:absolute;bottom:0;background-position:0 -26px;border-top:1px solid #ddd;border-top-color:rgba(0,0,0,0.10);border-radius:0 0 3px 3px}.pnlm-fullscreen-toggle-button,.pnlm-orientation-button,.pnlm-hot-spot-debug-indicator{width:26px;height:26px}.pnlm-hot-spot-debug-indicator{position:absolute;top:50%;left:50%;width:26px;height:26px;margin:-13px 0 0 -13px;background-color:rgba(255,255,255,0.5);border-radius:13px;display:none}.pnlm-orientation-button-inactive{background-position:0 -156px}.pnlm-orientation-button-active{background-position:0 -182px}.pnlm-fullscreen-toggle-button-inactive{background-position:0 -52px}.pnlm-fullscreen-toggle-button-active{background-position:0 -78px}.pnlm-panorama-info{position:absolute;bottom:4px;background-color:rgba(0,0,0,0.7);border-radius:0 3px 3px 0;padding-right:10px;color:#fff;text-align:left;display:none;z-index:2;-webkit-transform:translateZ(9999px);transform:translateZ(9999px)}.pnlm-title-box{position:relative;font-size:20px;display:table;padding-left:5px;margin-bottom:3px}.pnlm-author-box{position:relative;font-size:12px;display:table;padding-left:5px}.pnlm-load-box{position:absolute;top:50%;left:50%;width:200px;height:150px;margin:-75px 0 0 -100px;background-color:rgba(0,0,0,0.7);border-radius:3px;text-align:center;font-size:20px;display:none;color:#fff}.pnlm-load-box p{margin:20px 0}.pnlm-lbox{position:absolute;top:50%;left:50%;width:20px;height:20px;margin:-10px 0 0 -10px;display:none}.pnlm-loading{animation-duration:1.5s;-webkit-animation-duration:1.5s;animation-name:pnlm-mv;-webkit-animation-name:pnlm-mv;animation-iteration-count:infinite;-webkit-animation-iteration-count:infinite;animation-timing-function:linear;-webkit-animation-timing-function:linear;height:10px;width:10px;background-color:#fff;position:relative}@keyframes pnlm-mv{from{left:0;top:0}25%{left:10px;top:0}50%{left:10px;top:10px}75%{left:0;top:10px}to{left:0;top:0}}@-webkit-keyframes pnlm-mv{from{left:0;top:0}25%{left:10px;top:0}50%{left:10px;top:10px}75%{left:0;top:10px}to{left:0;top:0}}.pnlm-load-button{position:absolute;top:50%;left:50%;width:200px;height:100px;margin:-50px 0 0 -100px;background-color:rgba(0,0,0,.7);border-radius:3px;text-align:center;font-size:20px;display:table;color:#fff;cursor:pointer}.pnlm-load-button:hover{background-color:rgba(0,0,0,.8)}.pnlm-load-button p{display:table-cell;vertical-align:middle}.pnlm-info-box{font-size:15px;position:absolute;top:50%;left:50%;width:200px;height:150px;margin:-75px 0 0 -100px;background-color:#000;border-radius:3px;display:table;text-align:center;color:#fff;table-layout:fixed}.pnlm-info-box a,.pnlm-author-box a{color:#fff;word-wrap:break-word;overflow-wrap:break-word}.pnlm-info-box p{display:table-cell;vertical-align:middle;padding:0 5px 0 5px}.pnlm-error-msg{display:none}.pnlm-about-msg{font-size:11px;line-height:11px;color:#fff;padding:5px 8px 5px 8px;background:rgba(0,0,0,0.7);border-radius:3px;position:absolute;top:50px;left:50px;display:none;opacity:0;-moz-transition:opacity .3s ease-in-out;-webkit-transition:opacity .3s ease-in-out;-o-transition:opacity .3s ease-in-out;-ms-transition:opacity .3s ease-in-out;transition:opacity .3s ease-in-out;z-index:1}.pnlm-about-msg a:link,.pnlm-about-msg a:visited{color:#fff}.pnlm-about-msg a:hover,.pnlm-about-msg a:active{color:#eee}.pnlm-hotspot-base{position:absolute;visibility:hidden;cursor:default;vertical-align:middle;top:0;z-index:1}.pnlm-hotspot{height:26px;width:26px;border-radius:13px}.pnlm-hotspot:hover{background-color:rgba(255,255,255,0.2)}.pnlm-hotspot.pnlm-info{background-position:0 -104px}.pnlm-hotspot.pnlm-scene{background-position:0 -130px}div.pnlm-tooltip span{visibility:hidden;position:absolute;border-radius:3px;background-color:rgba(0,0,0,0.7);color:#fff;text-align:center;max-width:200px;padding:5px 10px;margin-left:-220px;cursor:default}div.pnlm-tooltip:hover span{visibility:visible}div.pnlm-tooltip:hover span:after{content:'';position:absolute;width:0;height:0;border-width:10px;border-style:solid;border-color:rgba(0,0,0,0.7) transparent transparent transparent;bottom:-20px;left:-10px;margin:0 50%}.pnlm-compass{position:absolute;width:50px;height:50px;right:4px;bottom:4px;border-radius:25px;background-image:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20height%3D%2250%22%20width%3D%2250%22%3E%0A%3Cpath%20d%3D%22m24.5078%206-3.2578%2018h7.5l-3.25781-18h-0.984376zm-3.2578%2020%203.2578%2018h0.9844l3.2578-18h-7.5zm1.19531%200.9941h5.10938l-2.5547%2014.1075-2.5547-14.1075z%22%2F%3E%0A%3C%2Fsvg%3E%0A');cursor:default;display:none}.pnlm-world{position:absolute;left:50%;top:50%}.pnlm-face{position:absolute;-webkit-transform-origin:0 0;transform-origin:0 0}.pnlm-dragfix,.pnlm-preview-img{position:absolute;height:100%;width:100%}.pnlm-preview-img{background-size:cover;background-position:center}.pnlm-lbar{width:150px;margin:0 auto;border:#fff 1px solid;height:6px}.pnlm-lbar-fill{background:#fff;height:100%;width:0}.pnlm-lmsg{font-size:12px}.pnlm-fade-img{position:absolute;top:0;left:0}.pnlm-pointer{cursor:pointer}</style>
@@ -727,6 +776,59 @@ document.addEventListener('keydown',function(e){if(e.key!=='Escape')return;var f
 document.addEventListener('wheel',function(e){var sec=document.getElementById('xhero');if(!pv||!sec||!e.target.closest('#xpano'))return;
  var fs=document.fullscreenElement||sec.classList.contains('xfs');if(!(fs||sec.classList.contains('exploring')||e.ctrlKey))return;e.preventDefault();pv.setHfov(pv.getHfov()+(e.deltaY>0?6:-6),false);panoTouched();},{passive:false});
 
+/* ---------- new landing: poster hero + search bar + top places ---------- */
+var HI={
+ pin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>',
+ cal:'<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ ppl:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3 20c.6-3.5 3-5.5 6-5.5s5.4 2 6 5.5M16 5.2a3 3 0 0 1 0 5.6M18 14.8c1.6.7 2.6 2.4 3 5.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+ search:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+ ne:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ left:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+ heritage:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 27V13l10-7 10 7v14M4 27h24M12 27v-8a4 4 0 0 1 8 0v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>',
+ nature:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 26l9-14 5 7 4-5 8 12z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="23" cy="8" r="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+ people:'<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 22h22M7 22c0-5 4-8 9-8s9 3 9 8M11 26h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M13 14c0-2 1.3-3.5 3-3.5s3 1.5 3 3.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+};
+var HERO_IMG='p/uzb_hero.jpg';
+function kzSvg(m){ /* m: layout */
+ var id='kz'+m.k, L=m;
+ return '<svg class="kz kz-'+m.k+'" viewBox="0 0 '+L.w+' '+L.h+'" role="img" aria-labelledby="'+id+'t">'+
+ '<title id="'+id+'t">O‘zbekiston. Toshkentdagi Islom sivilizatsiyasi markazi</title><defs>'+
+ '<linearGradient id="'+id+'f" gradientUnits="userSpaceOnUse" x1="0" y1="'+L.f0+'" x2="0" y2="'+L.f1+'"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>'+
+ '<linearGradient id="'+id+'r" gradientUnits="userSpaceOnUse" x1="0" y1="'+L.top+'" x2="0" y2="'+L.base+'"><stop offset="0" class="kz-r0"/><stop offset=".42" class="kz-r1"/><stop offset=".86" class="kz-r2"/></linearGradient>'+
+ '<mask id="'+id+'m" maskUnits="userSpaceOnUse" x="0" y="0" width="'+L.w+'" height="'+L.h+'"><rect width="'+L.w+'" height="'+L.h+'" fill="#000"/>'+kzText(L,'#fff')+'<rect y="'+L.f0+'" width="'+L.w+'" height="'+(L.h-L.f0)+'" fill="url(#'+id+'f)"/></mask></defs>'+
+ '<image href="'+HERO_IMG+'" x="0" y="0" width="'+L.w+'" height="'+L.h+'" preserveAspectRatio="'+L.par+'" mask="url(#'+id+'m)"/>'+
+ kzText(L,'url(#'+id+'r)')+'</svg>';}
+function kzText(L,fill){return '<text x="'+(L.w/2)+'" y="'+L.base+'" text-anchor="middle" textLength="'+L.tl+'" lengthAdjust="spacingAndGlyphs" font-family="Anton, Impact, \'Arial Narrow\', sans-serif" font-size="'+L.fs+'" fill="'+fill+'" transform="translate(0 '+L.base+') scale(1 '+L.sy+') translate(0 -'+L.base+')">O‘ZBEKISTON</text>';}
+var KZ_D={k:'d',w:1600,h:1000,base:392,fs:300,sy:1.42,top:80,tl:1560,f0:345,f1:425,par:'xMidYMax slice'};
+var KZ_M={k:'m',w:900,h:1180,base:470,fs:190,sy:2.05,top:180,tl:880,f0:400,f1:500,par:'xMidYMax slice'};
+function homeHero(){
+ return '<section class="kzh" id="kzh" aria-label="O‘zbekiston"><div class="kzw">'+
+ '<div class="kz-top"><p class="kz-kick"><span class="uzb-flag" aria-hidden="true"><i></i><i></i><i></i></span>Islom sivilizatsiyasi yurti</p><p class="kz-yr"><b>TSTU</b><span>Travel</span></p></div>'+
+ '<div class="kz-grid">'+
+  '<p class="kz-side">Ming yillik shaharlar, Buyuk Ipak yo‘li va mehmondo‘st xalq. O‘zbekistonda tarix va zamonaviylik bir joyda uchrashadi.</p>'+
+  '<div class="kz-art">'+kzSvg(KZ_D)+kzSvg(KZ_M)+
+   '<div class="kz-box"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 27V13l10-7 10 7v14M4 27h24M12 27v-8a4 4 0 0 1 8 0v8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><div><b>Islom sivilizatsiyasi markazi</b><span>Toshkent. Islom madaniyati va ilm-fan merosiga bag‘ishlangan markaz.</span></div></div>'+
+   '<p class="kz-geo">41°18′ N<br>69°16′ E</p></div>'+
+  '<ul class="kz-facts">'+
+   '<li>'+HI.heritage+'<b>Meros</b><span>Samarqand, Buxoro, Xiva va Shahrisabz UNESCO ro‘yxatida.</span></li>'+
+   '<li>'+HI.nature+'<b>Tabiat</b><span>Chimyon tog‘lari, cho‘l va vohalar.</span></li>'+
+   '<li>'+HI.people+'<b>Xalq</b><span>Dasturxon va mehmondo‘stlik an’anasi.</span></li></ul>'+
+ '</div>'+
+ 
+ '</div>'+searchBar()+'</section>';}
+function searchBar(){
+ return '<div class="w"><form class="sbar" id="searchForm" role="search" aria-label="Tur qidirish">'+
+ '<label class="sb-f">'+HI.pin+'<span><b>Yo‘nalish</b><select id="sDest">'+destOptions('samarqand')+'</select></span></label>'+
+ '<label class="sb-f">'+HI.cal+'<span><b>Sana</b><input id="sDate" type="date"></span></label>'+
+ '<label class="sb-f">'+HI.ppl+'<span><b>Kishi</b><input id="sPpl" type="number" min="1" value="2" inputmode="numeric"></span></label>'+
+ '<button class="sb-go" type="submit">'+HI.search+'<span>Qidirish</span></button></form>'+'<p class="kz-cr">Foto: <a href="https://commons.wikimedia.org/wiki/File:Center_of_Islamic_Civilization_of_Uzbekistan_Tashkent_2026_002.jpg" target="_blank" rel="noopener">Зинҳор Насрӣ</a>, CC BY-SA 4.0, Wikimedia Commons</p>'+'</div>';}
+function topPlaces(){
+ var ids=['samarqand','buxoro','xiva','toshkent','fargona','turkiya','baa','malayziya'].filter(function(i){return BY[i];});
+ return '<section class="sec tp"><div class="w tp-in"><div class="tp-hd"><span class="tp-rule" aria-hidden="true"></span><h2 class="h2">Mashhur <i>yo‘nalishlar</i></h2><p class="lead">Keyingi sayohatingiz uchun saralangan joylar.</p>'+
+ '<div class="tp-nav"><button type="button" class="tp-b" data-tp="-1" aria-label="Oldingi">'+HI.left+'</button><button type="button" class="tp-b on" data-tp="1" aria-label="Keyingi">'+I.arrow+'</button></div></div>'+
+ '<div class="tp-track" id="tpTrack">'+ids.map(function(i){var t=BY[i];return '<a class="tp-card" href="#tur-'+i+'"><img src="'+big(hero(i))+'" alt="'+esc(capFor(hero(i),i)||t.name)+'" loading="lazy"><span class="tp-ne" aria-hidden="true">'+HI.ne+'</span><span class="tp-t"><b>'+esc(t.name.replace(/ \(.*\)/,''))+'</b><span>'+esc(t.tag||'')+'</span></span></a>';}).join('')+'</div></div></section>';}
+document.addEventListener('click',function(e){var b=e.target.closest('[data-tp]');if(!b)return;var tr=document.getElementById('tpTrack');if(!tr)return;var c=tr.querySelector('.tp-card');var step=c?c.getBoundingClientRect().width+16:300;tr.scrollBy({left:step*(+b.getAttribute('data-tp')),behavior:reduce?'auto':'smooth'});});
+
 /* ---------- TSTU Travel v3 ---------- */
 var store={get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}}};
 var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -779,7 +881,7 @@ function trow(t,i){var k=hero(t.id);return '<a class="trow" href="#tur-'+t.id+'"
 function viewHome(){var t=BY[state.theme],base=t.id==='tstu';
  var list=T.filter(function(x){return x.grp===state.dir;});
  var minH=Math.min.apply(null,HOTELS.map(function(h){return h[3];}));
- return xHero(t,base)+uzbBlock()+
+ return homeHero()+topPlaces()+
  '<section class="sec"><div class="w route"><div><p class="eyebrow"><b>01</b> Marshrut</p><h2 class="h2"><i>Xivadan</i> Farg‘onagacha</h2><p class="lead">Ipak yo‘li bo‘ylab klassik marshrut. Shaharni bosing: narx, mehmonxonalar va gidlar bir sahifada.</p><p style="margin-top:26px"><a class="btn btn-ink" href="#turlar">Barcha turlar '+I.arrow+'</a></p></div>'+
  '<div class="map">'+mapSvg()+'<p class="note">Sxema, masshtabsiz</p></div></div></section>'+
  '<section class="sec"><div class="w"><div class="sh"><div><p class="eyebrow"><b>02</b> Turlar</p><h2 class="h2">Qayerga <i>boramiz?</i></h2></div><div class="tabs" role="group" aria-label="Yo‘nalish turi"><button type="button" data-dir="uz" aria-pressed="'+(state.dir==='uz')+'">O‘zbekiston</button><button type="button" data-dir="int" aria-pressed="'+(state.dir==='int')+'">Xalqaro</button></div></div>'+
@@ -862,7 +964,7 @@ window.addEventListener('scroll',onScroll,{passive:true});
 /* ---------- events ---------- */
 document.addEventListener('click',function(e){
  var el=e.target.closest('[data-action],[data-pick],[data-dir],[data-tgrp],[data-gcity],[data-hcity],[data-book]');if(!el)return;
- if(el.hasAttribute('data-pick')){var id=el.getAttribute('data-pick');closeIndex();if(route().indexOf('tur-')===0||route()!=='bosh'){location.hash='#tur-'+id;}else chooseTheme(id);return;}
+ if(el.hasAttribute('data-pick')){var id=el.getAttribute('data-pick');closeIndex();location.hash='#tur-'+id;return;}
  if(el.hasAttribute('data-dir')){state.dir=el.getAttribute('data-dir');render(true);return;}
  if(el.hasAttribute('data-tgrp')){state.tgrp=el.getAttribute('data-tgrp');render(true);return;}
  if(el.hasAttribute('data-gcity')){state.gFilter=el.getAttribute('data-gcity');render(true);return;}
@@ -1199,6 +1301,24 @@ var CITY_RX=[
 ];
 
 Object.assign(I18N,{
+"O‘ZBEKISTON":["УЗБЕКИСТАН","UZBEKISTAN","乌兹别克斯坦","우즈베키스탄"],
+"O‘zbekiston. Toshkentdagi Islom sivilizatsiyasi markazi":["Узбекистан. Центр исламской цивилизации в Ташкенте","Uzbekistan. Center for Islamic Civilization, Tashkent","乌兹别克斯坦。塔什干伊斯兰文明中心","우즈베키스탄. 타슈켄트 이슬람 문명 센터"],
+"Ming yillik shaharlar, Buyuk Ipak yo‘li va mehmondo‘st xalq. O‘zbekistonda tarix va zamonaviylik bir joyda uchrashadi.":["Тысячелетние города, Великий шёлковый путь и гостеприимные люди. В Узбекистане история встречается с современностью.","Thousand-year-old cities, the Great Silk Road and a hospitable people. In Uzbekistan history meets the present.","千年古城、伟大的丝绸之路和热情好客的人民。在乌兹别克斯坦，历史与现代交汇。","천년의 도시, 위대한 실크로드, 손님을 반기는 사람들. 우즈베키스탄에서는 역사와 현대가 만납니다."],
+"Islom sivilizatsiyasi markazi":["Центр исламской цивилизации","Center for Islamic Civilization","伊斯兰文明中心","이슬람 문명 센터"],
+"Toshkent. Islom madaniyati va ilm-fan merosiga bag‘ishlangan markaz.":["Ташкент. Центр, посвящённый наследию исламской культуры и науки.","Tashkent. A center dedicated to the heritage of Islamic culture and science.","塔什干。致力于伊斯兰文化与科学遗产的中心。","타슈켄트. 이슬람 문화와 학문의 유산을 기리는 센터."],
+"Meros":["Наследие","Heritage","遗产","유산"],
+"Samarqand, Buxoro, Xiva va Shahrisabz UNESCO ro‘yxatida.":["Самарканд, Бухара, Хива и Шахрисабз в списке ЮНЕСКО.","Samarkand, Bukhara, Khiva and Shahrisabz are UNESCO-listed.","撒马尔罕、布哈拉、希瓦和沙赫里萨布兹列入联合国教科文组织名录。","사마르칸트, 부하라, 히바, 샤흐리사브즈는 유네스코 유산입니다."],
+"Tabiat":["Природа","Nature","自然","자연"],
+"Chimyon tog‘lari, cho‘l va vohalar.":["Горы Чимган, пустыни и оазисы.","The Chimgan mountains, deserts and oases.","奇姆根山、沙漠与绿洲。","침간 산맥, 사막과 오아시스."],
+"Xalq":["Люди","People","人民","사람들"],
+"Dasturxon va mehmondo‘stlik an’anasi.":["Традиция дастархана и гостеприимства.","The tradition of the dastarkhan and hospitality.","餐桌文化与好客传统。","다스타르한과 환대의 전통."],
+"Mashhur":["Популярные","Popular","热门","인기"],
+"yo‘nalishlar":["направления","destinations","目的地","여행지"],
+"Keyingi sayohatingiz uchun saralangan joylar.":["Отобранные места для вашей следующей поездки.","Handpicked places for your next journey.","为您下一次旅行精选的地方。","다음 여행을 위해 엄선한 곳."],
+"Oldingi":["Назад","Previous","上一个","이전"],
+"Keyingi":["Далее","Next","下一个","다음"],
+"Qidirish":["Найти","Search","搜索","검색"],
+
 "Yo‘llar chorrahasi":["Перекрёсток путей","Crossroads of routes","道路交汇处","길의 교차로"],
 "Buyuk Ipak yo‘li markazi":["Центр Великого шёлкового пути","Heart of the Great Silk Road","伟大丝绸之路的中心","위대한 실크로드의 중심"],
 "Islom sivilizatsiyasi yurti":["Земля исламской цивилизации","Land of Islamic civilization","伊斯兰文明之乡","이슬람 문명의 땅"],
