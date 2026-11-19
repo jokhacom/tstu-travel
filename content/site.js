@@ -40,11 +40,11 @@ window.LEGACY.site = {
 
   /* ---------- opening ---------- */
   intro: {
-    line1: { ru: 'Если ты сомневаешься…', uz: 'Agar shubha qilsang…', en: 'If you doubt…' },
-    line2: { ru: '…в нашем могуществе —', uz: '…bizning qudratimizga —', en: '…our power —' },
-    line3: { ru: 'взгляни на наши постройки.', uz: 'biz qurgan imoratlarga boq.', en: 'look at our buildings.' },
+    line1: { ru: 'Сомневаешься…', uz: 'Agar shubha qilsang…', en: 'If you doubt…' },
+    line2: { ru: '…в нашем могуществе?', uz: '…bizning qudratimizga —', en: '…our power —' },
+    line3: { ru: 'Взгляни на наши творения!', uz: 'biz qurgan imoratlarga boq.', en: 'look at our buildings.' },
     motto: {
-      ru: '«Если ты сомневаешься в нашем могуществе — взгляни на наши постройки»',
+      ru: '«Сомневаешься в нашем могуществе? Взгляни на наши творения!»',
       uz: '«Agar bizning qudratimizga shubha qilsang, biz qurgan imoratlarga boq»',
       en: '“If you doubt our power, look at our buildings.”'
     },
