@@ -25,6 +25,11 @@ window.LEGACY.tour = {
   duration: null,         // { ru: '7 дней', uz: '7 kun', en: '7 days' }
   travelers: null,        // { ru: 'до 15 человек', uz: '15 kishigacha', en: 'up to 15 people' }
   price: null,            // { ru: 'от ... ₽', uz: '... so‘mdan', en: 'from ...' }
+  season: null,           // { ru: 'май–октябрь', uz: 'may–oktabr', en: 'May–October' }
+  level: null,            // { ru: 'лёгкий: до 5 км пешком в день', uz: '...', en: '...' }
+  transport: null,        // { ru: 'скоростной поезд и автобус', uz: '...', en: '...' }
+  outcomes: [],           // [ { ru: 'сертификат', uz: 'sertifikat', en: 'certificate' }, ... ]
+  updated: null,          // 'YYYY-MM-DD' — date the team last checked these details
   destinations: [],       // [ { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' }, ... ]
   included: [],           // [ { ru, uz, en }, ... ]
   excluded: [],           // [ { ru, uz, en }, ... ]

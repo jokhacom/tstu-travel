@@ -220,8 +220,103 @@
     }).join('');
     return '<section id="country" class="ch country" data-ch="country">' +
       '<header class="ch-open country-open">' + kicker('country', K.kicker) + '<h2 class="display">' + t(K.title) + '</h2></header>' +
+      renderAtlas() +
       '<nav class="pl-index" aria-label="' + esc(t(S.chapters[4].title)) + '"><ol>' + index + '</ol></nav>' +
       places + '</section>';
+  }
+
+  /* ---------- map of the legacy ---------- */
+  var atlasTheme = 'all', atlasCity = null;
+  function renderAtlas() {
+    var A = S.atlas, M = C.mapData; if (!A || !M) return '';
+    var chips = '<button type="button" class="chip" data-theme="all" aria-pressed="' + (atlasTheme === 'all') + '">' + esc(t(A.all)) + '</button>' +
+      A.themes.map(function (th) { return '<button type="button" class="chip" data-theme="' + th.id + '" aria-pressed="' + (atlasTheme === th.id) + '">' + esc(t(th.name)) + '</button>'; }).join('');
+    var nb = ['Kazakhstan', 'Turkmenistan', 'Tajikistan', 'Kyrgyzstan', 'Afghanistan'].map(function (n) { return '<path class="am-nb" d="' + M.paths[n] + '"/>'; }).join('');
+    var route = ['khiva', 'bukhara', 'samarkand', 'tashkent'].map(function (k) { return M.cities[k].join(' '); }).join(' L');
+    var pins = A.cities.map(function (c) {
+      var xy = M.cities[c.id];
+      var lx = c.id === 'shahrisabz' ? xy[0] + 16 : xy[0] + (c.id === 'khiva' ? 16 : 0), anchor = (c.id === 'shahrisabz' || c.id === 'khiva') ? 'start' : 'middle';
+      var ly = c.id === 'shahrisabz' ? xy[1] + 6 : (c.id === 'khiva' ? xy[1] + 6 : xy[1] - 20);
+      return '<g class="am-pin" data-city="' + c.id + '" tabindex="0" role="button" aria-label="' + esc(t(c.name)) + '" transform="translate(0 0)">' +
+        '<circle class="am-hit" cx="' + xy[0] + '" cy="' + xy[1] + '" r="26"/>' +
+        '<rect class="am-dot" x="' + (xy[0] - 7) + '" y="' + (xy[1] - 7) + '" width="14" height="14" transform="rotate(45 ' + xy[0] + ' ' + xy[1] + ')"/>' +
+        (c.capital ? '<circle class="am-cap" cx="' + xy[0] + '" cy="' + xy[1] + '" r="15"/>' : '') +
+        '<text x="' + lx + '" y="' + ly + '" text-anchor="' + anchor + '">' + esc(t(c.name)) + '</text></g>';
+    }).join('');
+    return '<div class="atlas" id="atlas">' +
+      '<div class="at-head"><p class="kicker"><span class="kl">' + esc(t(A.kicker)) + '</span></p><h3 class="at-title">' + esc(t(A.title)) + '</h3><p class="at-lead">' + esc(t(A.lead)) + '</p>' +
+      '<div class="chips" role="group">' + chips + '</div></div>' +
+      '<div class="at-body"><div class="at-map"><svg viewBox="0 0 ' + M.w + ' ' + M.h + '" role="img" aria-label="' + esc(t(A.kicker)) + '">' +
+      '<g class="am-nbs">' + nb + '</g><path class="am-uz" d="' + M.paths.Uzbekistan + '"/>' +
+      '<path class="am-route" d="M' + route + '"/>' + pins + '</svg>' +
+      '<p class="at-legend"><i></i>' + esc(t(A.route)) + '</p></div>' +
+      '<div class="at-card" id="atCard" aria-live="polite">' + atlasCard() + '</div></div></div>';
+  }
+  function atlasCard() {
+    var A = S.atlas;
+    var c = A.cities.filter(function (x) { return x.id === atlasCity; })[0];
+    if (!c) return '<p class="at-pick">' + esc(t(A.pick)) + '</p>';
+    var th = A.themes.filter(function (x) { return c.themes.indexOf(x.id) > -1; }).map(function (x) { return '<span>' + esc(t(x.name)) + '</span>'; }).join('');
+    return (c.image && resolve(c.image) ? '<div class="at-img">' + pic(c.image, { sizes: '(max-width:760px) 100vw, 30vw' }) + '</div>' : '') +
+      '<p class="at-km">' + (c.capital ? esc(t(A.capital)) : '≈ ' + c.km + ' ' + esc(t(A.fromTashkent))) + '</p>' +
+      '<h4 class="at-name">' + esc(t(c.name)) + '</h4><p class="at-text">' + esc(t(c.text)) + '</p><p class="at-tags">' + th + '</p>' +
+      (c.place ? '<a class="explore" href="#place-' + c.place + '" data-goplace="' + c.place + '"><span>' + esc(t(A.more)) + '</span><i aria-hidden="true"></i></a>' : '');
+  }
+  function applyAtlas() {
+    var A = S.atlas; if (!A) return;
+    $$('.chip').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-theme') === atlasTheme); });
+    $$('.am-pin').forEach(function (g) {
+      var c = A.cities.filter(function (x) { return x.id === g.getAttribute('data-city'); })[0];
+      g.classList.toggle('dim', atlasTheme !== 'all' && c.themes.indexOf(atlasTheme) < 0);
+      g.classList.toggle('on', c.id === atlasCity);
+    });
+    var card = $('#atCard'); if (card) card.innerHTML = atlasCard();
+  }
+  function pickCity(id) { atlasCity = id; applyAtlas(); stamp(id); }
+
+  /* ---------- heritage passport ---------- */
+  var pass = {};
+  try { pass = JSON.parse(localStorage.getItem('lot-pass') || '{}') || {}; } catch (e) { pass = {}; }
+  function passTotal() { return S.passport.stamps.length; }
+  function passCount() { return S.passport.stamps.filter(function (x) { return pass[x.id]; }).length; }
+  function updatePassBtn() {
+    var el = $('#passCount'); if (el) el.textContent = passCount() + '/' + passTotal();
+    var b = $('#passBtn'); if (b) b.setAttribute('aria-label', t(S.passport.title) + ' ' + passCount() + '/' + passTotal());
+  }
+  var toastTimer = null;
+  function toast(msg) {
+    var el = $('#toast'); if (!el) return;
+    el.innerHTML = msg; el.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { el.classList.remove('show'); }, 2600);
+  }
+  function stamp(id) {
+    var st = S.passport.stamps.filter(function (x) { return x.id === id; })[0];
+    if (!st || pass[id]) return;
+    pass[id] = new Date().toISOString().slice(0, 10);
+    try { localStorage.setItem('lot-pass', JSON.stringify(pass)); } catch (e) {}
+    updatePassBtn();
+    var b = $('#passBtn'); if (b) { b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse'); }
+    toast('<span>' + esc(t(S.passport.got)) + '</span><strong>' + esc(t(st.name)) + '</strong><em>' + passCount() + '/' + passTotal() + '</em>');
+  }
+  function sealSVG(st, on) {
+    return '<svg viewBox="0 0 120 120" aria-hidden="true"><path d="' + starPath(60, 60, 52) + '" class="sl-star"/><circle cx="60" cy="60" r="34" class="sl-ring"/>' +
+      '<text x="60" y="63" text-anchor="middle" class="sl-t" style="font-size:' + Math.min(10, Math.floor(52 / Math.max(1, t(st.name).length) * 1.45)) + 'px">' + esc(t(st.name).toUpperCase()) + '</text></svg>';
+  }
+  function openPassport() {
+    var P = S.passport, done = passCount() === passTotal();
+    var grid = P.stamps.map(function (st) {
+      var on = !!pass[st.id];
+      return '<li class="seal' + (on ? ' on' : '') + '">' + sealSVG(st, on) + '<span>' + esc(t(st.name)) + (on ? '<small>' + esc(pass[st.id]) + '</small>' : '') + '</span></li>';
+    }).join('');
+    openLightbox('<div class="passport"><p class="loc">' + passCount() + ' / ' + passTotal() + '</p><h3 class="lb-title">' + esc(t(P.title)) + '</h3>' +
+      '<p class="lb-text">' + esc(t(P.rules)) + '</p>' + (done ? '<p class="pass-done">' + esc(t(P.done)) + '</p>' : '') +
+      '<ul class="seals">' + grid + '</ul><div class="pass-actions"><button type="button" class="cta ghost" id="passShare"><span>' + esc(t(P.share)) + '</span><i aria-hidden="true"></i></button>' +
+      '<button type="button" class="linkish" id="passReset">' + esc(t(P.reset)) + '</button></div></div>');
+  }
+  function sharePass() {
+    var url = location.origin + location.pathname, text = t(S.passport.title) + ': ' + passCount() + '/' + passTotal() + ' · The Legacy of Temur';
+    if (navigator.share) { navigator.share({ title: 'The Legacy of Temur', text: text, url: url }).catch(function () {}); return; }
+    try { navigator.clipboard.writeText(text + ' ' + url).then(function () { toast('<strong>' + esc(t(S.passport.copied)) + '</strong>'); }); } catch (e) {}
   }
 
   function renderPeople() {
@@ -270,10 +365,13 @@
       '<div class="jt">' +
       '<h3 class="jt-title">' + esc(t(TOUR.title)) + '</h3>' +
       '<p class="jt-desc">' + (TOUR.description ? esc(t(TOUR.description)) : tbd()) + '</p>' +
-      '<dl class="jt-facts">' + fact(L.duration, TOUR.duration) + fact(L.travelers, TOUR.travelers) + fact(L.price, TOUR.price) + '</dl>' +
+      '<dl class="jt-facts">' + fact(L.duration, TOUR.duration) + fact(L.travelers, TOUR.travelers) + fact(L.price, TOUR.price) +
+      fact(L.season, TOUR.season) + fact(L.level, TOUR.level) + fact(L.transport, TOUR.transport) + '</dl>' +
       '<div class="jt-route"><p class="jd-l">' + esc(t(L.destinations)) + '</p><p class="jt-route-v">' + (route || tbd()) + '</p></div>' +
       '<h4 class="jt-sub">' + esc(t(L.itinerary)) + '</h4><ol class="jt-days">' + days + '</ol>' +
       '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(TOUR.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(TOUR.excluded) + '</div></div>' +
+      '<h4 class="jt-sub">' + esc(t(L.outcomes)) + '</h4>' + list(TOUR.outcomes) +
+      (TOUR.updated ? '<p class="note">' + esc(t(L.updated)) + ': ' + esc(TOUR.updated) + '</p>' : '') +
       '<div class="jt-cta"><a class="cta" href="' + esc(TOUR.bookingUrl || '#') + '" target="_blank" rel="noopener"><span>' + esc(t(J.cta)) + '</span><i aria-hidden="true"></i></a><p class="note">' + esc(t(J.ctaNote)) + '</p></div>' +
       '</div></section>';
   }
@@ -308,6 +406,7 @@
       return '<li><a href="#' + c.id + '" data-jump="' + c.id + '" aria-label="' + esc(t(c.title)) + '"><span>' + esc(t(c.title)) + '</span></a></li>';
     }).join('') + '</ol>';
     $('#soundBtn .sr').textContent = t(sound.on ? S.ui.soundOff : S.ui.soundOn);
+    updatePassBtn();
   }
 
   function renderAll() {
@@ -331,6 +430,11 @@
     $$('.ch', main).forEach(function (sec) { var r = sec.getBoundingClientRect(); if (r.top < vh * 0.5) active = sec.id; });
     $$('#progress a').forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-jump') === active); });
     document.body.classList.toggle('on-light', active === 'people');
+    // passport: a chapter counts once its end has been reached
+    ['man', 'walls', 'detail'].forEach(function (id) {
+      var sec = document.getElementById(id); if (!sec || pass[id]) return;
+      var r = sec.getBoundingClientRect(); if (r.bottom < vh * 0.9 && r.bottom > -vh) stamp(id);
+    });
     var place = null;
     $$('.place', main).forEach(function (pl) { var r = pl.getBoundingClientRect(); if (r.top < vh * 0.6 && r.bottom > vh * 0.4) place = pl.getAttribute('data-place'); });
     var idx = $('.pl-index', main);
@@ -338,6 +442,10 @@
       var cr = $('#country').getBoundingClientRect();
       idx.classList.toggle('show', !!place && cr.top < 0 && cr.bottom > vh);
       $$('a', idx).forEach(function (a) { a.classList.toggle('on', a.getAttribute('data-place') === place); });
+    }
+    if (place && introDone) {
+      var pl = document.getElementById('place-' + place);
+      if (pl && pl.getBoundingClientRect().top < vh * 0.2) stamp(place);
     }
   }
   var ticking = false;
@@ -620,16 +728,22 @@
     try { localStorage.setItem('lot-lang', l); } catch (e) {}
     renderAll();
     $('#prologue').classList.add('intro-done');
-    setupSteps(); setupMotion();
+    setupSteps(); setupMotion(); applyAtlas();
     if (cur) { var el = document.getElementById(cur); window.scrollTo(0, el.offsetTop + off * el.offsetHeight); }
     updateScenes();
   }
 
   /* ---------- events ---------- */
   document.addEventListener('click', function (e) {
-    var el = e.target.closest('[data-lang],[data-jump],[data-explore],#menuBtn,#soundBtn,.skip,#creditsBtn,[data-close],.scroll-cue,.wordmark,a[href="#journey"]');
+    var el = e.target.closest('[data-lang],[data-jump],[data-explore],#menuBtn,#soundBtn,.skip,#creditsBtn,[data-close],.scroll-cue,.wordmark,a[href="#journey"],[data-theme],.am-pin,[data-goplace],#passBtn,#passShare,#passReset');
     if (!el) { if (e.target.id === 'lightbox') closeLightbox(); return; }
     if (el.hasAttribute('data-lang')) { setLang(el.getAttribute('data-lang')); return; }
+    if (el.hasAttribute('data-theme')) { atlasTheme = el.getAttribute('data-theme'); applyAtlas(); return; }
+    if (el.classList.contains('am-pin')) { pickCity(el.getAttribute('data-city')); return; }
+    if (el.hasAttribute('data-goplace')) { e.preventDefault(); jump('place-' + el.getAttribute('data-goplace')); return; }
+    if (el.id === 'passBtn') { openPassport(); return; }
+    if (el.id === 'passShare') { sharePass(); return; }
+    if (el.id === 'passReset') { pass = {}; try { localStorage.removeItem('lot-pass'); } catch (e2) {} updatePassBtn(); openPassport(); return; }
     if (el.hasAttribute('data-jump')) { e.preventDefault(); jump(el.getAttribute('data-jump')); return; }
     if (el.hasAttribute('data-explore')) { explore(el.getAttribute('data-explore')); return; }
     if (el.id === 'menuBtn') { toggleMenu(); return; }
@@ -643,6 +757,7 @@
   });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { closeLightbox(); toggleMenu(false); }
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('am-pin')) { e.preventDefault(); pickCity(e.target.getAttribute('data-city')); }
   });
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () { onScroll(); if (!introDone && introTl) { /* keep intro geometry simple */ } });
@@ -662,6 +777,9 @@
       var el = document.getElementById(location.hash.slice(1));
       if (el) setTimeout(function () { window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY); }, 60);
     }
+  }
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
   }
   if (document.readyState === 'complete' || window.gsap) boot(); else window.addEventListener('load', boot);
 })();

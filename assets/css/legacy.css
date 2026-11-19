@@ -414,3 +414,71 @@ body.static .fn-sticky > .fn-line.f2 { display: none; }
 .ws-missing { display: grid; place-items: center; background: radial-gradient(60% 60% at 60% 40%, rgba(36,87,216,.28), transparent 70%), var(--midnight); }
 .ws-missing .ph-tag { position: absolute; right: var(--gut); top: calc(var(--hud) + 20px); }
 @media (max-width: 520px) { .hud .langs { display: none; } .hud .sound { display: none; } }
+
+/* ================= ATLAS (map of the legacy) ================= */
+.atlas { padding: 4vh var(--gut) 16vh; }
+.at-head { max-width: 760px; margin-left: calc(clamp(0px, 12vw, 190px)); }
+.at-title { font-family: var(--serif); font-weight: 500; font-size: clamp(32px, 4vw, 64px); line-height: 1; text-transform: uppercase; margin: 0; }
+.at-lead { color: var(--ivory-dim); max-width: 56ch; margin: 16px 0 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.chip { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 16px; min-height: 40px; border: 1px solid rgba(242,233,218,.3); border-radius: 999px; transition: background .3s, color .3s, border-color .3s; }
+.chip:hover { border-color: var(--ivory); }
+.chip[aria-pressed="true"] { background: var(--ivory); color: var(--midnight); border-color: var(--ivory); }
+.at-body { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(280px, .75fr); gap: 3vw; align-items: start; margin-top: 40px; margin-left: calc(clamp(0px, 12vw, 190px)); }
+.at-map svg { width: 100%; height: auto; display: block; overflow: hidden; }
+.am-nbs, .am-uz, .am-route { pointer-events: none; }
+.am-nb { fill: rgba(242,233,218,.03); stroke: rgba(242,233,218,.16); stroke-width: 1; }
+.am-uz { fill: rgba(36,87,216,.16); stroke: var(--ivory); stroke-width: 1.4; stroke-linejoin: round; }
+.am-route { fill: none; stroke: var(--orange); stroke-width: 2; stroke-dasharray: 2 7; stroke-linecap: round; opacity: .9; }
+.am-pin { cursor: pointer; outline: none; transition: opacity .4s; }
+.am-hit { fill: transparent; }
+.am-dot { fill: var(--midnight); stroke: var(--ivory); stroke-width: 2; transition: fill .3s, stroke .3s; }
+.am-cap { fill: none; stroke: var(--ivory); stroke-width: 1; opacity: .5; }
+.am-pin text { font-family: var(--sans); font-size: 17px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; fill: var(--ivory); paint-order: stroke; stroke: var(--midnight); stroke-width: 5px; }
+.am-pin:hover .am-dot, .am-pin:focus-visible .am-dot, .am-pin.on .am-dot { fill: var(--orange); stroke: var(--orange); }
+.am-pin.on text { fill: var(--orange); }
+.am-pin.dim { opacity: .22; }
+.at-legend { display: flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .08em; color: var(--ivory-dim); margin: 14px 0 0; }
+.at-legend i { width: 28px; border-top: 2px dotted var(--orange); }
+.at-card { border-top: 1px solid var(--line); padding-top: 22px; min-height: 200px; }
+.at-pick { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ivory-dim); margin: 0; }
+.at-img { aspect-ratio: 16 / 10; overflow: hidden; margin-bottom: 18px; }
+.at-img img { width: 100%; height: 100%; object-fit: cover; }
+.at-km { font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--orange); margin: 0 0 8px; }
+.at-name { font-family: var(--serif); font-weight: 500; font-size: clamp(36px, 3.4vw, 56px); line-height: .95; text-transform: uppercase; margin: 0; }
+.at-text { margin: 12px 0 0; font-size: 15px; }
+.at-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 0; }
+.at-tags span { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ivory-dim); border: 1px solid var(--line); padding: 4px 8px; }
+@media (max-width: 760px) {
+  .at-head, .at-body { margin-left: 0; }
+  .at-body { grid-template-columns: 1fr; }
+  .am-pin text { font-size: 24px; }
+}
+
+/* ================= PASSPORT ================= */
+.pass-btn { position: relative; width: auto; padding: 0 10px; gap: 6px; display: inline-flex; border-radius: 22px; }
+.pass-count { font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+.pass-btn.pulse { animation: pulse .9s ease; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(230,106,50,.7); } 100% { box-shadow: 0 0 0 16px rgba(230,106,50,0); } }
+body.intro-running .pass-btn { visibility: hidden; }
+.toast { position: fixed; left: 50%; bottom: 26px; z-index: 50; transform: translate(-50%, 30px); opacity: 0; pointer-events: none; display: flex; align-items: baseline; gap: 12px; background: var(--ivory); color: var(--ink); padding: 12px 18px; font-size: 13px; transition: opacity .4s, transform .4s; box-shadow: 0 10px 40px rgba(0,0,0,.35); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast span { font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #B5481C; }
+.toast strong { font-family: var(--serif); font-size: 20px; font-weight: 600; text-transform: uppercase; }
+.toast em { font-style: normal; font-size: 11px; opacity: .6; }
+.seals { list-style: none; padding: 0; margin: 34px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 26px; }
+.seal { text-align: center; }
+.seal svg { width: 100%; max-width: 150px; margin: 0 auto; display: block; }
+.sl-star { fill: none; stroke: rgba(242,233,218,.25); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.sl-ring { fill: none; stroke: rgba(242,233,218,.18); stroke-width: 1; }
+.sl-t { font-family: var(--sans); font-size: 10px; font-weight: 700; letter-spacing: .12em; fill: rgba(242,233,218,.3); }
+.seal.on .sl-star { stroke: var(--cobalt); stroke-dasharray: none; stroke-width: 2.4; fill: rgba(36,87,216,.14); }
+.seal.on .sl-ring { stroke: var(--orange); stroke-width: 1.6; }
+.seal.on .sl-t { fill: var(--ivory); }
+.seal.on svg { transform: rotate(-8deg); }
+.seal span { display: block; margin-top: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ivory-dim); }
+.seal.on span { color: var(--ivory); }
+.seal small { display: block; font-size: 10px; letter-spacing: .06em; color: var(--ivory-dim); margin-top: 2px; }
+.pass-done { font-family: var(--serif); font-size: 26px; color: var(--orange); margin: 18px 0 0; }
+.pass-actions { display: flex; flex-wrap: wrap; gap: 26px; align-items: center; margin-top: 40px; }
+@media (max-width: 520px) { .seals { grid-template-columns: repeat(2, 1fr); gap: 18px; } }
