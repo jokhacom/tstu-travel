@@ -2,6 +2,21 @@
  * by / lic / src / url are the credit shown on the site. */
 window.LEGACY = window.LEGACY || {};
 window.LEGACY.photos = {
+ "shahr_aks": {
+  "w": [
+   1080,
+   1920
+  ],
+  "alt": {
+   "ru": "Портал дворца Ак-Сарай на закате, Шахрисабз",
+   "uz": "Oqsaroy saroyi peshtoqi quyosh botishida, Shahrisabz",
+   "en": "The Ak-Saray palace portal at sunset, Shahrisabz"
+  },
+  "by": "TSTU Travel",
+  "lic": "Фото предоставлено командой, обработано / team photo, edited",
+  "src": "",
+  "url": ""
+ },
  "buxoro_1": {
   "w": [
    1080,

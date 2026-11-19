@@ -79,7 +79,7 @@ window.LEGACY.tour = {
       practical: { ru: 'Поезд около 2 ч. Ночь в Самарканде.', uz: 'Poyezd taxminan 2 soat. Tunash Samarqandda.', en: 'Train about 2 h. Night in Samarkand.' }
     },
     {
-      place: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' }, image: null,
+      place: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' }, image: 'shahr_aks',
       text: { ru: 'Родной город Темура и дворец, который должен был поражать мир.', uz: 'Temurning ona shahri va dunyoni hayratga solishi kerak bo‘lgan saroy.', en: 'Temur’s home town, and the palace meant to astonish the world.' },
       activities: [
         { ru: 'дорога через перевал Тахтакарача', uz: 'Taxtaqoracha dovoni orqali yo‘l', en: 'the road over the Takhtakaracha pass' },

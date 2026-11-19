@@ -332,7 +332,7 @@ window.LEGACY.site = {
       { id: 'samarkand', place: 'samarkand', image: 'samarqand_0', km: 266, themes: ['history', 'architecture', 'crafts', 'taste'],
         name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' },
         text: { ru: 'Столица Темура: Гур-Эмир, Биби-Ханым, Шахи-Зинда и Регистан.', uz: 'Temur poytaxti: Go‘ri Amir, Bibixonim, Shohi Zinda va Registon.', en: 'Temur’s capital: Gur-e Amir, Bibi-Khanym, Shah-i-Zinda and the Registan.' } },
-      { id: 'shahrisabz', image: null, km: 323, themes: ['history', 'architecture'],
+      { id: 'shahrisabz', image: 'shahr_aks', km: 323, themes: ['history', 'architecture'],
         name: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' },
         text: { ru: 'Родина Темура. Руины дворца Ак-Сарай, который он начал строить в 1380 году. Исторический центр в списке ЮНЕСКО с 2000 года.', uz: 'Temurning vatani. U 1380-yilda qura boshlagan Oqsaroy saroyi xarobalari. Tarixiy markaz 2000-yildan YuNESKO ro‘yxatida.', en: 'Temur’s homeland. The ruins of the Ak-Saray palace he began in 1380. Its historic centre has been on UNESCO’s list since 2000.' } },
       { id: 'bukhara', place: 'bukhara', image: 'buxoro_3', km: 440, themes: ['architecture', 'crafts', 'taste'],
