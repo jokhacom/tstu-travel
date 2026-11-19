@@ -341,6 +341,54 @@
   var box = null, vid = null, ui = null;
   var film = { open: false, raf: 0, cur: -2, phase: 'idle', idle: 0, timers: [] };
 
+  /* ---------- background music: a separate MP3 that follows the film ----------
+   * F.music: path to the MP3 (null = no music). It plays only while the film sound is on,
+   * stays in sync with the picture, dips under the narrator's voice (F.voice: the video has its own
+   * narration; detected automatically, or listed by hand in F.duck) and rises to its peak at the finale. */
+  var mus = { el: null, ctx: null, gain: null, an: null, buf: null, talk: 0 };
+  function hasSound() { return !!(F.voice || F.music); }
+  function ensureAudio() {
+    if (!F.music && !F.voice) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (F.music && !mus.el) { mus.el = new Audio(F.music); mus.el.preload = 'auto'; mus.el.loop = false; }
+    if (AC && !mus.ctx) {
+      try {
+        mus.ctx = new AC();
+        if (mus.el) { mus.gain = mus.ctx.createGain(); mus.gain.gain.value = 0; mus.ctx.createMediaElementSource(mus.el).connect(mus.gain); mus.gain.connect(mus.ctx.destination); }
+        if (F.voice && F.music) {   // listen to the film's own sound to find the narrator
+          var src = mus.ctx.createMediaElementSource(vid); mus.an = mus.ctx.createAnalyser(); mus.an.fftSize = 1024;
+          src.connect(mus.an); mus.an.connect(mus.ctx.destination); mus.buf = new Float32Array(mus.an.fftSize);
+        }
+      } catch (e) { mus.ctx = null; }
+    }
+    if (mus.ctx && mus.ctx.state === 'suspended') mus.ctx.resume();
+  }
+  function musicFollow() {
+    var m = mus.el; if (!m) return;
+    if (film.phase === 'unlock') return;   // the finale: the music carries on under the title, then fades
+    var on = film.phase === 'film' && !vid.muted && !vid.paused && !vid.ended;
+    if (!on) { if (!m.paused) m.pause(); return; }
+    if (m.duration && vid.currentTime < m.duration && Math.abs(m.currentTime - vid.currentTime) > 0.35) { try { m.currentTime = vid.currentTime; } catch (e) {} }
+    if (m.paused && (!m.duration || vid.currentTime < m.duration)) m.play().catch(function () {});
+  }
+  function musicLevel() {
+    var m = mus.el; if (!m) return;
+    var tm = vid.currentTime, base = F.musicVolume != null ? +F.musicVolume : 0.75, peak = 1;
+    var swell = F.swellAt != null ? +F.swellAt : ((F.cues || []).filter(function (c) { return c.motto; })[0] || { from: (vid.duration || 60) - 10 }).from;
+    var target = tm >= swell ? peak : base;
+    // the narrator is speaking: listed by hand, or heard in the film's own sound
+    var talking = (F.duck || []).some(function (r) { return tm >= r[0] && tm < r[1]; });
+    if (!talking && mus.an) {
+      mus.an.getFloatTimeDomainData(mus.buf);
+      var sum = 0; for (var i = 0; i < mus.buf.length; i++) sum += mus.buf[i] * mus.buf[i];
+      if (Math.sqrt(sum / mus.buf.length) > 0.02) mus.talk = performance.now();
+      talking = performance.now() - mus.talk < 450;
+    }
+    if (talking && tm < swell) target = base * (F.duckTo != null ? +F.duckTo : 0.3);
+    if (mus.gain) { mus.gain.gain.cancelScheduledValues(mus.ctx.currentTime + 0.05); mus.gain.gain.setTargetAtTime(target, mus.ctx.currentTime, talking ? 0.12 : 0.6); }
+    else m.volume = Math.max(0, Math.min(1, target));
+  }
+
   function buildPlayer() {
     box = document.createElement('div');
     box.id = 'film'; box.className = 'film'; box.hidden = true;
@@ -348,16 +396,17 @@
     box.innerHTML = '<video class="fm-video" playsinline preload="none"></video><div class="fm-shade" aria-hidden="true"></div><div class="fm-ui"></div>';
     document.body.appendChild(box);
     vid = $('.fm-video', box); ui = $('.fm-ui', box);
-    vid.addEventListener('play', function () { box.classList.add('playing'); box.classList.remove('paused', 'waiting'); controls(); tick(); });
-    vid.addEventListener('pause', function () { box.classList.remove('playing'); if (film.phase === 'film') box.classList.add('paused'); controls(); wake(); });
+    vid.addEventListener('play', function () { musicFollow(); box.classList.add('playing'); box.classList.remove('paused', 'waiting'); controls(); tick(); });
+    vid.addEventListener('pause', function () { musicFollow(); box.classList.remove('playing'); if (film.phase === 'film') box.classList.add('paused'); controls(); wake(); });
     vid.addEventListener('ended', function () { if (film.phase === 'film') unlock(false); });
     vid.addEventListener('error', function () { if (film.open && film.phase === 'film') unlock(true); });
-    vid.addEventListener('volumechange', controls);
+    vid.addEventListener('volumechange', function () { controls(); musicFollow(); });
+    vid.addEventListener('seeked', musicFollow);
     ['mousemove', 'touchstart', 'keydown'].forEach(function (ev) { box.addEventListener(ev, wake, { passive: true }); });
     // a tap on the picture itself turns the sound on (the film starts muted: browsers block autoplay with sound)
     ui.addEventListener('click', function (e) {
       if (e.target.closest('button, a') || film.phase !== 'film' || box.classList.contains('waiting')) return;
-      if (vid.muted) { vid.muted = false; vid.volume = 1; }
+      if (vid.muted && hasSound()) { ensureAudio(); vid.muted = false; vid.volume = 1; }
     });
   }
   function renderPlayer() {
@@ -392,6 +441,7 @@
     $$('.langs', ui).forEach(function (b) {
       b.innerHTML = LANGS.map(function (l) { return '<button type="button" data-lang="' + l + '" aria-pressed="' + (l === lang) + '">' + l.toUpperCase() + '</button>'; }).join('');
     });
+    ui.classList.toggle('no-sound', !hasSound());
     film.cur = -2; controls(); if (vid.src) tick(true);
   }
   function controls() {
@@ -417,6 +467,7 @@
       $$('.fm-cue', ui).forEach(function (el) { el.classList.toggle('on', +el.getAttribute('data-i') === on); });
     }
     var bar = $('.fm-progress i', ui); if (bar && vid.duration) bar.style.transform = 'scaleX(' + (tm / vid.duration) + ')';
+    if (mus.el) { musicFollow(); musicLevel(); }
     cancelAnimationFrame(film.raf);
     if (!once && !vid.paused && !vid.ended) film.raf = requestAnimationFrame(function () { tick(); });
   }
@@ -438,12 +489,14 @@
     vid.poster = pick(F.poster);
     vid.preload = 'auto';
     try { vid.currentTime = 0; } catch (e) {}
-    vid.muted = !gesture;
+    vid.muted = !(gesture && hasSound());
     if (reduce && !gesture) { box.classList.add('waiting'); controls(); $('.fm-start', ui).focus(); return; }
     start(gesture);
   }
   function start(withSound) {
     box.classList.remove('waiting');
+    withSound = withSound && hasSound();
+    if (withSound) ensureAudio();
     vid.muted = !withSound;
     var p = vid.play();
     if (p && p.catch) p.catch(function () {
@@ -451,7 +504,7 @@
       box.classList.add('waiting'); controls();   // autoplay blocked: wait for a tap
     });
     wake();
-    setTimeout(function () { var b = $('.fm-sound', ui); if (b && film.phase === 'film') b.focus({ preventScroll: true }); }, 50);
+    setTimeout(function () { var b = $(hasSound() ? '.fm-sound' : '.fm-play', ui); if (b && film.phase === 'film') b.focus({ preventScroll: true }); }, 50);
   }
   function togglePlay() {
     if (vid.paused || vid.ended) { if (vid.ended) replay(); else start(!vid.muted); }
@@ -470,6 +523,11 @@
     store(SEEN, '1');
     if (!vid.ended) vid.pause();
     cancelAnimationFrame(film.raf);
+    if (mus.el && !mus.el.paused) {   // the music peaks under the title, then fades away as the site opens
+      if (mus.gain) { mus.gain.gain.cancelScheduledValues(mus.ctx.currentTime); mus.gain.gain.setTargetAtTime(1, mus.ctx.currentTime, 0.3); mus.gain.gain.setTargetAtTime(0, mus.ctx.currentTime + (skipped ? 0.8 : 2.4), 0.6); }
+      later(function () { if (mus.el) { if (!mus.gain) mus.el.volume = 0; } }, skipped ? 1800 : 3400);
+      later(function () { if (mus.el) mus.el.pause(); }, skipped ? 3000 : 5600);
+    }
     $$('.fm-cue', ui).forEach(function (el) { el.classList.remove('on'); });
     // the site is built underneath, already "opened", so the overlay can dissolve into it
     renderSite();
@@ -562,7 +620,7 @@
       if (a === 'start') start(true);
       else if (a === 'play') togglePlay();
       else if (a === 'replay') replay();
-      else if (a === 'sound') { vid.muted = !vid.muted; vid.volume = 1; if (vid.paused && film.phase === 'film' && !box.classList.contains('waiting')) controls(); }
+      else if (a === 'sound') { ensureAudio(); vid.muted = !vid.muted; vid.volume = 1; if (vid.paused && film.phase === 'film' && !box.classList.contains('waiting')) controls(); }
       else if (a === 'skip') skip();
       return;
     }
@@ -575,7 +633,7 @@
     if (film.open && film.phase === 'film') {
       var tag = (e.target.tagName || '').toLowerCase();
       if ((e.key === ' ' || e.key === 'k') && tag !== 'button') { e.preventDefault(); togglePlay(); }
-      else if (e.key === 'm') { vid.muted = !vid.muted; }
+      else if (e.key === 'm' && hasSound()) { ensureAudio(); vid.muted = !vid.muted; }
       else if (e.key === 'Escape') skip();
       return;
     }

@@ -1,6 +1,6 @@
 /* Offline support: pages, scripts and text are network-first (always fresh when online),
    photos are cache-first once seen. Bump VERSION to drop old caches. */
-var VERSION = 'lot-v4';
+var VERSION = 'lot-v5';
 var SHELL = ['./', 'assets/css/legacy.css', 'assets/js/legacy.js',
   'content/site.js', 'content/tour.js', 'content/photos.js', 'img/film-poster.webp', 'img/film-end.webp'];
 self.addEventListener('install', function (e) {
@@ -18,7 +18,7 @@ self.addEventListener('fetch', function (e) {
   var sameOrigin = url.origin === self.location.origin;
   var isFont = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
   if (!sameOrigin && !isFont) return;
-  if (/\/video\//.test(url.pathname)) return; // the film streams with range requests: leave it to the browser
+  if (/\/(video|audio)\//.test(url.pathname)) return; // the film streams with range requests: leave it to the browser
   if ((sameOrigin && /\/img\//.test(url.pathname)) || isFont) {
     e.respondWith(caches.match(req).then(function (hit) {
       return hit || fetch(req).then(function (res) {
