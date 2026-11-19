@@ -36,6 +36,14 @@ window.LEGACY.tour = {
     { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' },
     { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' }
   ],
+  /* The best-known sights on the route (all are in the day-by-day programme). */
+  highlights: [
+    { image: 'gur_day', name: { ru: 'Гур-Эмир', uz: 'Go‘ri Amir', en: 'Gur-e Amir' }, place: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
+    { image: 'samarqand_0', name: { ru: 'Регистан', uz: 'Registon', en: 'The Registan' }, place: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
+    { image: 'shahr_aks', name: { ru: 'Ак-Сарай', uz: 'Oqsaroy', en: 'Ak-Saray' }, place: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' } },
+    { image: 'shah_wide', name: { ru: 'Шахи-Зинда', uz: 'Shohi Zinda', en: 'Shah-i-Zinda' }, place: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
+    { image: 'buxoro_3', name: { ru: 'Минарет Калян', uz: 'Minorai Kalon', en: 'Kalyan Minaret' }, place: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' } }
+  ],
   included: [
     { ru: '5 ночей в отелях 3* с завтраком', uz: '3* mehmonxonalarda nonushta bilan 5 kecha', en: '5 nights in 3* hotels with breakfast' },
     { ru: 'билеты на поезда Ташкент — Самарканд — Бухара — Ташкент', uz: 'Toshkent — Samarqand — Buxoro — Toshkent poyezd chiptalari', en: 'train tickets Tashkent — Samarkand — Bukhara — Tashkent' },
