@@ -1,6 +1,6 @@
 /* THE LEGACY OF TEMUR — site engine.
  * First visit: a fullscreen documentary player. When the film ends (or is skipped),
- * its last frame "opens up" into the site: THE LEGACY OF TEMUR → «По следам Темура» →
+ * its last frame "opens up" into the site: THE LEGACY OF TEMUR → «По следам Тамерлана» →
  * the tour, step by step → booking. The tour is never shown while the film plays.
  * Repeat visits open straight onto the site, with «Смотреть фильм снова».
  * The film itself is one setting: S.film.src in content/site.js. */
@@ -66,7 +66,8 @@
 
   /* ---------- the opened site: hero (the film's last frame) ---------- */
   function heroInner(inFilm) {
-    var route = (TOUR.destinations || []).map(function (d) { return esc(t(d)); }).join(' <i>—</i> ');
+    var route = PKGS.length ? PKGS.map(function (p) { return uniq(p.route).map(function (d) { return esc(t(d)); }).join(' <i>—</i> '); }).join(' <b>·</b> ')
+      : (TOUR.destinations || []).map(function (d) { return esc(t(d)); }).join(' <i>—</i> ');
     return '<div class="uh-in">' +
       '<' + (inFilm ? 'p' : 'h1') + ' class="uh-t"><span class="h-legacy">' + esc(t(S.intro.title)) + '</span>' +
       '<span class="h-tour">' + esc(t(TOUR.title)) + '</span></' + (inFilm ? 'p' : 'h1') + '>' +
@@ -107,26 +108,30 @@
   }
 
   function tbd() { return '<span class="tbd"><em>' + esc(t(S.ui.placeholder)) + '</em>' + esc(t(S.journey.labels.tbd)) + '</span>'; }
-  function renderJourney() {
-    var J = S.journey, L = J.labels, DAYS = TOUR.days || [];
-    function fact(label, v) { return '<div class="jf"><dt>' + esc(t(label)) + '</dt><dd>' + (v ? esc(t(v)) : tbd()) + '</dd></div>'; }
-    function list(arr) { return arr && arr.length ? '<ul>' + arr.map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul>' : tbd(); }
-    function two(n) { return (n < 10 ? '0' : '') + n; }
+  /* two student packages; the chosen one is shown below the tabs */
+  var PKGS = TOUR.packages || [], pkgI = 0;
+  (function () { var k = +store('lot-pkg'); if (PKGS[k]) pkgI = k; })();
+  function PKG() { return PKGS[pkgI] || TOUR; }
+  function uniq(arr) { var o = []; (arr || []).forEach(function (x) { if (!o.some(function (y) { return t(y) === t(x); })) o.push(x); }); return o; }
+  function two(n) { return (n < 10 ? '0' : '') + n; }
+  function fact(label, v, cls) { return '<div class="jf' + (cls ? ' ' + cls : '') + '"><dt>' + esc(t(label)) + '</dt><dd>' + (v != null && v !== '' ? esc(typeof v === 'object' ? t(v) : String(v)) : tbd()) + '</dd></div>'; }
+  function list(arr) { return arr && arr.length ? '<ul>' + arr.map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul>' : tbd(); }
 
-    /* the four cities of the route, each opening onto its first day */
-    var seen = {}, cities = [];
-    DAYS.forEach(function (d, i) {
-      var k = t(d.place);
-      if (!seen[k]) { seen[k] = { name: d.place, image: d.image, days: [] }; cities.push(seen[k]); }
-      seen[k].days.push(i + 1);
-    });
-    var cityCards = cities.map(function (c, i) {
-      return '<button type="button" class="city ir" data-tilt data-city-day="' + c.days[0] + '" style="--d:' + (i * 0.12) + 's" aria-label="' + esc(t(c.name)) + ' · ' + esc(t(L.day)) + ' ' + c.days.join(', ') + '">' +
-        '<span class="city-img">' + pic(c.image, { sizes: '(max-width:760px) 78vw, 25vw' }) + '</span>' +
-        '<span class="city-n">' + two(i + 1) + '</span>' +
-        '<span class="city-name">' + letters(t(c.name)) + '</span>' +
-        '<span class="city-days">' + esc(t(L.day)) + ' ' + c.days.join(' · ') + '</span></button>';
+  function renderPkg() {
+    var L = S.journey.labels, P = PKG(), DAYS = P.days || [], H = P.hotel || {}, TR = P.transport || {};
+    var legs = (P.legs || []).map(function (g) {
+      return '<li><span class="pl-r">' + esc(t(g.from)) + ' <i>→</i> ' + esc(t(g.to)) + '</span><span class="pl-km">' + esc(g.km || '') + ' ' + esc(t(L.km)) + '</span>' +
+        '<span class="pl-t">' + esc(t(g.time)) + (g.note ? '<small>' + esc(t(g.note)) + '</small>' : '') + '</span></li>';
     }).join('');
+    var yesNo = function (v) { return v == null ? null : v ? L.yes : L.no; };
+    var group = function (head, body) { return '<section class="pp-g rv"><h4 class="jt-sub">' + esc(t(head)) + '</h4><dl class="jt-facts">' + body + '</dl></section>'; };
+    var passport = '<div class="pp">' +
+      group(L.whenWhere, fact(L.dates, P.dates) + fact(L.duration, P.duration) + fact(L.start, P.start) + fact(L.destinations, P.route ? P.route.map(function (r) { return t(r); }).join(' → ') : null)) +
+      (legs ? '<section class="pp-g rv"><h4 class="jt-sub">' + esc(t(L.legs)) + '</h4><ul class="pl">' + legs + '</ul><p class="note">' + esc(t(L.approx)) + '</p></section>' : '') +
+      group(L.stay, fact(L.hotel, H.name) + fact(L.stars, H.stars) + fact(L.address, H.address) + fact(L.location, H.city) + fact(L.room, H.room) + fact(L.nights, H.nights) + fact(L.breakfast, yesNo(H.breakfast))) +
+      group(L.transport, fact(L.vehicle, TR.type) + fact(L.model, TR.model) + fact(L.transferIn, TR.transferIn) + fact(L.transferOut, TR.transferOut) + fact(L.driver, TR.driver)) +
+      group(L.mealsTours, fact(L.meals, P.meals) + fact(L.guides, P.guides) + fact(L.tickets, P.tickets)) +
+      '</div>';
 
     /* the programme: a sticky photo stage + days that open one by one */
     var stage = DAYS.map(function (d, i) {
@@ -140,6 +145,42 @@
         (d.practical ? '<p class="jd-prac">' + esc(t(d.practical)) + '</p>' : '') + '</div></li>';
     }).join('');
 
+    return (PKGS.length ? '<div class="pk-head rv"><h3 class="pk-name">' + esc(t(P.name)) + '</h3>' + (P.lead ? '<p class="pk-lead">' + esc(t(P.lead)) + '</p>' : '') + '</div>' : '') +
+      passport +
+      '<h3 class="jt-sub tr">' + words(t(L.itinerary)) + '</h3>' +
+      '<div class="tl"><div class="tl-stage" aria-hidden="true"><div class="tl-frame">' + stage + '</div>' +
+      '<p class="tl-count"><b>01</b> / ' + two(DAYS.length) + '</p><p class="tl-place">' + esc(t(DAYS[0] && DAYS[0].place)) + '</p></div>' +
+      '<div class="tl-list"><span class="tl-line" aria-hidden="true"><i></i></span><ol class="jt-days">' + days + '</ol></div></div>' +
+      '<div class="jt-price rv' + (TOUR.price ? '' : ' no-price') + '" id="price">' + (TOUR.price ? '<div class="jp-main"><p class="jd-l">' + esc(t(L.price)) + '</p><p class="jp-v tr">' + words(t(TOUR.price)) + '</p></div>' : '') +
+      '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(P.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(P.excluded) + '</div></div></div>';
+  }
+
+  function renderJourney() {
+    var J = S.journey, L = J.labels;
+
+    /* the four cities, each opening onto its first day in its package */
+    var seen = {}, cities = [];
+    (PKGS.length ? PKGS : [TOUR]).forEach(function (p, pi) {
+      (p.days || []).forEach(function (d, i) {
+        var k = t(d.place);
+        if (!seen[k]) { seen[k] = { name: d.place, image: d.image, pkg: pi, days: [] }; cities.push(seen[k]); }
+        if (seen[k].pkg === pi) seen[k].days.push(i + 1);
+      });
+    });
+    var cityCards = cities.map(function (c, i) {
+      var tag = PKGS.length ? t(L.pkgShort) + ' ' + (c.pkg + 1) + ' · ' : '';
+      return '<button type="button" class="city ir" data-tilt data-city-pkg="' + c.pkg + '" data-city-day="' + c.days[0] + '" style="--d:' + (i * 0.12) + 's" aria-label="' + esc(t(c.name)) + ' · ' + esc(tag + t(L.day)) + ' ' + c.days.join(', ') + '">' +
+        '<span class="city-img">' + pic(c.image, { sizes: '(max-width:760px) 78vw, 25vw' }) + '</span>' +
+        '<span class="city-n">' + two(i + 1) + '</span>' +
+        '<span class="city-name">' + letters(t(c.name)) + '</span>' +
+        '<span class="city-days">' + esc(tag + t(L.day)) + ' ' + c.days.join(' · ') + '</span></button>';
+    }).join('');
+
+    var tabs = PKGS.length > 1 ? '<div class="pk-tabs rv" role="tablist" aria-label="' + esc(t(L.packages)) + '">' + PKGS.map(function (p, i) {
+      return '<button type="button" role="tab" data-pkg="' + i + '" aria-selected="' + (i === pkgI) + '"><span class="pk-n">' + esc(t(L.pkgShort)) + ' ' + (i + 1) + '</span>' +
+        '<span class="pk-t">' + esc(t(p.tab || p.name)) + '</span><span class="pk-d">' + esc(t(p.duration)) + '</span></button>';
+    }).join('') + '</div>' : '';
+
     var hl = (TOUR.highlights || []).filter(function (h) { return PH[h.image]; }).map(function (h, i) {
       return '<figure class="jh ir" data-tilt data-photo tabindex="0" style="--d:' + (i * 0.1) + 's">' + pic(h.image, { sizes: '(max-width:760px) 78vw, 40vw' }) +
         '<figcaption><strong>' + esc(t(h.name)) + '</strong><span>' + esc(t(h.place)) + '</span></figcaption></figure>';
@@ -149,20 +190,25 @@
       '<div class="rv"><p class="kicker"><span class="kl">' + esc(t(J.kicker)) + '</span></p>' +
       '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>' +
       (TOUR.note ? '<p class="jt-note"><em>' + esc(t(S.ui.draft)) + '</em>' + esc(t(TOUR.note)) + '</p>' : '') + '</div>' +
-      '<dl class="jt-facts rv">' + fact(L.duration, TOUR.duration) + fact(L.travelers, TOUR.travelers) +
-      fact(L.season, TOUR.season) + fact(L.level, TOUR.level) + fact(L.transport, TOUR.transport) + '</dl>' +
-      (cities.length ? '<h3 class="jt-sub tr">' + words(t(L.destinations)) + '</h3><div class="cities" data-snap>' + cityCards + '</div>' : '') +
-      '<h3 class="jt-sub tr">' + words(t(L.itinerary)) + '</h3>' +
-      '<div class="tl"><div class="tl-stage" aria-hidden="true"><div class="tl-frame">' + stage + '</div>' +
-      '<p class="tl-count"><b>01</b> / ' + two(DAYS.length) + '</p><p class="tl-place">' + esc(t(DAYS[0] && DAYS[0].place)) + '</p></div>' +
-      '<div class="tl-list"><span class="tl-line" aria-hidden="true"><i></i></span><ol class="jt-days">' + days + '</ol></div></div>' +
+      '<dl class="jt-facts rv">' + fact(L.audience, TOUR.audience) + fact(L.tourismType, TOUR.tourismType, 'jf-wide') + fact(L.duration, TOUR.duration) +
+      fact(L.travelers, TOUR.travelers) + fact(L.season, TOUR.season) + fact(L.level, TOUR.level) + '</dl>' +
+      (cities.length ? '<h3 class="jt-sub tr">' + words(t(L.cities)) + '</h3><div class="cities" data-snap>' + cityCards + '</div>' : '') +
+      (PKGS.length > 1 ? '<h3 class="jt-sub tr" id="packages">' + words(t(L.chooseTab)) + '</h3>' : '') + tabs +
+      '<div class="pk" id="pkg" role="tabpanel">' + renderPkg() + '</div>' +
       (hl ? '<h3 class="jt-sub tr">' + words(t(L.highlights)) + '</h3><div class="jt-hl" data-snap>' + hl + '</div>' : '') +
-      '<div class="jt-price rv' + (TOUR.price ? '' : ' no-price') + '" id="price">' + (TOUR.price ? '<div class="jp-main"><p class="jd-l">' + esc(t(L.price)) + '</p><p class="jp-v tr">' + words(t(TOUR.price)) + '</p></div>' : '') +
-      '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(TOUR.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(TOUR.excluded) + '</div></div></div>' +
       '<div class="jt-book rv" id="book">' + bookingLink('cta', J.cta).replace('<a ', '<a data-mag ') + '<p class="note">' + esc(t(J.ctaNote)) + '</p></div>' +
       renderStar() +
       (TOUR.updated ? '<p class="note">' + esc(t(L.updated)) + ': ' + esc(TOUR.updated) + '</p>' : '') +
       '</div>';
+  }
+  /* switch package: only the package block is redrawn, the page stays where it is */
+  function setPkg(i) {
+    if (!PKGS[i]) return;
+    pkgI = i; store('lot-pkg', String(i));
+    $$('[data-pkg]', main).forEach(function (b) { b.setAttribute('aria-selected', String(+b.getAttribute('data-pkg') === i)); });
+    var box_ = $('#pkg', main); if (!box_) return;
+    box_.innerHTML = renderPkg(); curDay = -1; setDay(0);
+    observeReveals();
   }
 
   function renderFooter() {
@@ -223,7 +269,7 @@
     curDay = i;
     $$('.jd', main).forEach(function (el) { el.classList.toggle('on', +el.getAttribute('data-d') === i); });
     $$('.tl-pic', main).forEach(function (el) { el.classList.toggle('on', +el.getAttribute('data-d') === i); });
-    var d = (TOUR.days || [])[i], c = $('.tl-count b', main), pl = $('.tl-place', main);
+    var d = (PKG().days || [])[i], c = $('.tl-count b', main), pl = $('.tl-place', main);
     if (c) c.textContent = (i < 9 ? '0' : '') + (i + 1);
     if (pl && d) { pl.classList.remove('swap'); void pl.offsetWidth; pl.textContent = t(d.place); pl.classList.add('swap'); }
   }
@@ -318,9 +364,12 @@
 
   /* a city card grows into a full-screen photo, then the page lands on that city's day */
   function openCity(card) {
-    var day = +card.getAttribute('data-city-day') - 1, target = $('.jd[data-d="' + day + '"]', main);
-    if (!target) return;
-    var land = function () { window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3, behavior: 'auto' }); setDay(day); };
+    var day = +card.getAttribute('data-city-day') - 1, pk = +card.getAttribute('data-city-pkg') || 0;
+    var land = function () {
+      if (pk !== pkgI) setPkg(pk);
+      var target = $('.jd[data-d="' + day + '"]', main); if (!target) return;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.3, behavior: 'auto' }); setDay(day);
+    };
     var img = $('img', card);
     if (reduce || !img || !document.body.animate) { land(); return; }
     var r = flipRect(card), z = document.createElement('div');
@@ -610,6 +659,7 @@
     if (viewer) { if (!e.target.closest('.pv-cap')) closePhoto(); return; }
     var ph = e.target.closest('[data-photo]'); if (ph) { openPhoto(ph); return; }
     var cc = e.target.closest('[data-city-day]'); if (cc) { openCity(cc); return; }
+    var pb = e.target.closest('[data-pkg]'); if (pb) { setPkg(+pb.getAttribute('data-pkg')); return; }
     var el = e.target.closest('[data-lang],[data-jump],[data-film],[data-act],#menuBtn,#creditsBtn,[data-close],.wordmark');
     if (!el) { if (e.target.id === 'lightbox') closeLightbox(); return; }
     if (el.hasAttribute('data-lang')) { setLang(el.getAttribute('data-lang')); return; }
