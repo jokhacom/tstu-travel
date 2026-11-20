@@ -19,8 +19,8 @@ window.LEGACY.tour = {
   },
   // the playful intro above the facts: a hook, a short line, two "tickets" (one per package) and three perks
   intro: {
-    hook: { ru: 'Темур строил свою империю 35 лет. Тебе хватит трёх дней, чтобы её увидеть.', uz: 'Temur saltanatini 35 yil qurgan. Uni ko‘rish uchun senga uch kun yetadi.', en: 'Temur spent 35 years building his empire. You need three days to see it.' },
-    sub: { ru: 'Два коротких маршрута для студентов. Бери один или оба.', uz: 'Talabalar uchun ikkita qisqa yo‘nalish. Birini yoki ikkalasini tanla.', en: 'Two short student routes. Take one, or take both.' },
+    hook: { ru: 'Темур строил свою империю всю жизнь. Вам хватит трёх дней, чтобы её увидеть.', uz: 'Temur saltanatini butun umri davomida qurgan. Uni ko‘rish uchun sizga uch kun yetadi.', en: 'Temur spent a lifetime building his empire. Three days are enough for you to see it.' },
+    sub: { ru: 'Два коротких маршрута для студентов. Выберите один или оба.', uz: 'Talabalar uchun ikkita qisqa yo‘nalish. Birini yoki ikkalasini tanlang.', en: 'Two short student routes. Choose one, or both.' },
     tickets: [
       { pkg: 0, line: { ru: 'Где Темур родился и где он покоится', uz: 'Temur tug‘ilgan va mangu qo‘nim topgan joy', en: 'Where Temur was born, and where he rests' } },
       { pkg: 1, line: { ru: 'Столица сегодня и город купцов', uz: 'Bugungi poytaxt va savdogarlar shahri', en: 'Today’s capital and the city of merchants' } }
@@ -28,7 +28,7 @@ window.LEGACY.tour = {
     perks: [
       { ru: '3 дня, 2 ночи', uz: '3 kun, 2 kecha', en: '3 days, 2 nights' },
       { ru: 'завтрак, обед и ужин', uz: 'nonushta, tushlik va kechki ovqat', en: 'breakfast, lunch and dinner' },
-      { ru: 'гид и билеты уже внутри', uz: 'gid va chiptalar ichida', en: 'guide and tickets included' }
+      { ru: 'гид и билеты включены', uz: 'gid va chiptalar kiritilgan', en: 'guide and tickets included' }
     ]
   },
   description: {

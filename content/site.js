@@ -130,7 +130,7 @@ window.LEGACY.site = {
       uz: ['Agar bizning qudratimizga shubha qilsang,', 'biz qurgan imoratlarga boq'],
       en: ['If you doubt our power,', 'look at our buildings']
     },
-    invite: { ru: 'Теперь твоя очередь увидеть это своими глазами.', uz: 'Endi navbat senda — buni o‘z ko‘zing bilan ko‘r.', en: 'Now it’s your turn to see it with your own eyes.' },
+    invite: { ru: 'Теперь ваша очередь увидеть это своими глазами.', uz: 'Endi navbat sizda — buni o‘z ko‘zingiz bilan ko‘ring.', en: 'Now it’s your turn to see it with your own eyes.' },
     standInNote: {
       ru: 'Временный ролик из фотографий. Полноценный документальный фильм в работе.',
       uz: 'Suratlardan yig‘ilgan vaqtinchalik rolik. To‘liq hujjatli film tayyorlanmoqda.',
@@ -160,7 +160,7 @@ window.LEGACY.site = {
 
   journey: {
     kicker: { ru: 'Путешествие', uz: 'Sayohat', en: 'The journey' },
-    title: { ru: 'Увидеть<br>своими глазами.', uz: 'O‘z ko‘zing<br>bilan ko‘r.', en: 'See it<br>for yourself.' },
+    title: { ru: 'Увидеть<br>своими глазами.', uz: 'O‘z ko‘zingiz<br>bilan ko‘ring.', en: 'See it<br>for yourself.' },
     lead: {
       ru: 'Всё, что было в фильме, — в одном маршруте.',
       uz: 'Filmda ko‘rganlaringizning barchasi — bitta yo‘nalishda.',
