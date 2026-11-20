@@ -17,6 +17,20 @@ window.LEGACY.tour = {
     uz: 'Dasturdagi vaqtlar taxminiy: aniq vaqt poyezdlar jadvaliga bog‘liq.',
     en: 'Times are approximate and depend on the train timetable.'
   },
+  // the playful intro above the facts: a hook, a short line, two "tickets" (one per package) and three perks
+  intro: {
+    hook: { ru: 'Темур строил свою империю 35 лет. Тебе хватит трёх дней, чтобы её увидеть.', uz: 'Temur saltanatini 35 yil qurgan. Uni ko‘rish uchun senga uch kun yetadi.', en: 'Temur spent 35 years building his empire. You need three days to see it.' },
+    sub: { ru: 'Два коротких маршрута для студентов. Бери один или оба.', uz: 'Talabalar uchun ikkita qisqa yo‘nalish. Birini yoki ikkalasini tanla.', en: 'Two short student routes. Take one, or take both.' },
+    tickets: [
+      { pkg: 0, line: { ru: 'Где Темур родился и где он покоится', uz: 'Temur tug‘ilgan va mangu qo‘nim topgan joy', en: 'Where Temur was born, and where he rests' } },
+      { pkg: 1, line: { ru: 'Столица сегодня и город купцов', uz: 'Bugungi poytaxt va savdogarlar shahri', en: 'Today’s capital and the city of merchants' } }
+    ],
+    perks: [
+      { ru: '3 дня, 2 ночи', uz: '3 kun, 2 kecha', en: '3 days, 2 nights' },
+      { ru: 'завтрак, обед и ужин', uz: 'nonushta, tushlik va kechki ovqat', en: 'breakfast, lunch and dinner' },
+      { ru: 'гид и билеты уже внутри', uz: 'gid va chiptalar ichida', en: 'guide and tickets included' }
+    ]
+  },
   description: {
     ru: 'Маршрут по городам Амира Темура разделён на два коротких пакета, чтобы поездка была доступнее для студентов. Первый ведёт в Самарканд, его столицу, и в Шахрисабз, где он родился. Второй — в современный Ташкент и древнюю Бухару. Выберите один пакет или соедините оба.',
     uz: 'Amir Temur shaharlari bo‘ylab yo‘nalish talabalar uchun qulayroq bo‘lishi uchun ikkita qisqa paketga bo‘lingan. Birinchisi uning poytaxti Samarqand va u tug‘ilgan Shahrisabzga olib boradi. Ikkinchisi — zamonaviy Toshkent va qadimiy Buxoroga. Bitta paketni tanlang yoki ikkalasini birlashtiring.',

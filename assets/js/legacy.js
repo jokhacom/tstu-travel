@@ -78,13 +78,63 @@
       (HAS_FILM ? '<button type="button" class="watch-again" data-film><span class="wa-i" aria-hidden="true">▶</span>' + esc(t(S.ui.watchAgain)) + '</button>' : '') +
       '</div></div>';
   }
+  /* modern hero: a huge thin city name over the photo, round city thumbnails that switch the photo,
+     a rotating "watch the film" badge and a floating bar to pick a package */
+  var heroI = 0, heroTimer = 0, heroPkg = 0;
+  function heroSlides() { return (S.heroSlides || []).filter(function (h) { return PH[h.image]; }); }
   function renderHero() {
-    var E = F.endFrame || F.poster || {};
+    var E = F.endFrame || F.poster || {}, SL = heroSlides(), L = S.journey.labels, H = S.hero || {};
     var land = typeof E === 'string' ? E : E.landscape, port = typeof E === 'string' ? E : E.portrait;
-    var bg = land || port ? '<picture>' + (port ? '<source media="(max-aspect-ratio: 10/11)" srcset="' + esc(port) + '">' : '') +
+    var night = land || port ? '<picture class="hx-night">' + (port ? '<source media="(max-aspect-ratio: 10/11)" srcset="' + esc(port) + '">' : '') +
       '<img src="' + esc(land || port) + '" alt="" decoding="async"></picture>' : '';
-    return '<header class="uh" id="top"><div class="uh-bg" aria-hidden="true">' + bg + '</div><div class="uh-shade" aria-hidden="true"></div>' +
-      heroInner(false) + '<span class="uh-scroll" aria-hidden="true"></span></header>';
+    var slides = SL.map(function (h, i) {
+      var im = pic(h.image, { sizes: '100vw' }); if (!i) im = im.replace(' loading="lazy"', '');
+      return '<div class="hx-slide' + (i === heroI ? ' on' : '') + (h.night ? ' has-night' : '') + '" data-hx="' + i + '">' + im + (h.night ? night : '') + '</div>';
+    }).join('');
+    var name = SL[heroI] ? t(SL[heroI].name) : t(S.intro.title);
+    var thumbs = SL.map(function (h, i) {
+      return '<button type="button" class="hx-th' + (i === heroI ? ' on' : '') + '" data-hx-go="' + i + '" aria-label="' + esc(t(h.name)) + '">' + pic(h.image, { sizes: '120px' }) + '</button>';
+    }).join('');
+    var bt = t(H.badge || S.ui.watchAgain), ring = esc(bt + ' ✦ ' + bt + ' ✦ ');
+    var badge = HAS_FILM ? '<button type="button" class="hx-badge uh-s s3" data-film aria-label="' + esc(t(S.ui.watchAgain)) + '">' +
+      '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="hxRing" d="M60 60m-46 0a46 46 0 1 1 92 0a46 46 0 1 1-92 0"/></defs>' +
+      '<text><textPath href="#hxRing" textLength="286">' + ring + '</textPath></text></svg><span class="hx-play" aria-hidden="true">▶</span></button>' : '';
+    return '<header class="uh hx" id="top">' +
+      '<div class="uh-bg" aria-hidden="true">' + slides + '</div><div class="uh-shade" aria-hidden="true"></div>' +
+      '<div class="uh-in hx-in">' +
+        '<p class="hx-kicker uh-s s1">' + esc(t(H.kicker)) + '</p>' +
+        '<p class="hx-word" aria-hidden="true" style="--n:' + name.length + '">' + letters(name) + '</p>' +
+        '<h1 class="hx-title uh-s s2"><span>' + esc(t(S.intro.title)) + '</span> <i>·</i> <em>' + esc(t(TOUR.title)) + '</em></h1>' +
+        '<p class="hx-stars uh-s s2" aria-hidden="true">✦ ✦ ✦</p>' +
+        '<p class="hx-motto uh-s s3">' + esc(t(F.unlockLead)) + '</p>' +
+        (SL.length > 1 ? '<div class="hx-thumbs uh-s s3" role="group" aria-label="' + esc(t(L.cities)) + '">' + thumbs + '</div>' : '') +
+        badge +
+        '<div class="hx-bar uh-s s4">' + heroBar() + '</div>' +
+      '</div></header>';
+  }
+  function heroBar() {
+    var L = S.journey.labels, H = S.hero || {}, P = PKGS[heroPkg] || TOUR;
+    var tabs = PKGS.length > 1 ? '<div class="hx-tabs" role="tablist">' + PKGS.map(function (p, i) {
+      return '<button type="button" role="tab" data-hx-pkg="' + i + '" aria-selected="' + (i === heroPkg) + '">' + esc(t(L.pkgShort)) + ' ' + (i + 1) + '</button>';
+    }).join('') + '</div>' : '';
+    var f = function (ic, label, val) { return '<div class="hx-f"><span class="hx-ic" aria-hidden="true">' + ic + '</span><span class="hx-fv"><b>' + esc(t(label)) + '</b><small>' + esc(t(val != null ? val : L.tbd)) + '</small></span></div>'; };
+    return tabs + '<div class="hx-pill">' +
+      f('◎', L.destinations, P.tab || TOUR.duration) + f('◷', L.duration, P.duration) + f('▦', L.dates, P.dates) + f('☺', H.group, TOUR.travelers) +
+      '<button type="button" class="hx-go" data-hx-open><span>' + esc(t(S.ui.toTourShort)) + '</span><i aria-hidden="true">→</i></button></div>';
+  }
+  function heroGo(i, user) {
+    var SL = heroSlides(); if (!SL.length) return;
+    heroI = (i + SL.length) % SL.length;
+    $$('.hx-slide', main).forEach(function (el) { el.classList.toggle('on', +el.getAttribute('data-hx') === heroI); });
+    $$('.hx-th', main).forEach(function (el) { el.classList.toggle('on', +el.getAttribute('data-hx-go') === heroI); });
+    var w = $('.hx-word', main);
+    if (w) { w.classList.toggle('swap', false); void w.offsetWidth; var nm = t(SL[heroI].name); w.style.setProperty('--n', nm.length); w.innerHTML = letters(nm); w.classList.toggle('swap', true); }
+    if (user) heroAuto();
+  }
+  function heroAuto() {
+    clearInterval(heroTimer);
+    if (reduce || heroSlides().length < 2) return;
+    heroTimer = setInterval(function () { if (!document.hidden && window.scrollY < window.innerHeight * .8 && !film.open) heroGo(heroI + 1); }, 6500);
   }
 
   /* ---------- the tour (revealed step by step as you scroll) ---------- */
@@ -196,7 +246,7 @@
   }
 
   function renderJourney() {
-    var J = S.journey, L = J.labels;
+    var J = S.journey, L = J.labels, I = TOUR.intro;
 
     /* the four cities, each opening onto its first day in its package */
     var seen = {}, cities = [];
@@ -228,7 +278,15 @@
 
     return '<div class="jt" id="program">' +
       '<div class="rv"><p class="kicker"><span class="kl">' + esc(t(J.kicker)) + '</span></p>' +
-      '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>' +
+      (I ? '<h3 class="ji-hook tr">' + words(t(I.hook)) + '</h3><p class="ji-sub">' + esc(t(I.sub)) + '</p>' +
+        '<div class="ji-tix">' + (I.tickets || []).map(function (k, i) {
+          var P = PKGS[k.pkg]; if (!P) return '';
+          return '<button type="button" class="ji-t ir" data-tilt data-pkg-go="' + k.pkg + '" style="--d:' + (i * 0.12 + 0.1) + 's">' +
+            '<span class="ji-n">' + esc(t(L.pkgShort)) + ' ' + (k.pkg + 1) + '</span><span class="ji-r">' + esc(t(P.tab)) + '</span>' +
+            '<span class="ji-l">' + esc(t(k.line)) + '</span><span class="ji-go" aria-hidden="true">→</span></button>';
+        }).join('') + '</div>' +
+        '<ul class="ji-perks">' + (I.perks || []).map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul>'
+      : '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>') +
       (TOUR.note ? '<p class="jt-note">' + esc(t(TOUR.note)) + '</p>' : '') + '</div>' +
       '<dl class="jt-facts rv">' + fact(L.audience, TOUR.audience) + fact(L.tourismType, TOUR.tourismType, 'jf-wide') + fact(L.duration, TOUR.duration) +
       fact(L.travelers, TOUR.travelers) + fact(L.season, TOUR.season) + fact(L.level, TOUR.level) + '</dl>' +
@@ -276,6 +334,7 @@
     main.style.setProperty('--open', openScale());
     renderChrome();
     observeReveals();
+    heroAuto();
   }
 
   /* ================= INTERACTION: reveals, programme, parallax, tilt, magnetic, photos ================= */
@@ -300,7 +359,7 @@
       $$('.jd', main).forEach(function (el) { dayIO.observe(el); });
     }
     if (!fine) $$('[data-snap]', main).forEach(function (row) { row.addEventListener('scroll', function () { snapActive(row); }, { passive: true }); snapActive(row); });
-    $$('.uh .cta, .watch-again', main).forEach(function (el) { el.setAttribute('data-mag', ''); });
+    $$('.uh .cta, .watch-again, .hx-go', main).forEach(function (el) { el.setAttribute('data-mag', ''); });
     onScroll();
   }
   var curDay = 0;
@@ -328,6 +387,7 @@
   function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; scrollFx(); }); } }
   function scrollFx() {
     var vh = window.innerHeight, y = window.scrollY;
+    var uh = $('.uh', main); document.body.classList.toggle('on-light', isLight() && !!uh && y > uh.offsetHeight - 40);
     var bg = $('.uh-bg', main);
     if (bg && !reduce && y < vh * 1.2) { bg.style.transform = 'translate3d(0,' + (y * 0.35).toFixed(1) + 'px,0)'; var ui_ = $('.uh-in', main); if (ui_) { ui_.style.transform = 'translate3d(0,' + (y * 0.15).toFixed(1) + 'px,0)'; ui_.style.opacity = Math.max(0, 1 - y / (vh * 0.75)).toFixed(3); } }
     if (!reduce) $$('.city-img img, .jd-img img, .tl-pic.on img', main).forEach(function (im) {
@@ -637,7 +697,7 @@
     later(function () {
       box.hidden = true; box.className = 'film'; film.open = false; film.phase = 'idle';
       vid.preload = 'none';
-      var c = $('.uh .cta'); c && c.focus({ preventScroll: true });
+      var c = $('.uh .cta, .hx-go'); c && c.focus({ preventScroll: true });
     }, 4100 * slow);
   }
 
@@ -695,15 +755,31 @@
     window.scrollTo(0, y);
   }
 
+  /* ---------- theme: dark (default for dark systems) or light, one tap, remembered ---------- */
+  function isLight() { return root.getAttribute('data-theme') === 'light'; }
+  function setTheme(th) {
+    root.classList.add('theme-swap');
+    root.setAttribute('data-theme', th); store('lot-theme', th);
+    var b = $('#themeBtn'); if (b) b.setAttribute('aria-pressed', String(th === 'light'));
+    var m = $('meta[name="theme-color"]'); if (m) m.setAttribute('content', th === 'light' ? '#F6F0E6' : '#080A0F');
+    setTimeout(function () { root.classList.remove('theme-swap'); }, 600);
+    onScroll();
+  }
+  (function () { var b = $('#themeBtn'); if (b) b.setAttribute('aria-pressed', String(isLight())); if (isLight()) { var m = $('meta[name="theme-color"]'); if (m) m.setAttribute('content', '#F6F0E6'); } })();
+
   /* ---------- events ---------- */
   document.addEventListener('click', function (e) {
     if (viewer) { if (!e.target.closest('.pv-cap')) closePhoto(); return; }
     var ph = e.target.closest('[data-photo]'); if (ph) { openPhoto(ph); return; }
     var cc = e.target.closest('[data-city-day]'); if (cc) { openCity(cc); return; }
     var pb = e.target.closest('[data-pkg]'); if (pb) { setPkg(+pb.getAttribute('data-pkg')); return; }
+    var hg = e.target.closest('[data-hx-go]'); if (hg) { heroGo(+hg.getAttribute('data-hx-go'), true); return; }
+    var hp = e.target.closest('[data-hx-pkg]'); if (hp) { heroPkg = +hp.getAttribute('data-hx-pkg'); var bar = $('.hx-bar', main); if (bar) bar.innerHTML = heroBar(); return; }
+    if (e.target.closest('[data-hx-open]')) { setPkg(heroPkg); jump('packages'); return; }
+    var pg = e.target.closest('[data-pkg-go]'); if (pg) { setPkg(+pg.getAttribute('data-pkg-go')); jump('packages'); return; }
     var db = e.target.closest('[data-details]'); if (db) { var dd = db.getAttribute('data-details-day'); openDetails(db.getAttribute('data-details'), dd == null ? null : +dd); return; }
     var pt = e.target.closest('[data-pdt]'); if (pt) { detailsTab(pt.getAttribute('data-pdt')); return; }
-    var el = e.target.closest('[data-lang],[data-jump],[data-film],[data-act],#menuBtn,#creditsBtn,[data-close],.wordmark');
+    var el = e.target.closest('[data-lang],[data-jump],[data-film],[data-act],#menuBtn,#themeBtn,#creditsBtn,[data-close],.wordmark');
     if (!el) { if (e.target.id === 'lightbox') closeLightbox(); return; }
     if (el.hasAttribute('data-lang')) { setLang(el.getAttribute('data-lang')); return; }
     if (el.hasAttribute('data-film')) { e.preventDefault(); openFilm(true); return; }
@@ -717,6 +793,7 @@
       else if (a === 'skip') skip();
       return;
     }
+    if (el.id === 'themeBtn') { setTheme(isLight() ? 'dark' : 'light'); return; }
     if (el.id === 'menuBtn') { toggleMenu(); return; }
     if (el.id === 'creditsBtn') { credits(); return; }
     if (el.hasAttribute('data-close')) { closeLightbox(); return; }
