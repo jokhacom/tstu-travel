@@ -14,9 +14,9 @@ window.LEGACY = window.LEGACY || {};
 window.LEGACY.tour = {
   title: { ru: 'По следам Темура', uz: 'Temur izidan', en: 'In the footsteps of Temur' },
   note: {
-    ru: 'Проект программы. Цена и детали ориентировочные, их подтверждает команда TSTU Travel.',
-    uz: 'Dastur loyihasi. Narx va tafsilotlar taxminiy, ularni TSTU Travel jamoasi tasdiqlaydi.',
-    en: 'Draft programme. Price and details are approximate and are confirmed by the TSTU Travel team.'
+    ru: 'Проект программы. Детали ориентировочные, их подтверждает команда TSTU Travel.',
+    uz: 'Dastur loyihasi. Tafsilotlar taxminiy, ularni TSTU Travel jamoasi tasdiqlaydi.',
+    en: 'Draft programme. Details are approximate and are confirmed by the TSTU Travel team.'
   },
   description: {
     ru: 'Шесть дней по главным местам Амира Темура: родной Шахрисабз, столица Самарканд, где он похоронен, и древняя Бухара.',
@@ -25,7 +25,9 @@ window.LEGACY.tour = {
   },
   duration: { ru: '6 дней / 5 ночей', uz: '6 kun / 5 kecha', en: '6 days / 5 nights' },
   travelers: { ru: 'группа 10–20 человек', uz: '10–20 kishilik guruh', en: 'group of 10–20' },
-  price: { ru: 'ориентировочно от 750 $ на человека', uz: 'taxminan 750 $ dan (bir kishi uchun)', en: 'approx. from $750 per person' },
+  // The price is not shown on the site (Jokha, 2026-11-20). Was: approx. from $750 per person.
+  // Put a { ru, uz, en } value here to show it again.
+  price: null,
   season: { ru: 'апрель–июнь, сентябрь–октябрь', uz: 'aprel–iyun, sentabr–oktabr', en: 'April–June, September–October' },
   level: { ru: 'лёгкий: 6–10 км пешком в день', uz: 'yengil: kuniga 6–10 km piyoda', en: 'easy: 6–10 km on foot a day' },
   transport: { ru: 'скоростной поезд между городами, автобус в Шахрисабз', uz: 'shaharlar orasida tezyurar poyezd, Shahrisabzga avtobus', en: 'high-speed train between cities, coach to Shahrisabz' },
