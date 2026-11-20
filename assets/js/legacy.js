@@ -107,7 +107,7 @@
       '<ul class="zs-legend">' + legend + '</ul><ul class="zs-rewards">' + rewards + '</ul><p class="note">' + esc(t(Z.note)) + '</p></div></div>';
   }
 
-  function tbd() { return '<span class="tbd"><em>' + esc(t(S.ui.placeholder)) + '</em>' + esc(t(S.journey.labels.tbd)) + '</span>'; }
+  function tbd() { return '<span class="tbd">' + esc(t(S.journey.labels.tbd)) + '</span>'; }
   /* two student packages; the chosen one is shown below the tabs */
   var PKGS = TOUR.packages || [], pkgI = 0;
   (function () { var k = +store('lot-pkg'); if (PKGS[k]) pkgI = k; })();
@@ -117,23 +117,10 @@
   function fact(label, v, cls) { return '<div class="jf' + (cls ? ' ' + cls : '') + '"><dt>' + esc(t(label)) + '</dt><dd>' + (v != null && v !== '' ? esc(typeof v === 'object' ? t(v) : String(v)) : tbd()) + '</dd></div>'; }
   function list(arr) { return arr && arr.length ? '<ul>' + arr.map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul>' : tbd(); }
 
+  /* the package on the page stays short: key facts, days, what's included.
+     Hours, hotel, transport, meals and tours open in a separate full-screen panel. */
   function renderPkg() {
-    var L = S.journey.labels, P = PKG(), DAYS = P.days || [], H = P.hotel || {}, TR = P.transport || {};
-    var legs = (P.legs || []).map(function (g) {
-      return '<li><span class="pl-r">' + esc(t(g.from)) + ' <i>→</i> ' + esc(t(g.to)) + '</span><span class="pl-km">' + esc(g.km || '') + ' ' + esc(t(L.km)) + '</span>' +
-        '<span class="pl-t">' + esc(t(g.time)) + (g.note ? '<small>' + esc(t(g.note)) + '</small>' : '') + '</span></li>';
-    }).join('');
-    var yesNo = function (v) { return v == null ? null : v ? L.yes : L.no; };
-    var group = function (head, body) { return '<section class="pp-g rv"><h4 class="jt-sub">' + esc(t(head)) + '</h4><dl class="jt-facts">' + body + '</dl></section>'; };
-    var passport = '<div class="pp">' +
-      group(L.whenWhere, fact(L.dates, P.dates) + fact(L.duration, P.duration) + fact(L.start, P.start) + fact(L.destinations, P.route ? P.route.map(function (r) { return t(r); }).join(' → ') : null)) +
-      (legs ? '<section class="pp-g rv"><h4 class="jt-sub">' + esc(t(L.legs)) + '</h4><ul class="pl">' + legs + '</ul><p class="note">' + esc(t(L.approx)) + '</p></section>' : '') +
-      group(L.stay, fact(L.hotel, H.name) + fact(L.stars, H.stars) + fact(L.address, H.address) + fact(L.location, H.city) + fact(L.room, H.room) + fact(L.nights, H.nights) + fact(L.breakfast, yesNo(H.breakfast))) +
-      group(L.transport, fact(L.vehicle, TR.type) + fact(L.model, TR.model) + fact(L.transferIn, TR.transferIn) + fact(L.transferOut, TR.transferOut) + fact(L.driver, TR.driver)) +
-      group(L.mealsTours, fact(L.meals, P.meals) + fact(L.guides, P.guides) + fact(L.tickets, P.tickets)) +
-      '</div>';
-
-    /* the programme: a sticky photo stage + days that open one by one */
+    var L = S.journey.labels, P = PKG(), DAYS = P.days || [], B = P.brief || {};
     var stage = DAYS.map(function (d, i) {
       return '<figure class="tl-pic' + (i ? '' : ' on') + '" data-d="' + i + '">' + (PH[d.image] ? pic(d.image, { sizes: '(max-width:900px) 100vw, 45vw' }) : '') + '</figure>';
     }).join('');
@@ -142,17 +129,70 @@
         '<div class="jd-img ir' + (PH[d.image] ? '' : ' jd-noimg') + '">' + (PH[d.image] ? pic(d.image, { sizes: '100vw' }) : '<span class="jd-place">' + esc(t(d.place)) + '</span>') + '</div>' +
         '<div class="jd-body"><p class="jd-n"><b>' + two(i + 1) + '</b>' + esc(t(L.day)) + ' ' + (i + 1) + '</p><h4 class="tr">' + words(t(d.place)) + '</h4><p class="jd-text">' + esc(t(d.text)) + '</p>' +
         (d.activities && d.activities.length ? '<ul>' + d.activities.map(function (a, k) { return '<li style="--k:' + k + '">' + esc(t(a)) + '</li>'; }).join('') + '</ul>' : '') +
-        (d.practical ? '<p class="jd-prac">' + esc(t(d.practical)) + '</p>' : '') + '</div></li>';
+        (d.practical ? '<p class="jd-prac">' + esc(t(d.practical)) + '</p>' : '') +
+        (d.schedule ? '<button type="button" class="pk-more pk-more-s" data-details="hours" data-details-day="' + i + '"><span>' + esc(t(L.dayHours)) + '</span><i aria-hidden="true">→</i></button>' : '') +
+        '</div></li>';
     }).join('');
+    var sum = [[L.duration, P.duration], [L.dates, P.dates], [L.stay, B.hotel], [L.transport, B.transport], [L.meals, B.meals]]
+      .map(function (f) { return fact(f[0], f[1]); }).join('');
 
     return (PKGS.length ? '<div class="pk-head rv"><h3 class="pk-name">' + esc(t(P.name)) + '</h3>' + (P.lead ? '<p class="pk-lead">' + esc(t(P.lead)) + '</p>' : '') + '</div>' : '') +
-      passport +
+      '<dl class="jt-facts pk-sum rv">' + sum + '</dl>' +
+      '<div class="pk-cta rv"><button type="button" class="pk-more" data-details="hours" data-mag><span>' + esc(t(L.details)) + '</span><i aria-hidden="true">→</i></button>' +
+      '<p class="note">' + esc(t(L.detailsNote)) + '</p></div>' +
       '<h3 class="jt-sub tr">' + words(t(L.itinerary)) + '</h3>' +
       '<div class="tl"><div class="tl-stage" aria-hidden="true"><div class="tl-frame">' + stage + '</div>' +
       '<p class="tl-count"><b>01</b> / ' + two(DAYS.length) + '</p><p class="tl-place">' + esc(t(DAYS[0] && DAYS[0].place)) + '</p></div>' +
       '<div class="tl-list"><span class="tl-line" aria-hidden="true"><i></i></span><ol class="jt-days">' + days + '</ol></div></div>' +
       '<div class="jt-price rv' + (TOUR.price ? '' : ' no-price') + '" id="price">' + (TOUR.price ? '<div class="jp-main"><p class="jd-l">' + esc(t(L.price)) + '</p><p class="jp-v tr">' + words(t(TOUR.price)) + '</p></div>' : '') +
       '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(P.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(P.excluded) + '</div></div></div>';
+  }
+
+  /* ---------- package details: a full-screen panel with its own tabs ---------- */
+  var details = null;   // { tab, day } while open
+  function detailsHTML() {
+    var L = S.journey.labels, P = PKG(), H = P.hotel || {}, TR = P.transport || {}, DAYS = P.days || [];
+    var yesNo = function (v) { return v == null ? null : v ? L.yes : L.no; };
+    var dl = function (rows) { return '<dl class="jt-facts pd-facts">' + rows.map(function (r) { return fact(r[0], r[1]); }).join('') + '</dl>'; };
+    var legs = (P.legs || []).map(function (g) {
+      return '<li><span class="pl-r">' + esc(t(g.from)) + ' <i>→</i> ' + esc(t(g.to)) + '</span><span class="pl-km">' + esc(g.km || '') + ' ' + esc(t(L.km)) + '</span>' +
+        '<span class="pl-t">' + esc(t(g.time)) + (g.note ? '<small>' + esc(t(g.note)) + '</small>' : '') + '</span></li>';
+    }).join('');
+    var hours = '<div class="pd-days">' + DAYS.map(function (d, i) {
+      return '<section class="pd-day" id="pd-day-' + i + '"><h4 class="pd-dh"><b>' + two(i + 1) + '</b>' + esc(t(L.day)) + ' ' + (i + 1) + ' · ' + esc(t(d.place)) + '</h4>' +
+        '<ol class="pd-sch">' + (d.schedule || []).map(function (r) { return '<li><time>' + esc(r[0]) + '</time><span>' + esc(t(r[1])) + '</span></li>'; }).join('') + '</ol></section>';
+    }).join('') + '</div><p class="note">' + esc(t(TOUR.note)) + '</p>';
+    var panes = {
+      hours: hours,
+      route: dl([[L.dates, P.dates], [L.duration, P.duration], [L.start, P.start], [L.destinations, P.route ? P.route.map(function (r) { return t(r); }).join(' → ') : null]]) +
+        (legs ? '<h4 class="jt-sub">' + esc(t(L.legs)) + '</h4><ul class="pl">' + legs + '</ul><p class="note">' + esc(t(L.approx)) + '</p>' : ''),
+      stay: dl([[L.hotel, H.name], [L.stars, H.stars], [L.address, H.address], [L.location, H.city], [L.room, H.room], [L.nights, H.nights], [L.breakfast, yesNo(H.breakfast)]]),
+      transport: dl([[L.vehicle, TR.type], [L.model, TR.model], [L.transferIn, TR.transferIn], [L.transferOut, TR.transferOut], [L.driver, TR.driver]]) + '<p class="note">' + esc(t(L.modelNote)) + '</p>',
+      tours: dl([[L.meals, P.meals], [L.guides, P.guides], [L.tickets, P.tickets]]) +
+        (P.excursions ? '<h4 class="jt-sub">' + esc(t(L.excursions)) + '</h4>' + list(P.excursions) : ''),
+      incl: '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(P.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(P.excluded) + '</div></div>'
+    };
+    var names = { hours: L.hours, route: L.whenWhere, stay: L.stay, transport: L.transport, tours: L.mealsTours, incl: L.included };
+    var tab = panes[details.tab] ? details.tab : 'hours';
+    return '<div class="pd"><p class="jd-l">' + esc(t(L.details)) + '</p><h3 class="lb-title pd-title">' + esc(t(P.name)) + '</h3>' +
+      '<p class="pd-meta">' + esc(t(P.duration)) + (P.lead ? ' · ' + esc(t(P.lead)) : '') + '</p>' +
+      '<div class="pd-tabs" role="tablist">' + Object.keys(panes).map(function (k) {
+        return '<button type="button" role="tab" data-pdt="' + k + '" aria-selected="' + (k === tab) + '">' + esc(t(names[k])) + '</button>';
+      }).join('') + '</div>' +
+      '<div class="pd-pane" role="tabpanel">' + panes[tab] + '</div>' +
+      '<div class="pd-book">' + bookingLink('cta', S.journey.cta) + '</div></div>';
+  }
+  function openDetails(tab, day) {
+    details = { tab: tab || 'hours', day: day == null ? null : day };
+    openLightbox(detailsHTML());
+    $('#lightbox').classList.add('lb-pd');
+    if (day != null) { var d = document.getElementById('pd-day-' + day); if (d) { d.classList.add('hl'); $('#lightbox').scrollTop = d.getBoundingClientRect().top - 150; } }
+  }
+  function detailsTab(k) {
+    details.tab = k; details.day = null;
+    $('#lbBody').innerHTML = detailsHTML();
+    var b = $('[data-pdt="' + k + '"]', $('#lbBody')); if (b) { b.focus({ preventScroll: true }); b.scrollIntoView({ block: 'nearest', inline: 'center' }); }
+    var tb = $('.pd-tabs', $('#lbBody')), lb = $('#lightbox'); if (tb && lb.scrollTop > tb.offsetTop) lb.scrollTop = tb.offsetTop - 10;
   }
 
   function renderJourney() {
@@ -189,7 +229,7 @@
     return '<div class="jt" id="program">' +
       '<div class="rv"><p class="kicker"><span class="kl">' + esc(t(J.kicker)) + '</span></p>' +
       '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>' +
-      (TOUR.note ? '<p class="jt-note"><em>' + esc(t(S.ui.draft)) + '</em>' + esc(t(TOUR.note)) + '</p>' : '') + '</div>' +
+      (TOUR.note ? '<p class="jt-note">' + esc(t(TOUR.note)) + '</p>' : '') + '</div>' +
       '<dl class="jt-facts rv">' + fact(L.audience, TOUR.audience) + fact(L.tourismType, TOUR.tourismType, 'jf-wide') + fact(L.duration, TOUR.duration) +
       fact(L.travelers, TOUR.travelers) + fact(L.season, TOUR.season) + fact(L.level, TOUR.level) + '</dl>' +
       (cities.length ? '<h3 class="jt-sub tr">' + words(t(L.cities)) + '</h3><div class="cities" data-snap>' + cityCards + '</div>' : '') +
@@ -614,7 +654,7 @@
   }
   function closeLightbox() {
     var lb = $('#lightbox'); if (lb.hidden) return;
-    lb.hidden = true; $('#lbBody').innerHTML = '';
+    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd'); details = null;
     if (!film.open) root.classList.remove('lock');
   }
   function credits() {
@@ -648,6 +688,7 @@
     lang = l;
     store('lot-lang', l);
     renderSite();
+    if (details) $('#lbBody').innerHTML = detailsHTML();
     if (film.open && film.phase === 'film') renderPlayer();
     else if (film.open) { var u = $('.fm-unlock', ui); if (u) u.innerHTML = heroInner(true); }
     document.body.classList.add('unlocked');
@@ -660,6 +701,8 @@
     var ph = e.target.closest('[data-photo]'); if (ph) { openPhoto(ph); return; }
     var cc = e.target.closest('[data-city-day]'); if (cc) { openCity(cc); return; }
     var pb = e.target.closest('[data-pkg]'); if (pb) { setPkg(+pb.getAttribute('data-pkg')); return; }
+    var db = e.target.closest('[data-details]'); if (db) { var dd = db.getAttribute('data-details-day'); openDetails(db.getAttribute('data-details'), dd == null ? null : +dd); return; }
+    var pt = e.target.closest('[data-pdt]'); if (pt) { detailsTab(pt.getAttribute('data-pdt')); return; }
     var el = e.target.closest('[data-lang],[data-jump],[data-film],[data-act],#menuBtn,#creditsBtn,[data-close],.wordmark');
     if (!el) { if (e.target.id === 'lightbox') closeLightbox(); return; }
     if (el.hasAttribute('data-lang')) { setLang(el.getAttribute('data-lang')); return; }
