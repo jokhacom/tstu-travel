@@ -139,8 +139,18 @@ window.LEGACY.site = {
     unlockLead: { ru: '«Сомневаешься в нашем могуществе? Взгляни на наши творения!»', uz: '«Agar bizning qudratimizga shubha qilsang, biz qurgan imoratlarga boq»', en: '“If you doubt our power, look at our buildings.”' }
   },
 
-  // the hero photo in the light theme (a key from photos.js); the dark theme keeps the film's last frame
-  heroDay: 'samarqand_0',
+  // the first screen: photos that switch (keys from photos.js). night: true shows the film's night frame in the dark theme
+  heroSlides: [
+    { image: 'samarqand_0', night: true, name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
+    { image: 'shahr_aks', name: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' } },
+    { image: 'toshkent_cic', name: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' } },
+    { image: 'buxoro_3', name: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' } }
+  ],
+  hero: {
+    kicker: { ru: 'Studturizm 2026 · Узбекистан', uz: 'Studturizm 2026 · O‘zbekiston', en: 'Studturizm 2026 · Uzbekistan' },
+    badge: { ru: 'Смотреть фильм', uz: 'Filmni ko‘rish', en: 'Watch the film' },
+    group: { ru: 'Группа', uz: 'Guruh', en: 'Group' }
+  },
 
   /* ---------- chapters (menu + progress) ---------- */
   chapters: [
