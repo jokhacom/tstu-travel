@@ -153,6 +153,12 @@ window.LEGACY.site = {
       en: 'Everything in the film, in a single route.'
     },
     labels: {
+      details: { ru: 'Подробная программа и условия', uz: 'Batafsil dastur va shartlar', en: 'Full programme and terms' },
+      detailsNote: { ru: 'Расписание по часам, отель, транспорт, питание и экскурсии', uz: 'Soatbay jadval, mehmonxona, transport, ovqatlanish va ekskursiyalar', en: 'Hour-by-hour plan, hotel, transport, meals and tours' },
+      dayHours: { ru: 'Расписание дня', uz: 'Kun jadvali', en: 'Day schedule' },
+      hours: { ru: 'По часам', uz: 'Soatbay', en: 'Hour by hour' },
+      excursions: { ru: 'Экскурсионная программа', uz: 'Ekskursiya dasturi', en: 'Tours' },
+      modelNote: { ru: 'Машину под размер группы подбирает перевозчик; марка и модель подтверждаются при бронировании.', uz: 'Mashinani guruh hajmiga qarab tashuvchi tanlaydi; markasi va modeli band qilishda tasdiqlanadi.', en: 'The carrier picks a vehicle to fit the group; make and model are confirmed at booking.' },
       audience: { ru: 'Для кого', uz: 'Kim uchun', en: 'Who it is for' },
       tourismType: { ru: 'Вид туризма', uz: 'Turizm turi', en: 'Type of travel' },
       cities: { ru: 'Города', uz: 'Shaharlar', en: 'The cities' },

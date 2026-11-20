@@ -27,8 +27,10 @@ values when the package is ready.
 The tour is split into `packages` (now: 1 Samarkand + Shahrisabz, 2 Tashkent + Bukhara). The site
 shows a tab per package; each package has its own `dates`, `start`, `legs` (distance and time),
 `hotel` (name, address, stars, room, nights, breakfast), `transport` (type, model, transfers,
-driver), `meals`, `guides`, `tickets`, `included`, `excluded` and `days`. Still to confirm:
-`dates`, `hotel.name`, `hotel.address`, `transport.model`. `price: null` keeps the price hidden.
+driver), `meals`, `guides`, `tickets`, `excursions`, `included`, `excluded`, a short `brief` for the
+page and `days` (each with an hourly `schedule`). The page shows only the brief and the days; the
+rest opens in the «Подробная программа и условия» panel. Still to confirm: `dates`, `hotel.name`,
+`hotel.address`; `transport.model` is a typical option to check with the carrier. `price: null` keeps the price hidden.
 
 ### Adding a photo
 1. Export two WebP files: `img/<key>-1080.webp` and `img/<key>-1920.webp`.
