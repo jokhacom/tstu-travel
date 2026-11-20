@@ -1,6 +1,6 @@
 # The Legacy of Temur — Uzbekistan
 
-Cinematic site for Studturizm 2026 (Kaliningrad × Uzbekistan) by TSTU Travel.
+Cinematic tourism site about Uzbekistan by TSTU Travel.
 First visit: a fullscreen film about Amir Temur → its last frame opens into the site
 (THE LEGACY OF TEMUR · «По следам Тамерлана») → the tour, step by step → booking.
 Repeat visits open straight onto the site, with «Смотреть фильм снова». Add `?film` to the URL to see the first visit again.

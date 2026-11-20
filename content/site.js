@@ -147,7 +147,7 @@ window.LEGACY.site = {
     { image: 'buxoro_3', name: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' } }
   ],
   hero: {
-    kicker: { ru: 'Studturizm 2026 · Узбекистан', uz: 'Studturizm 2026 · O‘zbekiston', en: 'Studturizm 2026 · Uzbekistan' },
+    kicker: { ru: 'Узбекистан · TSTU Travel', uz: 'O‘zbekiston · TSTU Travel', en: 'Uzbekistan · TSTU Travel' },
     badge: { ru: 'Смотреть фильм', uz: 'Filmni ko‘rish', en: 'Watch the film' },
     group: { ru: 'Группа', uz: 'Guruh', en: 'Group' }
   },
@@ -267,8 +267,8 @@ window.LEGACY.site = {
   },
 
   footer: {
-    event: 'Studturizm 2026',
-    cities: { ru: 'Калининград × Узбекистан', uz: 'Kaliningrad × O‘zbekiston', en: 'Kaliningrad × Uzbekistan' },
+    event: 'The Legacy of Temur',
+    cities: { ru: 'Узбекистан', uz: 'O‘zbekiston', en: 'Uzbekistan' },
     by: { ru: 'Проект TSTU Travel', uz: 'TSTU Travel loyihasi', en: 'A TSTU Travel project' }
   }
 };
