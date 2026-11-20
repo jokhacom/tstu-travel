@@ -631,3 +631,9 @@ html[data-theme="light"] body.menu-open .hud { color: #F2E9DA; background: none;
 html[data-theme="light"] .theme-btn .t-sun { display: block; }
 html[data-theme="light"] .theme-btn .t-moon { display: none; }
 html.theme-swap, html.theme-swap * { transition: background-color .5s ease, color .5s ease, border-color .5s ease !important; }
+/* light theme hero: bright daytime Registan */
+.uh-day { position: absolute; inset: 0; display: none; }
+html[data-theme="light"] .uh-day { display: block; }
+html[data-theme="light"] .uh-day img { filter: saturate(1.05); }
+html[data-theme="light"] .uh-shade { background: radial-gradient(55% 48% at 50% 52%, rgba(8,10,15,.5), transparent 78%), linear-gradient(0deg, rgba(8,10,15,.72) 0%, rgba(8,10,15,.18) 50%, rgba(8,10,15,.42) 100%); }
+html[data-theme="light"] .uh-in { text-shadow: 0 2px 24px rgba(8,10,15,.55); }

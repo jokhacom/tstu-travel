@@ -83,7 +83,9 @@
     var land = typeof E === 'string' ? E : E.landscape, port = typeof E === 'string' ? E : E.portrait;
     var bg = land || port ? '<picture>' + (port ? '<source media="(max-aspect-ratio: 10/11)" srcset="' + esc(port) + '">' : '') +
       '<img src="' + esc(land || port) + '" alt="" decoding="async"></picture>' : '';
-    return '<header class="uh" id="top"><div class="uh-bg" aria-hidden="true">' + bg + '</div><div class="uh-shade" aria-hidden="true"></div>' +
+    // light theme: a bright daytime Registan instead of the film's night frame
+    var day = S.heroDay && PH[S.heroDay] ? '<div class="uh-day">' + pic(S.heroDay, { sizes: '100vw' }).replace(' loading="lazy"', '') + '</div>' : '';
+    return '<header class="uh" id="top"><div class="uh-bg" aria-hidden="true">' + bg + day + '</div><div class="uh-shade" aria-hidden="true"></div>' +
       heroInner(false) + '<span class="uh-scroll" aria-hidden="true"></span></header>';
   }
 

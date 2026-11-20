@@ -139,6 +139,9 @@ window.LEGACY.site = {
     unlockLead: { ru: '«Сомневаешься в нашем могуществе? Взгляни на наши творения!»', uz: '«Agar bizning qudratimizga shubha qilsang, biz qurgan imoratlarga boq»', en: '“If you doubt our power, look at our buildings.”' }
   },
 
+  // the hero photo in the light theme (a key from photos.js); the dark theme keeps the film's last frame
+  heroDay: 'samarqand_0',
+
   /* ---------- chapters (menu + progress) ---------- */
   chapters: [
     { id: 'prologue', num: '', title: { ru: 'Фильм о Темуре', uz: 'Temur haqida film', en: 'The film' } },
