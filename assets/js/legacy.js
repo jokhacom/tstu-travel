@@ -157,7 +157,7 @@
       '<p class="tl-count"><b>01</b> / ' + two(DAYS.length) + '</p><p class="tl-place">' + esc(t(DAYS[0] && DAYS[0].place)) + '</p></div>' +
       '<div class="tl-list"><span class="tl-line" aria-hidden="true"><i></i></span><ol class="jt-days">' + days + '</ol></div></div>' +
       (hl ? '<h3 class="jt-sub tr">' + words(t(L.highlights)) + '</h3><div class="jt-hl" data-snap>' + hl + '</div>' : '') +
-      '<div class="jt-price rv" id="price"><div class="jp-main"><p class="jd-l">' + esc(t(L.price)) + '</p><p class="jp-v tr">' + (TOUR.price ? words(t(TOUR.price)) : tbd()) + '</p></div>' +
+      '<div class="jt-price rv' + (TOUR.price ? '' : ' no-price') + '" id="price">' + (TOUR.price ? '<div class="jp-main"><p class="jd-l">' + esc(t(L.price)) + '</p><p class="jp-v tr">' + words(t(TOUR.price)) + '</p></div>' : '') +
       '<div class="jt-incl"><div><h4 class="jt-sub">' + esc(t(L.included)) + '</h4>' + list(TOUR.included) + '</div><div><h4 class="jt-sub">' + esc(t(L.excluded)) + '</h4>' + list(TOUR.excluded) + '</div></div></div>' +
       '<div class="jt-book rv" id="book">' + bookingLink('cta', J.cta).replace('<a ', '<a data-mag ') + '<p class="note">' + esc(t(J.ctaNote)) + '</p></div>' +
       renderStar() +

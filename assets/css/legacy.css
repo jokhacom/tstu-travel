@@ -489,3 +489,7 @@ body.unlocked .uh-scroll { opacity: .6; }
 @media (max-width: 760px) { .fm-big { font-size: clamp(38px, 11.5vw, 64px); } .fm-cw { min-width: 0; } }
 
 .fm-ui.no-sound .fm-sound { display: none; }
+
+/* no price shown: the included / not included lists take the whole box */
+.jt-price.no-price { grid-template-columns: 1fr; }
+.jt-price.no-price .jt-incl .jt-sub { margin-top: 0; }
