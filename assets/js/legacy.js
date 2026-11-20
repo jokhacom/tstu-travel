@@ -196,7 +196,7 @@
   }
 
   function renderJourney() {
-    var J = S.journey, L = J.labels;
+    var J = S.journey, L = J.labels, I = TOUR.intro;
 
     /* the four cities, each opening onto its first day in its package */
     var seen = {}, cities = [];
@@ -228,7 +228,15 @@
 
     return '<div class="jt" id="program">' +
       '<div class="rv"><p class="kicker"><span class="kl">' + esc(t(J.kicker)) + '</span></p>' +
-      '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>' +
+      (I ? '<h3 class="ji-hook tr">' + words(t(I.hook)) + '</h3><p class="ji-sub">' + esc(t(I.sub)) + '</p>' +
+        '<div class="ji-tix">' + (I.tickets || []).map(function (k, i) {
+          var P = PKGS[k.pkg]; if (!P) return '';
+          return '<button type="button" class="ji-t ir" data-tilt data-pkg-go="' + k.pkg + '" style="--d:' + (i * 0.12 + 0.1) + 's">' +
+            '<span class="ji-n">' + esc(t(L.pkgShort)) + ' ' + (k.pkg + 1) + '</span><span class="ji-r">' + esc(t(P.tab)) + '</span>' +
+            '<span class="ji-l">' + esc(t(k.line)) + '</span><span class="ji-go" aria-hidden="true">→</span></button>';
+        }).join('') + '</div>' +
+        '<ul class="ji-perks">' + (I.perks || []).map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul>'
+      : '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>') +
       (TOUR.note ? '<p class="jt-note">' + esc(t(TOUR.note)) + '</p>' : '') + '</div>' +
       '<dl class="jt-facts rv">' + fact(L.audience, TOUR.audience) + fact(L.tourismType, TOUR.tourismType, 'jf-wide') + fact(L.duration, TOUR.duration) +
       fact(L.travelers, TOUR.travelers) + fact(L.season, TOUR.season) + fact(L.level, TOUR.level) + '</dl>' +
@@ -701,6 +709,7 @@
     var ph = e.target.closest('[data-photo]'); if (ph) { openPhoto(ph); return; }
     var cc = e.target.closest('[data-city-day]'); if (cc) { openCity(cc); return; }
     var pb = e.target.closest('[data-pkg]'); if (pb) { setPkg(+pb.getAttribute('data-pkg')); return; }
+    var pg = e.target.closest('[data-pkg-go]'); if (pg) { setPkg(+pg.getAttribute('data-pkg-go')); jump('packages'); return; }
     var db = e.target.closest('[data-details]'); if (db) { var dd = db.getAttribute('data-details-day'); openDetails(db.getAttribute('data-details'), dd == null ? null : +dd); return; }
     var pt = e.target.closest('[data-pdt]'); if (pt) { detailsTab(pt.getAttribute('data-pdt')); return; }
     var el = e.target.closest('[data-lang],[data-jump],[data-film],[data-act],#menuBtn,#creditsBtn,[data-close],.wordmark');

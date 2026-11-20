@@ -1,6 +1,6 @@
 /* Offline support: pages, scripts and text are network-first (always fresh when online),
    photos are cache-first once seen. Bump VERSION to drop old caches. */
-var VERSION = 'lot-v8';
+var VERSION = 'lot-v9';
 var SHELL = ['./', 'assets/css/legacy.css', 'assets/js/legacy.js',
   'content/site.js', 'content/tour.js', 'content/photos.js', 'img/film-poster.webp', 'img/film-end.webp'];
 self.addEventListener('install', function (e) {
