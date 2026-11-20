@@ -141,7 +141,7 @@ window.LEGACY.site = {
   /* ---------- chapters (menu + progress) ---------- */
   chapters: [
     { id: 'prologue', num: '', title: { ru: 'Фильм о Темуре', uz: 'Temur haqida film', en: 'The film' } },
-    { id: 'journey', num: '', title: { ru: 'Тур «По следам Темура»', uz: '«Temur izidan» turi', en: 'The tour' } }
+    { id: 'journey', num: '', title: { ru: 'Тур «По следам Тамерлана»', uz: '«Temur izidan» turi', en: 'In the footsteps of Tamerlane' } }
   ],
 
   journey: {
@@ -153,6 +153,37 @@ window.LEGACY.site = {
       en: 'Everything in the film, in a single route.'
     },
     labels: {
+      audience: { ru: 'Для кого', uz: 'Kim uchun', en: 'Who it is for' },
+      tourismType: { ru: 'Вид туризма', uz: 'Turizm turi', en: 'Type of travel' },
+      cities: { ru: 'Города', uz: 'Shaharlar', en: 'The cities' },
+      packages: { ru: 'Пакеты тура', uz: 'Tur paketlari', en: 'Tour packages' },
+      chooseTab: { ru: 'Выберите пакет', uz: 'Paketni tanlang', en: 'Choose a package' },
+      pkgShort: { ru: 'Пакет', uz: 'Paket', en: 'Package' },
+      whenWhere: { ru: 'Даты и маршрут', uz: 'Sanalar va yo‘nalish', en: 'Dates and route' },
+      dates: { ru: 'Даты начала и окончания', uz: 'Boshlanish va tugash sanalari', en: 'Start and end dates' },
+      start: { ru: 'Город отправления', uz: 'Jo‘nash shahri', en: 'Departure city' },
+      legs: { ru: 'Переезды: расстояние и время в пути', uz: 'Yo‘llar: masofa va yo‘l vaqti', en: 'Journeys: distance and travel time' },
+      km: { ru: 'км', uz: 'km', en: 'km' },
+      approx: { ru: 'Расстояния и время в пути ориентировочные.', uz: 'Masofa va yo‘l vaqti taxminiy.', en: 'Distances and travel times are approximate.' },
+      stay: { ru: 'Размещение', uz: 'Joylashtirish', en: 'Accommodation' },
+      hotel: { ru: 'Отель', uz: 'Mehmonxona', en: 'Hotel' },
+      stars: { ru: 'Звёзды', uz: 'Yulduzlar', en: 'Stars' },
+      address: { ru: 'Адрес', uz: 'Manzil', en: 'Address' },
+      location: { ru: 'Где', uz: 'Qayerda', en: 'Where' },
+      room: { ru: 'Тип номера', uz: 'Xona turi', en: 'Room type' },
+      nights: { ru: 'Ночей', uz: 'Kechalar', en: 'Nights' },
+      breakfast: { ru: 'Завтрак', uz: 'Nonushta', en: 'Breakfast' },
+      yes: { ru: 'включён', uz: 'kiritilgan', en: 'included' },
+      no: { ru: 'не включён', uz: 'kiritilmagan', en: 'not included' },
+      vehicle: { ru: 'Тип транспорта', uz: 'Transport turi', en: 'Vehicle type' },
+      model: { ru: 'Марка и модель', uz: 'Markasi va modeli', en: 'Make and model' },
+      transferIn: { ru: 'Трансфер аэропорт — отель', uz: 'Transfer aeroport — mehmonxona', en: 'Transfer airport to hotel' },
+      transferOut: { ru: 'Трансфер отель — аэропорт', uz: 'Transfer mehmonxona — aeroport', en: 'Transfer hotel to airport' },
+      driver: { ru: 'Услуги водителя', uz: 'Haydovchi xizmatlari', en: 'Driver' },
+      mealsTours: { ru: 'Питание и экскурсии', uz: 'Ovqatlanish va ekskursiyalar', en: 'Meals and tours' },
+      meals: { ru: 'Питание', uz: 'Ovqatlanish', en: 'Meals' },
+      guides: { ru: 'Гиды', uz: 'Gidlar', en: 'Guides' },
+      tickets: { ru: 'Входные билеты', uz: 'Kirish chiptalari', en: 'Entrance tickets' },
       duration: { ru: 'Длительность', uz: 'Davomiyligi', en: 'Duration' },
       travelers: { ru: 'Путешественников', uz: 'Sayohatchilar', en: 'Travellers' },
       price: { ru: 'Стоимость', uz: 'Narxi', en: 'Price' },
@@ -163,8 +194,8 @@ window.LEGACY.site = {
       updated: { ru: 'Обновлено', uz: 'Yangilangan', en: 'Updated' },
       destinations: { ru: 'Маршрут', uz: 'Yo‘nalish', en: 'Route' },
       highlights: { ru: 'Главные места', uz: 'Asosiy joylar', en: 'Highlights' },
-      included: { ru: 'Включено', uz: 'Narxga kiritilgan', en: 'Included' },
-      excluded: { ru: 'Не включено', uz: 'Narxga kiritilmagan', en: 'Not included' },
+      included: { ru: 'Что включено', uz: 'Nimalar kiritilgan', en: 'What’s included' },
+      excluded: { ru: 'Не включено', uz: 'Kiritilmagan', en: 'Not included' },
       itinerary: { ru: 'Программа по дням', uz: 'Kunlik dastur', en: 'Day by day' },
       day: { ru: 'День', uz: 'Kun', en: 'Day' },
       activities: { ru: 'Что будет', uz: 'Nimalar bo‘ladi', en: 'Activities' },
@@ -196,7 +227,7 @@ window.LEGACY.site = {
     groups: [
       { id: 'city', n: 4,
         head: { ru: '4 луча — города маршрута', uz: '4 nur — yo‘nalish shaharlari', en: '4 rays: the cities of the route' },
-        text: { ru: 'Ташкент, Самарканд, Шахрисабз, Бухара. Гид отмечает луч в каждом городе.', uz: 'Toshkent, Samarqand, Shahrisabz, Buxoro. Gid har bir shaharda nurni belgilaydi.', en: 'Tashkent, Samarkand, Shahrisabz, Bukhara. Your guide marks a ray in each city.' } },
+        text: { ru: 'Самарканд и Шахрисабз в первом пакете, Ташкент и Бухара во втором. Гид отмечает луч в каждом городе.', uz: 'Birinchi paketda Samarqand va Shahrisabz, ikkinchisida Toshkent va Buxoro. Gid har bir shaharda nurni belgilaydi.', en: 'Samarkand and Shahrisabz in package 1, Tashkent and Bukhara in package 2. Your guide marks a ray in each city.' } },
       { id: 'friend', n: 3,
         head: { ru: '3 луча — друзья', uz: '3 nur — do‘stlar', en: '3 rays: friends' },
         text: { ru: 'Каждый друг, который поедет в тур по вашей рекомендации, добавляет луч.', uz: 'Tavsiyangiz bilan turga borgan har bir do‘st bitta nur qo‘shadi.', en: 'Each friend who joins the tour on your recommendation adds a ray.' } },
@@ -205,7 +236,7 @@ window.LEGACY.site = {
         text: { ru: 'Следующая поездка с TSTU Travel замыкает звезду.', uz: 'TSTU Travel bilan navbatdagi safar yulduzni yakunlaydi.', en: 'Your next trip with TSTU Travel completes the star.' } }
     ],
     rewards: [
-      { at: 4, text: { ru: 'Маршрут пройден: именной сертификат «Хранитель узора».', uz: 'Yo‘nalish bosib o‘tildi: «Naqsh posboni» nomli sertifikati.', en: 'Route complete: a named “Keeper of the Pattern” certificate.' } },
+      { at: 4, text: { ru: 'Оба пакета пройдены: именной сертификат «Хранитель узора».', uz: 'Ikkala paket bosib o‘tildi: «Naqsh posboni» nomli sertifikati.', en: 'Both packages done: a named “Keeper of the Pattern” certificate.' } },
       { at: 8, text: { ru: 'Звезда собрана: скидка на следующий тур TSTU Travel.', uz: 'Yulduz to‘liq: TSTU Travel’ning keyingi turiga chegirma.', en: 'Star complete: a discount on your next TSTU Travel tour.' } }
     ],
     note: {
