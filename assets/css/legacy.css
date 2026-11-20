@@ -589,3 +589,45 @@ body.unlocked .uh-scroll { opacity: .6; }
 .ji-perks li { font-size: 13px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ivory); }
 .ji-perks li::before { content: "✦"; color: var(--orange); margin-right: 8px; font-size: 10px; }
 @media (max-width: 760px) { .ji-tix { grid-template-columns: 1fr; } }
+
+/* ================= LIGHT THEME (one-tap switch in the top bar) =================
+   The film, the hero photo and text laid over photos stay dark; everything else turns to warm paper. */
+html[data-theme="light"] {
+  --obsidian: #F6F0E6;
+  --midnight: #ECE3D3;
+  --ivory: #16130F;
+  --ivory-dim: rgba(22, 19, 15, .66);
+  --line: rgba(22, 19, 15, .16);
+  color-scheme: light;
+}
+html[data-theme="light"] .film, html[data-theme="light"] .uh, html[data-theme="light"] .city, html[data-theme="light"] .jh,
+html[data-theme="light"] .tl-frame, html[data-theme="light"] .pv, html[data-theme="light"] .cz, html[data-theme="light"] .menu {
+  --obsidian: #080A0F; --midnight: #111C32; --ivory: #F2E9DA; --ivory-dim: rgba(242, 233, 218, .68); --line: rgba(242, 233, 218, .18);
+  color: var(--ivory);
+}
+html[data-theme="light"] .journey { background: linear-gradient(#EFE7D9, #F6F0E6 40%); }
+html[data-theme="light"] .jt-price, html[data-theme="light"] .ji-t, html[data-theme="light"] .pk-tabs button {
+  background: radial-gradient(80% 120% at 0% 0%, rgba(230,106,50,.12), transparent 70%), #FFFAF2; }
+html[data-theme="light"] .pk-tabs button[aria-selected="true"] { background: radial-gradient(80% 120% at 0% 0%, rgba(230,106,50,.2), transparent 70%), #FFFAF2; }
+html[data-theme="light"] .zs { background: radial-gradient(70% 90% at 15% 50%, rgba(36,87,216,.14), transparent 70%), #FFFAF2; }
+html[data-theme="light"] .ji-t::after { border-left-color: rgba(22,19,15,.22); }
+html[data-theme="light"] .watch-again { border-bottom-color: rgba(242,233,218,.5); }
+html[data-theme="light"] .lightbox, html[data-theme="light"] .lightbox.lb-pd { background: #F6F0E6; }
+html[data-theme="light"] .pd-tabs { background: #F6F0E6; box-shadow: 0 -60px 0 #F6F0E6; }
+html[data-theme="light"] .skiplink, html[data-theme="light"] .menu-tour:hover { background: #F2E9DA; color: #16130F; }
+html[data-theme="light"] .jd::before { background: #F6F0E6; }
+html[data-theme="light"] .tl-line { background: rgba(36,87,216,.3); }
+html[data-theme="light"] .media-missing { background: repeating-linear-gradient(45deg, #E6DCCB 0 12px, #EFE6D6 12px 24px); }
+/* top bar: light text over the hero photo, dark text once the page turns to paper */
+html[data-theme="light"] .hud { color: #F2E9DA; }
+html[data-theme="light"] body.on-light .hud { color: #16130F; background: linear-gradient(rgba(246,240,230,.92), rgba(246,240,230,0)); }
+html[data-theme="light"] body.menu-open .hud { color: #F2E9DA; background: none; }
+
+/* the switch itself */
+.theme-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; opacity: .8; transition: opacity .3s, transform .5s cubic-bezier(.2,.7,.2,1); }
+.theme-btn:hover { opacity: 1; transform: rotate(-20deg); }
+.theme-btn svg { width: 19px; height: 19px; }
+.theme-btn .t-sun { display: none; }
+html[data-theme="light"] .theme-btn .t-sun { display: block; }
+html[data-theme="light"] .theme-btn .t-moon { display: none; }
+html.theme-swap, html.theme-swap * { transition: background-color .5s ease, color .5s ease, border-color .5s ease !important; }

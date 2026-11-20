@@ -27,6 +27,7 @@ window.LEGACY.site = {
     watchAgain: { ru: 'Смотреть фильм снова', uz: 'Filmni qayta ko‘rish', en: 'Watch the film again' },
     soundOn: { ru: 'Включить звук', uz: 'Ovozni yoqish', en: 'Sound on' },
     soundOff: { ru: 'Выключить звук', uz: 'Ovozni o‘chirish', en: 'Sound off' },
+    theme: { ru: 'Светлая / тёмная тема', uz: 'Yorug‘ / qorong‘i mavzu', en: 'Light / dark theme' },
     toTour: { ru: 'Сразу к туру', uz: 'To‘g‘ridan-to‘g‘ri turga', en: 'Go to the journey' },
     credits: { ru: 'Фото и лицензии', uz: 'Suratlar va litsenziyalar', en: 'Photos & licences' },
     creditsIntro: {
