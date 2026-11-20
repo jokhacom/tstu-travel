@@ -730,3 +730,7 @@ html[data-theme="light"] .hx .uh-shade { background: radial-gradient(48% 40% at 
 .hx-slide .hx-night img, .hx-slide.on .hx-night img { transform: scale(var(--open, 1.3)); }
 .hx-word { font-size: min(14vw, calc(88vw / (var(--n, 9) * .74)), 240px); }
 @media (max-width: 760px) { .hx-word { font-size: min(18vw, calc((100vw - 28px) / (var(--n, 9) * .8))); } }
+/* big city name: plain white letters (gradient text clipping broke into white blocks in some mobile browsers) */
+.hx-word { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: rgba(255,255,255,.94); -webkit-text-fill-color: currentColor; filter: none; text-shadow: 0 6px 30px rgba(8,10,15,.28); }
+.hx-word .ch { background: none; -webkit-background-clip: border-box; background-clip: border-box; }
+@keyframes hxCh { from { opacity: 0; transform: translateY(.35em); } }
