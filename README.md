@@ -49,7 +49,9 @@ grain, letterbox, synthesized ambient sound). To put in the real documentary:
 Nothing else changes. `film.src: null` switches the film off and the site opens on the tour.
 
 ### Film
-The film is `video/temur-film-720.mp4` (90 s, 720p, its own music and sound effects, Russian subtitles burnt in).
+The film is `video/temur-film-720.mp4` (screens) and `video/temur-film-480.mp4` (upright phones): 90 s, 30 fps, its own music
+and sound effects, Russian subtitles burnt in. Both have a capped bitrate (`-crf 25 -maxrate 1000k/550k -bufsize` the same, `-g 60`,
+`-movflags +faststart`) so they stream smoothly on mobile networks.
 To replace it, copy the new file over it, refresh `img/film-poster.webp` (first frame) and `img/film-end.webp`
 (last frame), and bump `?v=` in `film.src`, `film.poster` and `film.endFrame` (`content/site.js`).
 It plays when the viewer turns the sound on, follows pause and replay, dips under the narrator

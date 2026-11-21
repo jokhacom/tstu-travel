@@ -79,12 +79,13 @@ window.LEGACY.site = {
    * Cue options: pos = bl | br | tl | tr | l | r | c (where in the frame); look = year (big number `n`),
    * place (kicker as a big word), quote (large italic, centred). Leave them out for the plain style.
    *
-   * Now: the 90-second film «The Legacy of Temur» with its own music and sound effects and Russian
+   * Now: the 90-second film «The Legacy of Temur» (30 fps, bitrate capped at ~1 Mbit/s for 720p and
+   * ~0.55 Mbit/s for the phone 480p so it streams without stalls) with its own music and sound effects and Russian
    * subtitles burnt into the picture (so `cues` is empty). It has no black bars. On a phone held upright
    * the whole frame is shown (portraitFit: 'contain'), so the subtitles are never cut off. */
   film: {
     standIn: false,
-    src: { landscape: 'video/temur-film-720.mp4?v=5', portrait: 'video/temur-film-720.mp4?v=5' },   // bump ?v= when the file changes (browsers cache video for 7 days)
+    src: { landscape: 'video/temur-film-720.mp4?v=6', portrait: 'video/temur-film-480.mp4?v=6' },   // 720p for screens, a lighter 480p for upright phones   // bump ?v= when the file changes (browsers cache video for 7 days)
     poster: { landscape: 'img/film-poster.webp?v=5', portrait: 'img/film-poster.webp?v=5' },
     endFrame: { landscape: 'img/film-end.webp?v=5', portrait: 'img/film-end.webp?v=5' },
     letterbox: 0,
