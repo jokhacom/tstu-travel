@@ -576,7 +576,7 @@
     box.setAttribute('aria-label', t(S.ui.watch));
     ui.innerHTML =
       '<div class="fm-caps" aria-live="polite">' + cues + '</div>' +
-      '<div class="fm-unlock" aria-hidden="true">' + heroInner(true) + '</div>' +
+      (F.ownTitle ? '' : '<div class="fm-unlock" aria-hidden="true">' + heroInner(true) + '</div>') +
       '<button type="button" class="fm-start" data-act="start"><span class="fs-i" aria-hidden="true">▶</span><span class="fs-l">' + esc(t(S.ui.watch)) + '</span></button>' +
       '<div class="fm-top">' + (F.standIn ? '<p class="fm-note">' + esc(t(F.standInNote)) + '</p>' : '<span></span>') +
       '<div class="langs" role="group" aria-label="Language"></div></div>' +
@@ -636,6 +636,7 @@
     var src = pick(F.src);
     if (vid.getAttribute('src') !== src) { vid.setAttribute('src', src); }
     vid.poster = pick(F.poster);
+    if (F.portraitFit) vid.setAttribute('data-fit', F.portraitFit); else vid.removeAttribute('data-fit');
     vid.preload = 'auto';
     try { vid.currentTime = 0; } catch (e) {}
     vid.muted = !(gesture && hasSound());

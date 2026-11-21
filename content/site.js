@@ -79,52 +79,31 @@ window.LEGACY.site = {
    * Cue options: pos = bl | br | tl | tr | l | r | c (where in the frame); look = year (big number `n`),
    * place (kicker as a big word), quote (large italic, centred). Leave them out for the plain style.
    *
-   * Now: a TEMPORARY clip made from the site's own photos (58 s, no sound of its own), 19 shots.
-   * Shot starts: 0, 1.7, 6.3, 7.4, 11.6, 12.5, 15.9, 18.9, 23.1, 24.2, 27.1, 29.1, 32.8, 35.85, 38.5, 41.5, 43.0, 45.8, 46.3. */
+   * Now: the 90-second film «The Legacy of Temur» with its own music and sound effects and Russian
+   * subtitles burnt into the picture (so `cues` is empty). It has no black bars. On a phone held upright
+   * the whole frame is shown (portraitFit: 'contain'), so the subtitles are never cut off. */
   film: {
-    standIn: true,
-    src: { landscape: 'video/temur-film-1080.mp4?v=4', portrait: 'video/temur-film-720v.mp4?v=4' },   // bump ?v= when the file changes (browsers cache video for 7 days)
-    poster: { landscape: 'img/film-poster.webp?v=4', portrait: 'img/film-poster-v.webp?v=4' },
-    endFrame: { landscape: 'img/film-end.webp?v=4', portrait: 'img/film-end-v.webp?v=4' },
-    letterbox: 0.11,
+    standIn: false,
+    src: { landscape: 'video/temur-film-720.mp4?v=5', portrait: 'video/temur-film-720.mp4?v=5' },   // bump ?v= when the file changes (browsers cache video for 7 days)
+    poster: { landscape: 'img/film-poster.webp?v=5', portrait: 'img/film-poster.webp?v=5' },
+    endFrame: { landscape: 'img/film-end.webp?v=5', portrait: 'img/film-end.webp?v=5' },
+    letterbox: 0,
+    portraitFit: 'contain',
+    ownTitle: true,   // the film ends on its own title card, so the site does not lay its title over it when it opens
     /* SOUND
-     * voice: true when the video file has its own sound (narration). The stand-in has none.
-     * music: background MP3, e.g. 'audio/film-music.mp3' (put the file in audio/). null = no music.
-     *   It plays only when the viewer turns the sound on, follows the picture (pause, replay),
-     *   dips to `duckTo` of its level while the narrator speaks and rises to full at `swellAt`
-     *   (default: when the motto appears), then fades as the site opens.
-     * duck: optional narration times by hand, e.g. [[3.0, 9.5], [12, 20]], if automatic detection
-     *   is not enough. With no voice and no music, the sound button is hidden. */
-    voice: false,
-    music: 'audio/film-music.mp3?v=1',   // now: the TEMPORARY score; replace the file with the real track
+     * voice: true when the video file has its own sound. The film has music and sound effects in it.
+     * music: a separate background MP3 that follows the picture (e.g. 'audio/film-music.mp3'). null = none.
+     *   It plays only when the viewer turns the sound on, dips to `duckTo` while the narrator speaks
+     *   and rises at `swellAt`. With no voice and no music, the sound button is hidden.
+     * On the first visit the film starts muted (browsers block autoplay with sound): a tap or the sound
+     * button turns it on. Opened with the «Watch the film» button, it starts with sound. */
+    voice: true,
+    music: null,
     musicVolume: 0.75,
     duckTo: 0.3,
     swellAt: null,
-    duck: [],   // height of each black bar in the landscape cut (share of the frame); 0 = none
-    cues: [
-      { from: 2.2, to: 6.0, look: 'year', n: '1336', pos: 'bl', k: { ru: 'Кеш', uz: 'Kesh', en: 'Kesh' },
-        text: { ru: 'Близ Кеша, нынешнего Шахрисабза, рождается Темур.', uz: 'Kesh, hozirgi Shahrisabz yaqinida Temur dunyoga keladi.', en: 'Near Kesh, today’s Shahrisabz, Temur is born.' } },
-      { from: 7.9, to: 11.4, pos: 'tl', k: { ru: 'Начало пути', uz: 'Yo‘l boshi', en: 'The road begins' },
-        text: { ru: 'Сын рода барлас, с юности в седле — воин и стратег.', uz: 'Barlos urug‘ining o‘g‘li, yoshligidan egarda — jangchi va sarkarda.', en: 'A son of the Barlas clan, in the saddle from youth: a warrior and a strategist.' } },
-      { from: 13.0, to: 18.6, look: 'year', n: '1370', pos: 'l', k: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' },
-        text: { ru: 'Его провозглашают правителем. Столицей он делает Самарканд.', uz: 'U hukmdor deb e’lon qilinadi. Samarqandni poytaxt qiladi.', en: 'He is proclaimed ruler, and he makes Samarkand his capital.' } },
-      { from: 19.4, to: 22.9, look: 'place', pos: 'l', k: { ru: 'Империя', uz: 'Saltanat', en: 'An empire' },
-        text: { ru: 'Его держава протянется от Кавказа и Малой Азии до границ Индии.', uz: 'Uning davlati Kavkaz va Kichik Osiyodan Hindiston chegaralarigacha yoyiladi.', en: 'His realm will stretch from the Caucasus and Anatolia to the borders of India.' } },
-      { from: 24.7, to: 29.0, pos: 'br', k: { ru: 'Шахи-Зинда', uz: 'Shohi Zinda', en: 'Shah-i-Zinda' },
-        text: { ru: 'Лучшие зодчие державы строят в Самарканде улицу бирюзовых мавзолеев.', uz: 'Saltanatning eng yaxshi me’morlari Samarqandda moviy maqbaralar ko‘chasini quradi.', en: 'The finest architects of his realm raise a street of turquoise mausoleums in Samarkand.' } },
-      { from: 29.8, to: 32.8, look: 'year', n: '1405', pos: 'tr', k: { ru: 'Гур-Эмир', uz: 'Go‘ri Amir', en: 'Gur-e Amir' },
-        text: { ru: 'Под этим ребристым куполом покоится сам Темур.', uz: 'Bu qovurg‘ali gumbaz ostida Temurning o‘zi yotibdi.', en: 'Beneath this ribbed dome lies Temur himself.' } },
-      { from: 33.4, to: 36.0, look: 'quote', pos: 'c', k: { ru: 'Шесть веков спустя', uz: 'Olti asr o‘tib', en: 'Six centuries later' },
-        text: { ru: 'Самарканд по-прежнему поражает мир.', uz: 'Samarqand hamon dunyoni hayratga soladi.', en: 'Samarkand still astonishes the world.' } },
-      { from: 36.3, to: 38.6, look: 'place', pos: 'bl', k: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' },
-        text: { ru: 'Порталы его дворца Ак-Сарай стоят до сих пор.', uz: 'Uning Oqsaroy saroyi peshtoqlari hamon tik turibdi.', en: 'The portals of his Ak-Saray palace still stand.' } },
-      { from: 38.9, to: 41.3, look: 'place', pos: 'tr', k: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' },
-        text: { ru: 'Купола и минареты древнего города.', uz: 'Qadimiy shaharning gumbaz va minoralari.', en: 'The domes and minarets of an ancient city.' } },
-      { from: 41.8, to: 45.5, look: 'place', pos: 'br', k: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' },
-        text: { ru: 'Столица современного Узбекистана.', uz: 'Zamonaviy O‘zbekiston poytaxti.', en: 'The capital of modern Uzbekistan.' } },
-      { from: 47.2, to: 53.0, motto: true },
-      { from: 53.6, to: 57.8, invite: true }
-    ],
+    duck: [],
+    cues: [],
     motto: {
       ru: ['Если ты сомневаешься в нашем могуществе —', 'взгляни на наши творения'],
       uz: ['Agar bizning qudratimizga shubha qilsang,', 'biz qurgan imoratlarga boq'],
@@ -141,7 +120,7 @@ window.LEGACY.site = {
 
   // the first screen: photos that switch (keys from photos.js). night: true shows the film's night frame in the dark theme
   heroSlides: [
-    { image: 'samarqand_0', night: true, name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
+    { image: 'samarqand_0', name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
     { image: 'shahr_aks', name: { ru: 'Шахрисабз', uz: 'Shahrisabz', en: 'Shahrisabz' } },
     { image: 'toshkent_cic', name: { ru: 'Ташкент', uz: 'Toshkent', en: 'Tashkent' } },
     { image: 'buxoro_3', name: { ru: 'Бухара', uz: 'Buxoro', en: 'Bukhara' } }
