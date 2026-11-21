@@ -48,9 +48,10 @@ grain, letterbox, synthesized ambient sound). To put in the real documentary:
 4. If the film has no black bars, set `film.letterbox: 0`.
 Nothing else changes. `film.src: null` switches the film off and the site opens on the tour.
 
-### Film music
-The background music is a separate file: `audio/film-music.mp3` (now a TEMPORARY synthesized score).
-To use the real track, replace the file (same name) and bump `?v=` in `film.music` (`content/site.js`).
+### Film
+The film is `video/temur-film-720.mp4` (90 s, 720p, its own music and sound effects, Russian subtitles burnt in).
+To replace it, copy the new file over it, refresh `img/film-poster.webp` (first frame) and `img/film-end.webp`
+(last frame), and bump `?v=` in `film.src`, `film.poster` and `film.endFrame` (`content/site.js`).
 It plays when the viewer turns the sound on, follows pause and replay, dips under the narrator
 (set `film.voice: true` once the video has its own narration; times can also be listed in `film.duck`)
 and rises to full at the motto (`film.swellAt`), then fades as the site opens.

@@ -734,3 +734,5 @@ html[data-theme="light"] .hx .uh-shade { background: radial-gradient(48% 40% at 
 .hx-word { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: rgba(255,255,255,.94); -webkit-text-fill-color: currentColor; filter: none; text-shadow: 0 6px 30px rgba(8,10,15,.28); }
 .hx-word .ch { background: none; -webkit-background-clip: border-box; background-clip: border-box; }
 @keyframes hxCh { from { opacity: 0; transform: translateY(.35em); } }
+/* the real film: on an upright phone show the whole frame so the burnt-in subtitles stay visible */
+@media (max-aspect-ratio: 1/1) { .fm-video[data-fit="contain"] { object-fit: contain; } }
