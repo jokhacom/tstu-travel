@@ -823,8 +823,9 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
 
 /* «thank you» screen: atlas (ikat) band on the left, rosette, falling diamonds */
 .lb-ok { --atlas: clamp(110px, 20vw, 320px); padding-left: calc(var(--atlas) + var(--gut)); }
-.bk-atlas { position: fixed; top: 0; bottom: 0; left: 0; width: var(--atlas); overflow: hidden; z-index: 0; animation: atlasIn 1.1s cubic-bezier(.2,.7,.2,1) both; }
-.bk-atlas svg { position: absolute; top: -20px; left: -20px; width: calc(100% + 40px) !important; height: calc(100% + 40px) !important; }
+.bk-atlas { position: fixed; top: 0; bottom: 0; left: 0; width: var(--atlas); overflow: hidden; z-index: 0; background: #111C32 0 0 / 160px 160px repeat;
+  animation: atlasIn 1.1s cubic-bezier(.2,.7,.2,1) both, atlasDrift 24s linear infinite; }
+@keyframes atlasDrift { to { background-position: 0 160px; } }
 .bk-atlas::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 14px;
   background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); opacity: .9; }
 @keyframes atlasIn { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
@@ -867,3 +868,8 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
   .bk-atlas, .bk-ros, .bk-ros * { animation: none !important; }
   .bk-ros .r-c { stroke-dashoffset: 0; } .bk-ros .r-p, .bk-ros .r-d { opacity: 1; } .bk-ros .r-s { transform: none; }
 }
+
+.bk-weave { position: relative; height: clamp(150px, 30vh, 280px); margin: 40px 0 0; color: var(--ivory); border-radius: 4px; overflow: hidden; }
+.bk-weave canvas { display: block; width: 100%; height: 100%; }
+@media (max-width: 760px) { .bk-weave { height: 170px; margin-top: 30px; } }
+@media (prefers-reduced-motion: reduce) { .bk-atlas { animation: none !important; } }

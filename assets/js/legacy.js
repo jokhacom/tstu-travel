@@ -891,10 +891,11 @@
       .then(function () {
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
-          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul>';
+          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-weave" aria-hidden="true"><canvas></canvas></div>';
         f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
         var lb = $('#lightbox'); lb.classList.add('lb-ok'); lb.insertAdjacentHTML('afterbegin', atlasSVG()); lb.scrollTop = 0;
         confetti($('.bk-ros', f));
+        weave($('.bk-weave', f));
       })
       .catch(function (x) {
         var m = String((x && x.message) || '');
@@ -920,24 +921,72 @@
     for (i = 0; i < n; i++) pts.push([cx - rx + i * sx, cy - i * sy], [cx - rx + i * sx, cy - (i + 1) * sy]);
     return pts.map(function (q) { return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ');
   }
+  /* ikat (atlas) colours, worked out per pixel so that every browser draws the same thing:
+     stepped lozenges in columns, each thread row shifted a little — the «bleed» of real abr fabric */
+  var IKAT = [[17, 28, 50], [230, 106, 50], [242, 233, 218], [36, 87, 216], [233, 185, 73], [158, 31, 63], [24, 166, 160]];
+  function ikatAt(u, v) {
+    var vv = ((v % 160) + 160) % 160, row = Math.floor(vv / 4);
+    var jit = ((row * 7919 + 13) % 11) / 10 * 6 - 3;            // −3…3 px, the same on every repeat
+    var uu = u + jit, col = Math.floor(uu / 80), odd = ((col % 2) + 2) % 2;
+    var dx = Math.abs(uu - col * 80 - 40), dy = Math.abs(((vv + odd * 80) % 160) - 80);
+    dx = Math.floor(dx / 4) * 4; dy = Math.floor(dy / 6) * 6;     // stair steps
+    var d = dx / 36 + dy / 72;
+    if (d < .16) return 5; if (d < .36) return 4; if (d < .56) return 3; if (d < .76) return 2; if (d < 1) return 1;
+    var zz = ((u % 80) + 80) % 80, tri = Math.abs((vv % 20) - 10) / 10 * 5;   // turquoise zigzag thread between columns
+    return Math.abs(zz - 2 - tri) < 1.6 ? 6 : 0;
+  }
+  function ikatPaint(ctx, w, h, k) {   // k = device pixels per css pixel
+    var img = ctx.createImageData(w, h), px = img.data, i = 0;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++, i += 4) {
+      var c = IKAT[ikatAt(x / k, y / k)]; px[i] = c[0]; px[i + 1] = c[1]; px[i + 2] = c[2]; px[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  var ikatTile = null;
   function atlasSVG() {
-    var col = function (x, y) {
-      return '<polygon points="' + stepD(x, y, 38, 76, 7) + '" fill="#E66A32"/>' +
-        '<polygon points="' + stepD(x, y, 29, 58, 6) + '" fill="#F2E9DA"/>' +
-        '<polygon points="' + stepD(x, y, 21, 42, 5) + '" fill="#2457D8"/>' +
-        '<polygon points="' + stepD(x, y, 12, 24, 4) + '" fill="#E9B949"/>' +
-        '<polygon points="' + stepD(x, y, 5, 10, 2) + '" fill="#9E1F3F"/>';
-    };
-    var tile = col(40, 80) + col(120, 0) + col(120, 160) +
-      // thin chevron threads between the lozenges
-      '<path d="M80 0 L86 10 L80 20 L86 30 L80 40 L86 50 L80 60 L86 70 L80 80 L86 90 L80 100 L86 110 L80 120 L86 130 L80 140 L86 150 L80 160" fill="none" stroke="#18A6A0" stroke-width="3"/>' +
-      '<path d="M0 0 L6 10 L0 20 L6 30 L0 40 L6 50 L0 60 L6 70 L0 80 L6 90 L0 100 L6 110 L0 120 L6 130 L0 140 L6 150 L0 160" fill="none" stroke="#18A6A0" stroke-width="3"/>';
-    return '<div class="bk-atlas" aria-hidden="true"><svg width="100%" height="100%" preserveAspectRatio="none">' +
-      '<defs><filter id="ikatBleed" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.45" numOctaves="2" seed="7"/>' +
-      '<feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="B"/></filter>' +
-      '<pattern id="ikatTile" width="160" height="160" patternUnits="userSpaceOnUse"><rect width="160" height="160" fill="#111C32"/>' + tile +
-      '<animateTransform attributeName="patternTransform" type="translate" from="0 0" to="0 160" dur="24s" repeatCount="indefinite"/></pattern></defs>' +
-      '<rect width="100%" height="100%" fill="url(#ikatTile)" filter="url(#ikatBleed)"/></svg></div>';
+    if (!ikatTile) { try { var c = document.createElement('canvas'); c.width = c.height = 320; ikatPaint(c.getContext('2d'), 320, 320, 2); ikatTile = c.toDataURL('image/png'); } catch (x) { ikatTile = ''; } }
+    return '<div class="bk-atlas" aria-hidden="true"' + (ikatTile ? ' style="background-image:url(' + ikatTile + ')"' : '') + '></div>';
+  }
+  /* the loop below the summary: an atlas being woven row by row, the shuttle running back and forth */
+  function weave(box) {
+    var cv = box && $('canvas', box); if (!cv) return;
+    var k = Math.min(2, window.devicePixelRatio || 1), W = box.clientWidth, H = box.clientHeight;
+    cv.width = Math.round(W * k); cv.height = Math.round(H * k);
+    var ctx = cv.getContext('2d'), full = document.createElement('canvas');
+    full.width = cv.width; full.height = cv.height; ikatPaint(full.getContext('2d'), full.width, full.height, k);
+    var RH = 4, rows = Math.ceil(H / RH), still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var warp = getComputedStyle(box).color;
+    if (still) { ctx.drawImage(full, 0, 0); return; }
+    var t0 = 0, ROW = 140, HOLD = 2600, FADE = 700, cycle = rows * ROW + HOLD + FADE;
+    function frame(now) {
+      if (!box.isConnected) return;
+      if (!t0) t0 = now;
+      var t = (now - t0) % cycle, done = Math.min(rows, t / ROW), r = Math.floor(done), f = done - r;
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.save(); ctx.scale(k, k);
+      // warp threads still waiting for the weft (the loom is at the bottom, cloth grows upward)
+      ctx.globalAlpha = .28; ctx.fillStyle = warp;
+      for (var x = 3; x < W; x += 6) ctx.fillRect(x, 0, 1, H - r * RH);
+      ctx.globalAlpha = 1; ctx.restore();
+      var a = t > rows * ROW + HOLD ? 1 - (t - rows * ROW - HOLD) / FADE : 1;
+      ctx.globalAlpha = a;
+      var wovenH = r * RH * k; if (wovenH) ctx.drawImage(full, 0, cv.height - wovenH, cv.width, wovenH, 0, cv.height - wovenH, cv.width, wovenH);
+      if (r < rows) {
+        var ltr = r % 2 === 0, sx = (ltr ? f : 1 - f) * W, y = H - (r + 1) * RH;
+        // the row being woven so far
+        var px0 = ltr ? 0 : sx, pw = ltr ? sx : W - sx;
+        ctx.drawImage(full, px0 * k, y * k, pw * k, RH * k, px0 * k, y * k, pw * k, RH * k);
+        ctx.save(); ctx.scale(k, k);
+        ctx.fillStyle = '#C9A15A'; ctx.fillRect(0, y - 3, W, 2);   // the reed (beater)
+        ctx.translate(sx, y + RH / 2);                              // the shuttle
+        ctx.fillStyle = '#7A4A26'; ctx.beginPath(); ctx.moveTo(-22, 0); ctx.quadraticCurveTo(0, -8, 22, 0); ctx.quadraticCurveTo(0, 8, -22, 0); ctx.fill();
+        ctx.fillStyle = '#E9B949'; ctx.fillRect(-7, -2, 14, 4);
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   }
   // eight-pointed star with petals, like the medallions on suzani and tiles
   function rosetteSVG() {
