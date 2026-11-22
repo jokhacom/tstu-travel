@@ -907,3 +907,10 @@ body.film-on .site-atlas, body.menu-open .site-atlas { opacity: 0; }
 body { padding-left: var(--band); }
 .site-atlas { width: var(--band); }
 .foot { display: grid; gap: 12px; padding: 40px var(--gut) 48px; border-top: 1px solid var(--line); }
+
+/* atlas band: no gold dashes, and widths that hold whole lozenge columns so nothing is cut at the band's edge */
+.site-atlas::after, .bk-atlas::after { content: none !important; }
+.lb-pd { --atlas: 80px; }
+.lb-pd.lb-ok, .lb-ok { --atlas: 240px; }
+@media (max-width: 1100px) { .lb-pd.lb-ok, .lb-ok { --atlas: 160px; } }
+@media (max-width: 760px) { .lb-pd { --atlas: 12px; } .lb-pd.lb-ok, .lb-ok { --atlas: 96px; } }
