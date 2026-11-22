@@ -816,3 +816,5 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
 .pk-tabs.has-both { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .pk-both .pk-n i { font-style: normal; color: var(--orange); }
 @media (max-width: 760px) { .pk-tabs.has-both { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
+/* the last day can scroll up until its marker and title reach the top of the sticky photo */
+@media (min-width: 901px) { .tl .jd:last-child { min-height: calc(76vh + 6vh); } }
