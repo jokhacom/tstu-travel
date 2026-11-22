@@ -891,11 +891,10 @@
       .then(function () {
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
-          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-weave" aria-hidden="true"><canvas></canvas></div>';
+          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-guyw">' + guySVG() + '</div>';
         f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
         var lb = $('#lightbox'); lb.classList.add('lb-ok'); atlasInto(lb); lb.scrollTop = 0;
         confetti($('.bk-ros', f));
-        weave($('.bk-weave', f));
       })
       .catch(function (x) {
         var m = String((x && x.message) || '');
@@ -913,7 +912,7 @@
 
   // the atlas edge on the left of the page (decorative, under the menu and the film)
   setTimeout(function () { atlasSVG(); var d = document.createElement('div'); d.className = 'site-atlas'; d.setAttribute('aria-hidden', 'true');
-    if (ikatTile) d.style.backgroundImage = 'url(' + ikatTile + ')'; document.body.appendChild(d); }, 0);
+    if (ikatTile) { d.style.backgroundImage = 'url(' + ikatTile + ')'; root.style.setProperty('--ikat', 'url(' + ikatTile + ')'); } document.body.appendChild(d); }, 0);
   /* ---------- «thank you» screen: atlas (ikat) band and a rosette ---------- */
   // stepped lozenge, the way ikat threads draw a diamond
   function stepD(cx, cy, rx, ry, n) {
@@ -952,46 +951,45 @@
     return '<div class="bk-atlas" aria-hidden="true"' + (ikatTile ? ' style="background-image:url(' + ikatTile + ')"' : '') + '></div>';
   }
   function atlasInto(lb) { if (lb && !$('.bk-atlas', lb)) lb.insertAdjacentHTML('afterbegin', atlasSVG()); }
-  /* the loop below the summary: an atlas being woven row by row, the shuttle running back and forth */
-  function weave(box) {
-    var cv = box && $('canvas', box); if (!cv) return;
-    var k = Math.min(2, window.devicePixelRatio || 1), W = box.clientWidth, H = box.clientHeight;
-    cv.width = Math.round(W * k); cv.height = Math.round(H * k);
-    var ctx = cv.getContext('2d'), full = document.createElement('canvas');
-    full.width = cv.width; full.height = cv.height; ikatPaint(full.getContext('2d'), full.width, full.height, k);
-    var RH = 4, rows = Math.ceil(H / RH), still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var warp = getComputedStyle(box).color;
-    if (still) { ctx.drawImage(full, 0, 0); return; }
-    var t0 = 0, ROW = 140, HOLD = 2600, FADE = 700, cycle = rows * ROW + HOLD + FADE;
-    function frame(now) {
-      if (!box.isConnected) return;
-      if (!t0) t0 = now;
-      var t = (now - t0) % cycle, done = Math.min(rows, t / ROW), r = Math.floor(done), f = done - r;
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      ctx.save(); ctx.scale(k, k);
-      // warp threads still waiting for the weft (the loom is at the bottom, cloth grows upward)
-      ctx.globalAlpha = .28; ctx.fillStyle = warp;
-      for (var x = 3; x < W; x += 6) ctx.fillRect(x, 0, 1, H - r * RH);
-      ctx.globalAlpha = 1; ctx.restore();
-      var a = t > rows * ROW + HOLD ? 1 - (t - rows * ROW - HOLD) / FADE : 1;
-      ctx.globalAlpha = a;
-      var wovenH = r * RH * k; if (wovenH) ctx.drawImage(full, 0, cv.height - wovenH, cv.width, wovenH, 0, cv.height - wovenH, cv.width, wovenH);
-      if (r < rows) {
-        var ltr = r % 2 === 0, sx = (ltr ? f : 1 - f) * W, y = H - (r + 1) * RH;
-        // the row being woven so far
-        var px0 = ltr ? 0 : sx, pw = ltr ? sx : W - sx;
-        ctx.drawImage(full, px0 * k, y * k, pw * k, RH * k, px0 * k, y * k, pw * k, RH * k);
-        ctx.save(); ctx.scale(k, k);
-        ctx.fillStyle = '#C9A15A'; ctx.fillRect(0, y - 3, W, 2);   // the reed (beater)
-        ctx.translate(sx, y + RH / 2);                              // the shuttle
-        ctx.fillStyle = '#7A4A26'; ctx.beginPath(); ctx.moveTo(-22, 0); ctx.quadraticCurveTo(0, -8, 22, 0); ctx.quadraticCurveTo(0, 8, -22, 0); ctx.fill();
-        ctx.fillStyle = '#E9B949'; ctx.fillRect(-7, -2, 14, 4);
-        ctx.restore();
-      }
-      ctx.globalAlpha = 1;
-      requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
+  /* a young man in a chapan and doppi puts his hand on his heart and bows: the Uzbek way of saying thank you */
+  function guySVG() {
+    var stripes = '<pattern id="chapan" width="12" height="10" patternUnits="userSpaceOnUse"><rect width="12" height="10" fill="#2457D8"/>' +
+      '<rect x="4" width="2" height="10" fill="#18A6A0"/><rect x="6" width="1" height="10" fill="#F2E9DA"/><rect x="7" width="3" height="10" fill="#9E1F3F"/><rect x="10" width="1" height="10" fill="#E9B949"/></pattern>';
+    var pepper = function (x, m) { return '<path d="M' + x + ' 54 C' + (x - 6 * m) + ' 48 ' + (x - 2 * m) + ' 42 ' + (x + 2 * m) + ' 41 C' + (x + 2 * m) + ' 46 ' + (x + 4 * m) + ' 50 ' + x + ' 54Z" fill="#F2E9DA"/>'; };
+    return '<svg class="bk-guy" viewBox="0 0 240 300" role="img" aria-label="Rahmat!"><defs>' + stripes + '</defs>' +
+      '<path class="g-arch" d="M36 300V132Q36 62 120 26Q204 62 204 132V300Z"/>' +
+      '<path class="g-arch2" d="M46 300V134Q46 70 120 38Q194 70 194 134V300Z"/>' +
+      '<ellipse cx="120" cy="292" rx="52" ry="6" fill="#000" opacity=".14"/>' +
+      // legs, boots and the lower part of the robe stay still
+      '<path d="M104 266h13v20q0 4-4 4h-15q-2 0 0-4z" fill="#5A3A22"/><path d="M123 266h13l3 20q2 4 0 4h-15q-1 0-1-4z" fill="#5A3A22"/>' +
+      '<path d="M88 186 78 272h84l-10-86z" fill="url(#chapan)"/><path d="M114 186l-3 86h18l-3-86z" fill="#23324F"/>' +
+      '<path d="M88 186 78 272M152 186l10 86" stroke="#E66A32" stroke-width="3"/>' +
+      '<g class="g-up">' +
+        '<path d="M86 114Q88 100 104 98h32q16 2 18 16v76H86z" fill="url(#chapan)"/>' +
+        '<path d="M109 98h22l-11 28z" fill="#F2E9DA"/><path d="M106 98l14 32 14-32" fill="none" stroke="#E66A32" stroke-width="4" stroke-linejoin="round"/>' +
+        '<rect x="86" y="174" width="68" height="14" rx="3" fill="#E66A32"/><path d="M96 186l-6 26 12-2 2-24z" fill="#E66A32"/><path d="M96 188l-4 20" stroke="#E9B949" stroke-width="1.5"/>' +
+        '<path d="M150 106q12 6 12 44l-4 32h-10V120z" fill="url(#chapan)"/><circle cx="153" cy="188" r="6.5" fill="#D9A27A"/>' +
+        '<rect x="113" y="84" width="14" height="16" rx="4" fill="#C98E66"/>' +
+        '<g class="g-head">' +
+          '<circle cx="102" cy="72" r="4.5" fill="#C98E66"/><circle cx="138" cy="72" r="4.5" fill="#C98E66"/>' +
+          '<ellipse cx="120" cy="70" rx="18" ry="21" fill="#D9A27A"/>' +
+          '<path d="M102 62q0-6 4-8h28q4 2 4 8v4q-3-6-6-7H108q-3 1-6 7z" fill="#1E1712"/>' +
+          '<path d="M109 66l6-1M125 65l6 1" stroke="#1E1712" stroke-width="2" stroke-linecap="round"/>' +
+          '<path class="g-eye" d="M108 72q4-3 8 0M124 72q4-3 8 0" fill="none" stroke="#1E1712" stroke-width="2" stroke-linecap="round"/>' +
+          '<path d="M120 73l-2 6h4" fill="none" stroke="#B57A55" stroke-width="1.5" stroke-linecap="round"/>' +
+          '<path d="M113 82q7 6 14 0" fill="none" stroke="#7A3B2A" stroke-width="2" stroke-linecap="round"/>' +
+          '<circle cx="109" cy="80" r="3.5" fill="#E66A32" opacity=".22"/><circle cx="131" cy="80" r="3.5" fill="#E66A32" opacity=".22"/>' +
+          // doppi: the black four-sided cap with white pepper (qalampir) motifs
+          '<path d="M100 59l4-19q16-6 32 0l4 19q-20-5-40 0z" fill="#16130F"/>' + pepper(111, 1) + pepper(129, -1) +
+          '<path d="M103 56q17-5 34 0M106 41q14-4 28 0" fill="none" stroke="#F2E9DA" stroke-width="1.2"/><path d="M120 37v17" stroke="#F2E9DA" stroke-width="1"/>' +
+        '</g>' +
+        // right arm: rises and the hand rests on the heart
+        '<g class="g-arm"><path d="M90 106q-12 6-12 40l2 6h12l2-34z" fill="url(#chapan)"/>' +
+          '<g class="g-fore"><path d="M79 146l1 36h12l1-36z" fill="url(#chapan)"/><path d="M80 180h12" stroke="#E66A32" stroke-width="3"/><circle cx="86" cy="188" r="6.5" fill="#D9A27A"/></g></g>' +
+      '</g>' +
+      '<g class="g-say"><rect x="148" y="18" width="78" height="28" rx="14" fill="#FFFAF2" stroke="#E66A32" stroke-width="1.5"/><path d="M156 44l-6 10 14-8z" fill="#FFFAF2" stroke="#E66A32" stroke-width="1.5" stroke-linejoin="round"/>' +
+        '<rect x="152" y="40" width="16" height="5" fill="#FFFAF2"/><text x="187" y="37" text-anchor="middle">Rahmat!</text></g>' +
+      '</svg>';
   }
   // eight-pointed star with petals, like the medallions on suzani and tiles
   function rosetteSVG() {

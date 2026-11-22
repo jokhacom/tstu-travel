@@ -869,9 +869,30 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
   .bk-ros .r-c { stroke-dashoffset: 0; } .bk-ros .r-p, .bk-ros .r-d { opacity: 1; } .bk-ros .r-s { transform: none; }
 }
 
-.bk-weave { position: relative; height: clamp(150px, 30vh, 280px); margin: 40px 0 0; color: var(--ivory); border-radius: 4px; overflow: hidden; }
-.bk-weave canvas { display: block; width: 100%; height: 100%; }
-@media (max-width: 760px) { .bk-weave { height: 170px; margin-top: 30px; } }
+.bk-guyw { margin: 34px 0 0; display: flex; justify-content: center; }
+.bk-guy { display: block; height: clamp(240px, 40vh, 360px); width: auto; overflow: visible; }
+.bk-guy .g-arch { fill: var(--midnight); stroke: var(--orange); stroke-width: 2; }
+.bk-guy .g-arch2 { fill: none; stroke: #18A6A0; stroke-width: 2; stroke-dasharray: 2 6; stroke-linecap: round; }
+.bk-guy .g-say text { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 17px; fill: #E66A32; }
+.bk-guy .g-up, .bk-guy .g-head, .bk-guy .g-arm, .bk-guy .g-fore, .bk-guy .g-say { transform-box: view-box; }
+.bk-guy .g-up { transform-origin: 120px 190px; animation: gBow 6s 1s ease-in-out infinite; }
+.bk-guy .g-head { transform-origin: 120px 92px; animation: gNod 6s 1s ease-in-out infinite; }
+.bk-guy .g-arm { transform-origin: 88px 108px; animation: gArm 6s 1s ease-in-out infinite; }
+.bk-guy .g-fore { transform-origin: 86px 148px; animation: gFore 6s 1s ease-in-out infinite; }
+.bk-guy .g-say { transform-origin: 156px 50px; opacity: 0; animation: gSay 6s 1s ease-out infinite; }
+@keyframes gArm { 0%, 4% { transform: rotate(0); } 14%, 66% { transform: rotate(-10deg); } 78%, 100% { transform: rotate(0); } }
+@keyframes gFore { 0%, 4% { transform: rotate(0); } 14%, 66% { transform: rotate(-112deg); } 78%, 100% { transform: rotate(0); } }
+@keyframes gBow { 0%, 16% { transform: none; } 28%, 52% { transform: translateY(5px) scaleY(.95); } 64%, 100% { transform: none; } }
+@keyframes gNod { 0%, 16% { transform: none; } 28%, 52% { transform: translateY(5px) rotate(-4deg) scaleY(.94); } 64%, 100% { transform: none; } }
+@keyframes gSay { 0%, 20% { opacity: 0; transform: scale(.4); } 28% { opacity: 1; transform: scale(1.08); } 32%, 60% { opacity: 1; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(.9); } }
+@media (max-width: 760px) { .bk-guy { height: 250px; } .bk-guyw { margin-top: 26px; } }
+@media (prefers-reduced-motion: reduce) {
+  .bk-guy * { animation: none !important; }
+  .bk-guy .g-arm { transform: rotate(-10deg); } .bk-guy .g-fore { transform: rotate(-112deg); } .bk-guy .g-say { opacity: 1; }
+}
+/* an atlas ribbon along the top of the hero's package card */
+.hx-pill { position: relative; overflow: hidden; padding-top: 22px; }
+.hx-pill::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: #111C32 var(--ikat, none) 0 0 / 20px 20px repeat-x; }
 @media (prefers-reduced-motion: reduce) { .bk-atlas { animation: none !important; } }
 
 /* atlas band on every screen: a slim edge on the page, a wider band on the overlay screens (details, booking) */
@@ -879,7 +900,8 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
   background: #111C32 0 0 / 48px 48px repeat; animation: atlasDriftS 24s linear infinite; }
 @keyframes atlasDriftS { to { background-position: 0 48px; } }
 @keyframes atlasDriftXS { to { background-position: 0 24px; } }
-@media (max-width: 760px) { .site-atlas { width: 12px; background-size: 24px 24px; animation-name: atlasDriftXS; } .site-atlas::after { width: 2px; } }
+@media (max-width: 760px) { .site-atlas { width: 18px; background-size: 36px 36px; animation-name: atlasDriftM; } .site-atlas::after { width: 3px; } }
+@keyframes atlasDriftM { to { background-position: 0 36px; } }
 .site-atlas::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 4px; background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); }
 body.film-on .site-atlas, body.menu-open .site-atlas { opacity: 0; }
 .lb-pd { --atlas: clamp(40px, 7vw, 120px); padding-left: calc(var(--atlas) + var(--gut)); }
@@ -894,3 +916,5 @@ body.film-on .site-atlas, body.menu-open .site-atlas { opacity: 0; }
   .lb-pd.lb-ok { --atlas: 96px; padding-left: var(--gut); }
 }
 @media (prefers-reduced-motion: reduce) { .site-atlas { animation: none; } }
+
+@media (max-width: 760px) { :root { --gut: 28px; } }
