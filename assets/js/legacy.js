@@ -955,7 +955,6 @@
   function guySVG() {
     var stripes = '<pattern id="chapan" width="12" height="10" patternUnits="userSpaceOnUse"><rect width="12" height="10" fill="#2457D8"/>' +
       '<rect x="4" width="2" height="10" fill="#18A6A0"/><rect x="6" width="1" height="10" fill="#F2E9DA"/><rect x="7" width="3" height="10" fill="#9E1F3F"/><rect x="10" width="1" height="10" fill="#E9B949"/></pattern>';
-    var pepper = function (x, m) { return '<path d="M' + x + ' 54 C' + (x - 6 * m) + ' 48 ' + (x - 2 * m) + ' 42 ' + (x + 2 * m) + ' 41 C' + (x + 2 * m) + ' 46 ' + (x + 4 * m) + ' 50 ' + x + ' 54Z" fill="#F2E9DA"/>'; };
     return '<svg class="bk-guy" viewBox="0 0 240 300" role="img" aria-label="Rahmat!"><defs>' + stripes + '</defs>' +
       '<path class="g-arch" d="M36 300V132Q36 62 120 26Q204 62 204 132V300Z"/>' +
       '<path class="g-arch2" d="M46 300V134Q46 70 120 38Q194 70 194 134V300Z"/>' +
@@ -979,9 +978,15 @@
           '<path d="M120 73l-2 6h4" fill="none" stroke="#B57A55" stroke-width="1.5" stroke-linecap="round"/>' +
           '<path d="M113 82q7 6 14 0" fill="none" stroke="#7A3B2A" stroke-width="2" stroke-linecap="round"/>' +
           '<circle cx="109" cy="80" r="3.5" fill="#E66A32" opacity=".22"/><circle cx="131" cy="80" r="3.5" fill="#E66A32" opacity=".22"/>' +
-          // doppi: the black four-sided cap with white pepper (qalampir) motifs
-          '<path d="M100 59l4-19q16-6 32 0l4 19q-20-5-40 0z" fill="#16130F"/>' + pepper(111, 1) + pepper(129, -1) +
-          '<path d="M103 56q17-5 34 0M106 41q14-4 28 0" fill="none" stroke="#F2E9DA" stroke-width="1.2"/><path d="M120 37v17" stroke="#F2E9DA" stroke-width="1"/>' +
+          // doppi in the Chust style: black dome, one big white kalampir (paisley) on the front, a row of white arches on the band
+          '<path d="M97 63V50Q97 35 108 32Q120 28 132 32Q143 35 143 50V63Q120 60 97 63Z" fill="#16130F"/>' +
+          '<path d="M108.5 42.5C106.5 38 110 34.6 114.5 35.2C121 36 127 38.6 133 45C127.5 41.6 122 41.3 117.5 43.4C113.5 45.4 110 45.2 108.5 42.5Z" fill="#F2E9DA"/>' +
+          '<path d="M110.2 42C109 39.2 111.4 36.9 114.6 37.3C119 37.9 122.5 39.3 125.5 41.4C121.5 40.6 118.5 41 116 42.4C113.3 43.8 111 43.6 110.2 42Z" fill="#16130F"/>' +
+          '<circle cx="113.2" cy="40" r="1.6" fill="none" stroke="#F2E9DA" stroke-width=".7"/><path d="M116 38.6v3M117.4 38.8v3M118.8 39.1v2.6" stroke="#F2E9DA" stroke-width=".6"/>' +
+          '<circle cx="121" cy="46.5" r=".6" fill="#F2E9DA"/><circle cx="126" cy="46.5" r=".6" fill="#F2E9DA"/><path d="M123.5 45.2v2.6M122.2 46.5h2.6" stroke="#F2E9DA" stroke-width=".6"/>' +
+          '<path d="M98.6 41q1.6-4 4.6-5.6q-1 3.6-4.6 5.6M141.4 41q-1.6-4-4.6-5.6q1 3.6 4.6 5.6" fill="#F2E9DA"/>' +
+          '<path d="M103 58a5.5 5.5 0 0 1 11 0" fill="none" stroke="#F2E9DA" stroke-width="1.3"/><path d="M105.6 58a3.4 3.4 0 0 1 6.8 0z" fill="#F2E9DA"/><path d="M106.0 56.2h6M105.7 57.2h6.6" stroke="#16130F" stroke-width=".55"/><circle cx="109.0" cy="55.3" r=".6" fill="#16130F"/><path d="M114 58a5.5 5.5 0 0 1 11 0" fill="none" stroke="#F2E9DA" stroke-width="1.3"/><path d="M116.6 58a3.4 3.4 0 0 1 6.8 0z" fill="#F2E9DA"/><path d="M117.0 56.2h6M116.7 57.2h6.6" stroke="#16130F" stroke-width=".55"/><circle cx="120.0" cy="55.3" r=".6" fill="#16130F"/><path d="M125 58a5.5 5.5 0 0 1 11 0" fill="none" stroke="#F2E9DA" stroke-width="1.3"/><path d="M127.6 58a3.4 3.4 0 0 1 6.8 0z" fill="#F2E9DA"/><path d="M128.0 56.2h6M127.7 57.2h6.6" stroke="#16130F" stroke-width=".55"/><circle cx="131.0" cy="55.3" r=".6" fill="#16130F"/>' +
+          '<path d="M98 58.6h44" stroke="#F2E9DA" stroke-width="1.2"/>' +
         '</g>' +
         // right arm: rises and the hand rests on the heart
         '<g class="g-arm"><path d="M90 106q-12 6-12 40l2 6h12l2-34z" fill="url(#chapan)"/>' +
