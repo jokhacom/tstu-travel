@@ -811,3 +811,8 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
   .ji-hint { flex-basis: 100%; }
 }
 @media (prefers-reduced-motion: reduce) { .ji-tix.snap { animation: none; } .ji-seam { transition: none; } }
+
+/* package tabs with the third «both» tab */
+.pk-tabs.has-both { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pk-both .pk-n i { font-style: normal; color: var(--orange); }
+@media (max-width: 760px) { .pk-tabs.has-both { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
