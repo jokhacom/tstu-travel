@@ -880,15 +880,18 @@
     err.hidden = true; btn.disabled = true; $('span', btn).textContent = t(B.sending);
     fetch('https://formsubmit.co/ajax/' + encodeURIComponent(B.to), {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body)
-    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || r.status); }); })
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || String(r.status)); }); })
       .then(function () {
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
           '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul>';
       })
-      .catch(function () {
+      .catch(function (x) {
+        var m = String((x && x.message) || '');
+        if (window.console) console.warn('[booking] FormSubmit:', m);
         btn.disabled = false; $('span', btn).textContent = t(B.send);
-        err.textContent = t(B.err); err.hidden = false;
+        // FormSubmit answers "This form needs Activation…" until the owner confirms the address once
+        err.textContent = t(/activat/i.test(m) && B.notActive ? B.notActive : B.err); err.hidden = false;
       });
   }
 

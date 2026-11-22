@@ -168,6 +168,11 @@ window.LEGACY.site = {
     join: { ru: 'Соединить пакеты', uz: 'Paketlarni birlashtirish', en: 'Join the packages' },
     unjoin: { ru: 'Разъединить', uz: 'Ajratish', en: 'Separate' },
     bookBoth: { ru: 'Забронировать оба', uz: 'Ikkalasini band qilish', en: 'Book both' },
+    notActive: {
+      ru: 'Форма ещё не активирована: на почту сайта пришло письмо от FormSubmit, нажмите в нём «Activate Form» и отправьте заявку снова.',
+      uz: 'Forma hali faollashtirilmagan: sayt pochtasiga FormSubmit xati keldi, undagi «Activate Form» tugmasini bosing va arizani qayta yuboring.',
+      en: 'The form is not activated yet: FormSubmit sent an email to the site address; press «Activate Form» in it and send the request again.'
+    },
     tg: { ru: 'Написать в Telegram', uz: 'Telegramda yozish', en: 'Write on Telegram' },
     required: { ru: 'Заполните отмеченные поля', uz: 'Belgilangan maydonlarni to‘ldiring', en: 'Please fill in the marked fields' },
     subject: { ru: 'Новая заявка на тур «По следам Тамерлана»', uz: 'Новая заявка на тур «По следам Тамерлана»', en: 'Новая заявка на тур «По следам Тамерлана»' }
