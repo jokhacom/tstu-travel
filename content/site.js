@@ -119,6 +119,52 @@ window.LEGACY.site = {
     unlockLead: { ru: '«Сомневаешься в нашем могуществе? Взгляни на наши творения!»', uz: '«Agar bizning qudratimizga shubha qilsang, biz qurgan imoratlarga boq»', en: '“If you doubt our power, look at our buildings.”' }
   },
 
+  /* ---------- booking form (the «Забронировать тур» buttons) ----------
+   * Requests are sent by email through FormSubmit (formsubmit.co, free, no database).
+   * The very first request triggers a one-time activation email from FormSubmit to this address:
+   * open it and press «Activate Form». After that every request arrives as an email.
+   * Tip: after activation FormSubmit gives a random alias (e.g. 'a1b2c3…'): put it in place of the
+   * address below so the address is not visible in the page code. */
+  booking: {
+    to: 'mirkomilovjavohir562@gmail.com',
+    telegram: 'https://t.me/djavokhirmirzo',
+    title: { ru: 'Заявка на тур', uz: 'Turga ariza', en: 'Book the tour' },
+    lead: {
+      ru: 'Выберите пакет и дату, и мы свяжемся с вами, чтобы всё уточнить.',
+      uz: 'Paket va sanani tanlang, biz siz bilan bog‘lanib, hammasini aniqlashtiramiz.',
+      en: 'Choose a package and a date, and we will get in touch to confirm the details.'
+    },
+    name: { ru: 'Ваше имя', uz: 'Ismingiz', en: 'Your name' },
+    contact: { ru: 'Телефон или Telegram', uz: 'Telefon yoki Telegram', en: 'Phone or Telegram' },
+    contactPh: { ru: '+998 … или @username', uz: '+998 … yoki @username', en: '+998 … or @username' },
+    date: { ru: 'Желаемая дата поездки', uz: 'Sayohatning istalgan sanasi', en: 'Preferred travel date' },
+    pkg: { ru: 'Пакет', uz: 'Paket', en: 'Package' },
+    both: { ru: 'Оба пакета', uz: 'Ikkala paket', en: 'Both packages' },
+    bothNote: { ru: '6 дней, 4 города', uz: '6 kun, 4 shahar', en: '6 days, 4 cities' },
+    message: { ru: 'Ваше сообщение', uz: 'Xabaringiz', en: 'Your message' },
+    messagePh: {
+      ru: 'Сколько вас человек, вопросы, пожелания…',
+      uz: 'Necha kishisiz, savollar, istaklar…',
+      en: 'How many of you, questions, wishes…'
+    },
+    send: { ru: 'Отправить заявку', uz: 'Arizani yuborish', en: 'Send the request' },
+    sending: { ru: 'Отправляем…', uz: 'Yuborilmoqda…', en: 'Sending…' },
+    okTitle: { ru: 'Спасибо!', uz: 'Rahmat!', en: 'Thank you!' },
+    ok: {
+      ru: 'Заявка отправлена. Мы свяжемся с вами в ближайшее время.',
+      uz: 'Ariza yuborildi. Tez orada siz bilan bog‘lanamiz.',
+      en: 'Your request has been sent. We will get in touch soon.'
+    },
+    err: {
+      ru: 'Не получилось отправить заявку. Попробуйте ещё раз или напишите нам в Telegram.',
+      uz: 'Arizani yuborib bo‘lmadi. Qayta urinib ko‘ring yoki bizga Telegramda yozing.',
+      en: 'The request could not be sent. Please try again or write to us on Telegram.'
+    },
+    tg: { ru: 'Написать в Telegram', uz: 'Telegramda yozish', en: 'Write on Telegram' },
+    required: { ru: 'Заполните отмеченные поля', uz: 'Belgilangan maydonlarni to‘ldiring', en: 'Please fill in the marked fields' },
+    subject: { ru: 'Новая заявка на тур «По следам Тамерлана»', uz: 'Новая заявка на тур «По следам Тамерлана»', en: 'Новая заявка на тур «По следам Тамерлана»' }
+  },
+
   // the first screen: photos that switch (keys from photos.js). night: true shows the film's night frame in the dark theme
   heroSlides: [
     { image: 'samarqand_0', name: { ru: 'Самарканд', uz: 'Samarqand', en: 'Samarkand' } },
@@ -209,9 +255,9 @@ window.LEGACY.site = {
     },
     cta: { ru: 'Забронировать тур', uz: 'Turni band qilish', en: 'Book the tour' },
     ctaNote: {
-      ru: 'Откроется чат с командой TSTU Travel в Telegram',
-      uz: 'TSTU Travel jamoasi bilan Telegram chat ochiladi',
-      en: 'Opens a Telegram chat with the TSTU Travel team'
+      ru: 'Заявка придёт команде TSTU Travel, мы свяжемся с вами',
+      uz: 'Ariza TSTU Travel jamoasiga boradi, biz siz bilan bog‘lanamiz',
+      en: 'Your request goes to the TSTU Travel team and we will get back to you'
     }
   },
 

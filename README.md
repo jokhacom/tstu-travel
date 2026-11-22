@@ -63,3 +63,8 @@ and rises to full at the motto (`film.swellAt`), then fades as the site opens.
 - The motto is shown as traditionally attributed to Amir Temur, not as a verified quotation.
 - With `prefers-reduced-motion` the film does not autoplay: the end card shows, with a play button.
 - Local preview needs a server with HTTP Range support for the video to seek (e.g. `npx serve`).
+
+### Booking form
+The «Забронировать тур» buttons open a form: package 1, 2 or both, a preferred date, name, phone/Telegram and a message.
+It is sent by email through FormSubmit (no database). Settings are in `site.booking` (`content/site.js`). The first request
+after a new address triggers a one-time activation email from FormSubmit: open it and press «Activate Form».
