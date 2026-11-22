@@ -892,6 +892,9 @@
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
           '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul>';
+        f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
+        var lb = $('#lightbox'); lb.classList.add('lb-ok'); lb.insertAdjacentHTML('afterbegin', atlasSVG()); lb.scrollTop = 0;
+        confetti($('.bk-ros', f));
       })
       .catch(function (x) {
         var m = String((x && x.message) || '');
@@ -907,6 +910,65 @@
       });
   }
 
+  /* ---------- «thank you» screen: atlas (ikat) band and a rosette ---------- */
+  // stepped lozenge, the way ikat threads draw a diamond
+  function stepD(cx, cy, rx, ry, n) {
+    var pts = [], i, sx = rx / n, sy = ry / n;
+    for (i = 0; i < n; i++) pts.push([cx + i * sx, cy - ry + i * sy], [cx + (i + 1) * sx, cy - ry + i * sy]);
+    for (i = 0; i < n; i++) pts.push([cx + rx - i * sx, cy + i * sy], [cx + rx - i * sx, cy + (i + 1) * sy]);
+    for (i = 0; i < n; i++) pts.push([cx - i * sx, cy + ry - i * sy], [cx - (i + 1) * sx, cy + ry - i * sy]);
+    for (i = 0; i < n; i++) pts.push([cx - rx + i * sx, cy - i * sy], [cx - rx + i * sx, cy - (i + 1) * sy]);
+    return pts.map(function (q) { return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ');
+  }
+  function atlasSVG() {
+    var col = function (x, y) {
+      return '<polygon points="' + stepD(x, y, 38, 76, 7) + '" fill="#E66A32"/>' +
+        '<polygon points="' + stepD(x, y, 29, 58, 6) + '" fill="#F2E9DA"/>' +
+        '<polygon points="' + stepD(x, y, 21, 42, 5) + '" fill="#2457D8"/>' +
+        '<polygon points="' + stepD(x, y, 12, 24, 4) + '" fill="#E9B949"/>' +
+        '<polygon points="' + stepD(x, y, 5, 10, 2) + '" fill="#9E1F3F"/>';
+    };
+    var tile = col(40, 80) + col(120, 0) + col(120, 160) +
+      // thin chevron threads between the lozenges
+      '<path d="M80 0 L86 10 L80 20 L86 30 L80 40 L86 50 L80 60 L86 70 L80 80 L86 90 L80 100 L86 110 L80 120 L86 130 L80 140 L86 150 L80 160" fill="none" stroke="#18A6A0" stroke-width="3"/>' +
+      '<path d="M0 0 L6 10 L0 20 L6 30 L0 40 L6 50 L0 60 L6 70 L0 80 L6 90 L0 100 L6 110 L0 120 L6 130 L0 140 L6 150 L0 160" fill="none" stroke="#18A6A0" stroke-width="3"/>';
+    return '<div class="bk-atlas" aria-hidden="true"><svg width="100%" height="100%" preserveAspectRatio="none">' +
+      '<defs><filter id="ikatBleed" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.015 0.45" numOctaves="2" seed="7"/>' +
+      '<feDisplacementMap in="SourceGraphic" scale="9" xChannelSelector="R" yChannelSelector="B"/></filter>' +
+      '<pattern id="ikatTile" width="160" height="160" patternUnits="userSpaceOnUse"><rect width="160" height="160" fill="#111C32"/>' + tile +
+      '<animateTransform attributeName="patternTransform" type="translate" from="0 0" to="0 160" dur="24s" repeatCount="indefinite"/></pattern></defs>' +
+      '<rect width="100%" height="100%" fill="url(#ikatTile)" filter="url(#ikatBleed)"/></svg></div>';
+  }
+  // eight-pointed star with petals, like the medallions on suzani and tiles
+  function rosetteSVG() {
+    var petals = '', i;
+    for (i = 0; i < 8; i++) petals += '<path class="r-p" d="M60 60 C52 44 52 26 60 12 C68 26 68 44 60 60Z" transform="rotate(' + (i * 45) + ' 60 60)"/>';
+    var star = stepStar(60, 60, 34, 24);
+    return '<svg class="bk-ros" viewBox="0 0 120 120" aria-hidden="true">' +
+      '<circle class="r-c" cx="60" cy="60" r="56"/>' + petals +
+      '<polygon class="r-s" points="' + star + '"/><circle class="r-d" cx="60" cy="60" r="9"/></svg>';
+  }
+  function stepStar(cx, cy, R, r) {
+    var pts = [], i, a;
+    for (i = 0; i < 16; i++) { a = Math.PI / 8 * i - Math.PI / 2; var d = i % 2 ? r : R; pts.push((cx + d * Math.cos(a)).toFixed(1) + ',' + (cy + d * Math.sin(a)).toFixed(1)); }
+    return pts.join(' ');
+  }
+  // small ikat diamonds scatter from the rosette and fall
+  function confetti(from) {
+    if (!from || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var cols = ['#E66A32', '#2457D8', '#18A6A0', '#E9B949', '#9E1F3F'], box = document.createElement('div');
+    box.className = 'bk-conf'; box.setAttribute('aria-hidden', 'true');
+    var r = from.getBoundingClientRect(), x0 = r.left + r.width / 2, y0 = r.top + r.height / 2, html = '';
+    for (var i = 0; i < 28; i++) {
+      var ang = Math.random() * Math.PI * 2, dist = 80 + Math.random() * 220;
+      html += '<i style="left:' + x0 + 'px;top:' + y0 + 'px;--dx:' + (Math.cos(ang) * dist).toFixed(0) + 'px;--dy:' + (Math.sin(ang) * dist * .6 - 60).toFixed(0) +
+        'px;--fall:' + (260 + Math.random() * 260).toFixed(0) + 'px;--rot:' + (Math.random() * 540 - 270).toFixed(0) + 'deg;--d:' + (Math.random() * .25).toFixed(2) +
+        's;--s:' + (6 + Math.random() * 7).toFixed(0) + 'px;background:' + cols[i % cols.length] + '"></i>';
+    }
+    box.innerHTML = html; $('#lightbox').appendChild(box);
+    setTimeout(function () { box.remove(); }, 3200);
+  }
+
   /* ---------- lightbox / credits ---------- */
   function openLightbox(html) {
     var lb = $('#lightbox');
@@ -917,7 +979,7 @@
   }
   function closeLightbox() {
     var lb = $('#lightbox'); if (lb.hidden) return;
-    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd', 'lb-bk'); details = null;
+    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd', 'lb-bk', 'lb-ok'); $$('.bk-atlas, .bk-conf', lb).forEach(function (x) { x.remove(); }); details = null;
     if (!film.open) root.classList.remove('lock');
   }
   function credits() {
