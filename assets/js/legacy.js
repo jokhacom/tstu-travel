@@ -891,7 +891,7 @@
       .then(function () {
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
-          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-guyw">' + guySVG() + '</div>';
+          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-guyw">' + rahmatVideo() + '</div>';
         f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
         var lb = $('#lightbox'); lb.classList.add('lb-ok'); atlasInto(lb); lb.scrollTop = 0;
         confetti($('.bk-ros', f));
@@ -951,50 +951,10 @@
     return '<div class="bk-atlas" aria-hidden="true"' + (ikatTile ? ' style="background-image:url(' + ikatTile + ')"' : '') + '></div>';
   }
   function atlasInto(lb) { if (lb && !$('.bk-atlas', lb)) lb.insertAdjacentHTML('afterbegin', atlasSVG()); }
-  /* a young man in a chapan and doppi puts his hand on his heart and bows: the Uzbek way of saying thank you */
-  function guySVG() {
-    var stripes = '<pattern id="chapan" width="12" height="10" patternUnits="userSpaceOnUse"><rect width="12" height="10" fill="#2457D8"/>' +
-      '<rect x="4" width="2" height="10" fill="#18A6A0"/><rect x="6" width="1" height="10" fill="#F2E9DA"/><rect x="7" width="3" height="10" fill="#9E1F3F"/><rect x="10" width="1" height="10" fill="#E9B949"/></pattern>';
-    return '<svg class="bk-guy" viewBox="0 0 240 300" role="img" aria-label="Rahmat!"><defs>' + stripes + '</defs>' +
-      '<path class="g-arch" d="M36 300V132Q36 62 120 26Q204 62 204 132V300Z"/>' +
-      '<path class="g-arch2" d="M46 300V134Q46 70 120 38Q194 70 194 134V300Z"/>' +
-      '<ellipse cx="120" cy="292" rx="52" ry="6" fill="#000" opacity=".14"/>' +
-      // legs, boots and the lower part of the robe stay still
-      '<path d="M104 266h13v20q0 4-4 4h-15q-2 0 0-4z" fill="#5A3A22"/><path d="M123 266h13l3 20q2 4 0 4h-15q-1 0-1-4z" fill="#5A3A22"/>' +
-      '<path d="M88 186 78 272h84l-10-86z" fill="url(#chapan)"/><path d="M114 186l-3 86h18l-3-86z" fill="#23324F"/>' +
-      '<path d="M88 186 78 272M152 186l10 86" stroke="#E66A32" stroke-width="3"/>' +
-      '<g class="g-up">' +
-        '<path d="M86 114Q88 100 104 98h32q16 2 18 16v76H86z" fill="url(#chapan)"/>' +
-        '<path d="M109 98h22l-11 28z" fill="#F2E9DA"/><path d="M106 98l14 32 14-32" fill="none" stroke="#E66A32" stroke-width="4" stroke-linejoin="round"/>' +
-        '<rect x="86" y="174" width="68" height="14" rx="3" fill="#E66A32"/><path d="M96 186l-6 26 12-2 2-24z" fill="#E66A32"/><path d="M96 188l-4 20" stroke="#E9B949" stroke-width="1.5"/>' +
-        '<path d="M150 106q12 6 12 44l-4 32h-10V120z" fill="url(#chapan)"/><circle cx="153" cy="188" r="6.5" fill="#D9A27A"/>' +
-        '<rect x="113" y="84" width="14" height="16" rx="4" fill="#C98E66"/>' +
-        '<g class="g-head">' +
-          '<circle cx="102" cy="72" r="4.5" fill="#C98E66"/><circle cx="138" cy="72" r="4.5" fill="#C98E66"/>' +
-          '<ellipse cx="120" cy="70" rx="18" ry="21" fill="#D9A27A"/>' +
-          '<path d="M102 62q0-6 4-8h28q4 2 4 8v4q-3-6-6-7H108q-3 1-6 7z" fill="#1E1712"/>' +
-          '<path d="M109 66l6-1M125 65l6 1" stroke="#1E1712" stroke-width="2" stroke-linecap="round"/>' +
-          '<path class="g-eye" d="M108 72q4-3 8 0M124 72q4-3 8 0" fill="none" stroke="#1E1712" stroke-width="2" stroke-linecap="round"/>' +
-          '<path d="M120 73l-2 6h4" fill="none" stroke="#B57A55" stroke-width="1.5" stroke-linecap="round"/>' +
-          '<path d="M113 82q7 6 14 0" fill="none" stroke="#7A3B2A" stroke-width="2" stroke-linecap="round"/>' +
-          '<circle cx="109" cy="80" r="3.5" fill="#E66A32" opacity=".22"/><circle cx="131" cy="80" r="3.5" fill="#E66A32" opacity=".22"/>' +
-          // doppi in the Chust style: black dome, one big white kalampir (paisley) on the front, a row of white arches on the band
-          '<path d="M97 63V50Q97 35 108 32Q120 28 132 32Q143 35 143 50V63Q120 60 97 63Z" fill="#16130F"/>' +
-          '<path d="M108.5 42.5C106.5 38 110 34.6 114.5 35.2C121 36 127 38.6 133 45C127.5 41.6 122 41.3 117.5 43.4C113.5 45.4 110 45.2 108.5 42.5Z" fill="#F2E9DA"/>' +
-          '<path d="M110.2 42C109 39.2 111.4 36.9 114.6 37.3C119 37.9 122.5 39.3 125.5 41.4C121.5 40.6 118.5 41 116 42.4C113.3 43.8 111 43.6 110.2 42Z" fill="#16130F"/>' +
-          '<circle cx="113.2" cy="40" r="1.6" fill="none" stroke="#F2E9DA" stroke-width=".7"/><path d="M116 38.6v3M117.4 38.8v3M118.8 39.1v2.6" stroke="#F2E9DA" stroke-width=".6"/>' +
-          '<circle cx="121" cy="46.5" r=".6" fill="#F2E9DA"/><circle cx="126" cy="46.5" r=".6" fill="#F2E9DA"/><path d="M123.5 45.2v2.6M122.2 46.5h2.6" stroke="#F2E9DA" stroke-width=".6"/>' +
-          '<path d="M98.6 41q1.6-4 4.6-5.6q-1 3.6-4.6 5.6M141.4 41q-1.6-4-4.6-5.6q1 3.6 4.6 5.6" fill="#F2E9DA"/>' +
-          '<path d="M103 58a5.5 5.5 0 0 1 11 0" fill="none" stroke="#F2E9DA" stroke-width="1.3"/><path d="M105.6 58a3.4 3.4 0 0 1 6.8 0z" fill="#F2E9DA"/><path d="M106.0 56.2h6M105.7 57.2h6.6" stroke="#16130F" stroke-width=".55"/><circle cx="109.0" cy="55.3" r=".6" fill="#16130F"/><path d="M114 58a5.5 5.5 0 0 1 11 0" fill="none" stroke="#F2E9DA" stroke-width="1.3"/><path d="M116.6 58a3.4 3.4 0 0 1 6.8 0z" fill="#F2E9DA"/><path d="M117.0 56.2h6M116.7 57.2h6.6" stroke="#16130F" stroke-width=".55"/><circle cx="120.0" cy="55.3" r=".6" fill="#16130F"/><path d="M125 58a5.5 5.5 0 0 1 11 0" fill="none" stroke="#F2E9DA" stroke-width="1.3"/><path d="M127.6 58a3.4 3.4 0 0 1 6.8 0z" fill="#F2E9DA"/><path d="M128.0 56.2h6M127.7 57.2h6.6" stroke="#16130F" stroke-width=".55"/><circle cx="131.0" cy="55.3" r=".6" fill="#16130F"/>' +
-          '<path d="M98 58.6h44" stroke="#F2E9DA" stroke-width="1.2"/>' +
-        '</g>' +
-        // right arm: rises and the hand rests on the heart
-        '<g class="g-arm"><path d="M90 106q-12 6-12 40l2 6h12l2-34z" fill="url(#chapan)"/>' +
-          '<g class="g-fore"><path d="M79 146l1 36h12l1-36z" fill="url(#chapan)"/><path d="M80 180h12" stroke="#E66A32" stroke-width="3"/><circle cx="86" cy="188" r="6.5" fill="#D9A27A"/></g></g>' +
-      '</g>' +
-      '<g class="g-say"><rect x="148" y="18" width="78" height="28" rx="14" fill="#FFFAF2" stroke="#E66A32" stroke-width="1.5"/><path d="M156 44l-6 10 14-8z" fill="#FFFAF2" stroke="#E66A32" stroke-width="1.5" stroke-linejoin="round"/>' +
-        '<rect x="152" y="40" width="16" height="5" fill="#FFFAF2"/><text x="187" y="37" text-anchor="middle">Rahmat!</text></g>' +
-      '</svg>';
+  /* Jokha's own animation: a young man in a chapan bows with his hand on his heart and says «Rahmat!» */
+  function rahmatVideo() {
+    return '<video class="bk-rah" autoplay muted loop playsinline preload="auto" poster="img/rahmat-poster.webp?v=1" aria-label="Rahmat!">' +
+      '<source src="video/rahmat.webm?v=1" type="video/webm"><source src="video/rahmat.mp4?v=1" type="video/mp4"></video>';
   }
   // eight-pointed star with petals, like the medallions on suzani and tiles
   function rosetteSVG() {

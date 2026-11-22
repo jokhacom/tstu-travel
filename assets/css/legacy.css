@@ -870,26 +870,8 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
 }
 
 .bk-guyw { margin: 34px 0 0; display: flex; justify-content: center; }
-.bk-guy { display: block; height: clamp(240px, 40vh, 360px); width: auto; overflow: visible; }
-.bk-guy .g-arch { fill: var(--midnight); stroke: var(--orange); stroke-width: 2; }
-.bk-guy .g-arch2 { fill: none; stroke: #18A6A0; stroke-width: 2; stroke-dasharray: 2 6; stroke-linecap: round; }
-.bk-guy .g-say text { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 17px; fill: #E66A32; }
-.bk-guy .g-up, .bk-guy .g-head, .bk-guy .g-arm, .bk-guy .g-fore, .bk-guy .g-say { transform-box: view-box; }
-.bk-guy .g-up { transform-origin: 120px 190px; animation: gBow 6s 1s ease-in-out infinite; }
-.bk-guy .g-head { transform-origin: 120px 92px; animation: gNod 6s 1s ease-in-out infinite; }
-.bk-guy .g-arm { transform-origin: 88px 108px; animation: gArm 6s 1s ease-in-out infinite; }
-.bk-guy .g-fore { transform-origin: 86px 148px; animation: gFore 6s 1s ease-in-out infinite; }
-.bk-guy .g-say { transform-origin: 156px 50px; opacity: 0; animation: gSay 6s 1s ease-out infinite; }
-@keyframes gArm { 0%, 4% { transform: rotate(0); } 14%, 66% { transform: rotate(-10deg); } 78%, 100% { transform: rotate(0); } }
-@keyframes gFore { 0%, 4% { transform: rotate(0); } 14%, 66% { transform: rotate(-112deg); } 78%, 100% { transform: rotate(0); } }
-@keyframes gBow { 0%, 16% { transform: none; } 28%, 52% { transform: translateY(5px) scaleY(.95); } 64%, 100% { transform: none; } }
-@keyframes gNod { 0%, 16% { transform: none; } 28%, 52% { transform: translateY(5px) rotate(-4deg) scaleY(.94); } 64%, 100% { transform: none; } }
-@keyframes gSay { 0%, 20% { opacity: 0; transform: scale(.4); } 28% { opacity: 1; transform: scale(1.08); } 32%, 60% { opacity: 1; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(.9); } }
-@media (max-width: 760px) { .bk-guy { height: 250px; } .bk-guyw { margin-top: 26px; } }
-@media (prefers-reduced-motion: reduce) {
-  .bk-guy * { animation: none !important; }
-  .bk-guy .g-arm { transform: rotate(-10deg); } .bk-guy .g-fore { transform: rotate(-112deg); } .bk-guy .g-say { opacity: 1; }
-}
+.bk-rah { display: block; width: min(100%, 440px); aspect-ratio: 1; height: auto; border-radius: 18px; box-shadow: 0 24px 60px rgba(22,19,15,.18); background: #EDE3D2; }
+@media (max-width: 760px) { .bk-rah { width: 100%; max-width: 360px; } .bk-guyw { margin-top: 26px; } }
 /* an atlas ribbon along the top of the hero's package card */
 .hx-pill { position: relative; overflow: hidden; padding-top: 22px; }
 .hx-pill::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: #111C32 var(--ikat, none) 0 0 / 20px 20px repeat-x; }
