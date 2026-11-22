@@ -124,7 +124,7 @@ window.LEGACY.tour = {
         { ru: 'входные билеты', uz: 'kirish chiptalari', en: 'entrance tickets' }
       ],
       excluded: [
-        { ru: 'дорога до Ташкента и обратно', uz: 'Toshkentga kelish va qaytish', en: 'getting to Tashkent and back' },
+        { ru: 'дорога из вашего города до Ташкента и обратно домой (весь маршрут Ташкент — Самарканд — Шахрисабз — Ташкент включён)', uz: 'o‘z shahringizdan Toshkentgacha kelish va uyga qaytish (Toshkent — Samarqand — Shahrisabz — Toshkent yo‘nalishining o‘zi kiritilgan)', en: 'getting from your home city to Tashkent and back home (the whole route Tashkent — Samarkand — Shahrisabz — Tashkent is included)' },
         { ru: 'страховка и личные расходы', uz: 'sug‘urta va shaxsiy xarajatlar', en: 'insurance and personal expenses' },
         { ru: 'мастер-классы и фотосъёмка внутри объектов, где она платная', uz: 'mahorat darslari va pullik joylarda suratga olish', en: 'workshops, and photo fees where a site charges them' }
       ],
@@ -243,7 +243,7 @@ window.LEGACY.tour = {
         { ru: 'входные билеты', uz: 'kirish chiptalari', en: 'entrance tickets' }
       ],
       excluded: [
-        { ru: 'перелёт до Ташкента и обратно', uz: 'Toshkentga va qaytish aviachiptasi', en: 'flights to Tashkent and back' },
+        { ru: 'перелёт или проезд из вашего города до Ташкента и обратно домой (поезда Ташкент — Бухара — Ташкент включены)', uz: 'o‘z shahringizdan Toshkentgacha uchish yoki kelish va uyga qaytish (Toshkent — Buxoro — Toshkent poyezdlari kiritilgan)', en: 'your flight or trip from your home city to Tashkent and back home (the Tashkent — Bukhara — Tashkent trains are included)' },
         { ru: 'страховка и личные расходы', uz: 'sug‘urta va shaxsiy xarajatlar', en: 'insurance and personal expenses' },
         { ru: 'мастер-классы и фотосъёмка внутри объектов, где она платная', uz: 'mahorat darslari va pullik joylarda suratga olish', en: 'workshops, and photo fees where a site charges them' }
       ],

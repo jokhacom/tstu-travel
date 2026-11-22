@@ -55,6 +55,7 @@
     }).join('');
   }
   function bookingLink(cls, label) {
+    if (S.booking && S.booking.to) return '<a class="' + cls + '" href="#book" data-book role="button"><span>' + esc(t(label)) + '</span><i aria-hidden="true"></i></a>';
     return '<a class="' + cls + '" href="' + esc(TOUR.bookingUrl || '#') + '" target="_blank" rel="noopener"><span>' + esc(t(label)) + '</span><i aria-hidden="true"></i></a>';
   }
 
@@ -279,12 +280,12 @@
     return '<div class="jt" id="program">' +
       '<div class="rv"><p class="kicker"><span class="kl">' + esc(t(J.kicker)) + '</span></p>' +
       (I ? '<h3 class="ji-hook tr">' + words(t(I.hook)) + '</h3><p class="ji-sub">' + esc(t(I.sub)) + '</p>' +
-        '<div class="ji-tix">' + (I.tickets || []).map(function (k, i) {
+        '<div class="ji-tix' + (pkJoined ? ' joined' : '') + '">' + (I.tickets || []).map(function (k, i) {
           var P = PKGS[k.pkg]; if (!P) return '';
-          return '<button type="button" class="ji-t ir" data-tilt data-pkg-go="' + k.pkg + '" style="--d:' + (i * 0.12 + 0.1) + 's">' +
+          return '<button type="button" class="ji-t ir" data-pkg-go="' + k.pkg + '" style="--d:' + (i * 0.12 + 0.1) + 's">' +
             '<span class="ji-n">' + esc(t(L.pkgShort)) + ' ' + (k.pkg + 1) + '</span><span class="ji-r">' + esc(t(P.tab)) + '</span>' +
             '<span class="ji-l">' + esc(t(k.line)) + '</span><span class="ji-go" aria-hidden="true">→</span></button>';
-        }).join('') + '</div>' +
+        }).join('') + '<span class="ji-seam" aria-hidden="true">✦</span></div>' + joinBar() +
         '<ul class="ji-perks">' + (I.perks || []).map(function (x) { return '<li>' + esc(t(x)) + '</li>'; }).join('') + '</ul>'
       : '<p class="jt-desc tr">' + (TOUR.description ? words(t(TOUR.description)) : tbd()) + '</p>') +
       (TOUR.note ? '<p class="jt-note">' + esc(t(TOUR.note)) + '</p>' : '') + '</div>' +
@@ -328,6 +329,76 @@
       return '<li><a href="#' + c.id + '" ' + act + '><span class="ml-n">' + (i + 1) + '</span><span class="ml-t">' + esc(t(c.title)) + '</span></a></li>';
     }).join('');
   }
+
+  /* ---------- the two tickets can be joined: hold one, drag it onto the other ---------- */
+  var pkJoined = false, tixDrag = null, tixNoClick = 0;
+  function joinBar() {
+    var B = S.booking || {}, L = S.journey.labels;
+    if (PKGS.length < 2 || !B.join) return '';
+    return '<div class="ji-join" aria-live="polite">' + (pkJoined
+      ? '<p class="ji-both"><b>' + esc(t(B.both)) + '</b><span>' + esc(PKGS.map(function (p) { return t(p.tab); }).join(' + ')) + ' · ' + esc(t(B.bothNote)) + '</span></p>' +
+        (B.to ? '<button type="button" class="ji-bk" data-book data-book-pkg="both">' + esc(t(B.bookBoth)) + ' <i aria-hidden="true">→</i></button>' : '') +
+        '<button type="button" class="ji-un" data-unjoin>✕ ' + esc(t(B.unjoin)) + '</button>'
+      : '<p class="ji-hint"><span aria-hidden="true">⇄</span> ' + esc(t(B.joinHint)) + '</p><button type="button" class="ji-jb" data-join>' + esc(t(B.join)) + '</button>') + '</div>';
+  }
+  function setJoined(on) {
+    var box = $('.ji-tix', main); if (!box) { pkJoined = on; return; }
+    var tix = $$('.ji-t', box), before = tix.map(function (el) { return el.getBoundingClientRect(); });
+    pkJoined = on;
+    tix.forEach(function (el) { el.style.transition = 'none'; el.style.transform = ''; el.classList.remove('lift', 'near'); });
+    box.classList.toggle('joined', on);
+    var bar = $('.ji-join', main); if (bar) bar.outerHTML = joinBar();
+    if (reduce) { tix.forEach(function (el) { el.style.transition = ''; }); return; }
+    tix.forEach(function (el, i) {   // FLIP: from where each ticket was to where it now sits
+      var r = el.getBoundingClientRect(), b = before[i];
+      el.style.transform = 'translate(' + (b.left - r.left) + 'px,' + (b.top - r.top) + 'px)';
+    });
+    void box.offsetWidth;
+    tix.forEach(function (el) { el.style.transition = 'transform .55s cubic-bezier(.3,1.4,.4,1)'; el.style.transform = ''; });
+    box.classList.add(on ? 'snap' : 'unsnap');
+    setTimeout(function () { box.classList.remove('snap', 'unsnap'); tix.forEach(function (el) { el.style.transition = ''; }); }, 700);
+  }
+  function tixDown(e) {
+    var el = e.target.closest && e.target.closest('.ji-t'); if (!el || e.button > 0 || PKGS.length < 2) return;
+    var other = $$('.ji-t', main).filter(function (x) { return x !== el; })[0]; if (!other) return;
+    tixDrag = { el: el, other: other, id: e.pointerId, x: e.clientX, y: e.clientY, on: false, near: false, apart: false,
+      timer: setTimeout(function () {
+        if (!tixDrag) return;
+        tixDrag.on = true; el.classList.add('lift'); el.style.transition = 'none';
+        try { el.setPointerCapture(tixDrag.id); } catch (er) {}
+        if (navigator.vibrate) try { navigator.vibrate(12); } catch (er) {}
+      }, e.pointerType === 'mouse' ? 160 : 280) };
+  }
+  function tixMove(e) {
+    var d = tixDrag; if (!d || e.pointerId !== d.id) return;
+    var dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (!d.on) { if (Math.abs(dx) + Math.abs(dy) > 10) { clearTimeout(d.timer); tixDrag = null; } return; }   // moved before the hold: a scroll
+    d.el.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + (dx * .012).toFixed(2) + 'deg)';
+    var a = d.el.getBoundingClientRect(), b = d.other.getBoundingClientRect();
+    if (pkJoined) { d.apart = Math.hypot(dx, dy) > Math.min(a.width, 260) * .45; d.el.classList.toggle('pulling', d.apart); }
+    else {
+      var ax = a.left + a.width / 2, ay = a.top + a.height / 2, bx = b.left + b.width / 2, by = b.top + b.height / 2;
+      d.near = Math.abs(ax - bx) < b.width * .9 && Math.abs(ay - by) < b.height * .9;
+      d.other.classList.toggle('near', d.near);
+    }
+  }
+  function tixUp(e) {
+    var d = tixDrag; if (!d || e.pointerId !== d.id) return;
+    clearTimeout(d.timer); tixDrag = null;
+    if (!d.on) return;
+    tixNoClick = Date.now();
+    d.el.classList.remove('lift', 'pulling'); d.other.classList.remove('near');
+    if (!pkJoined && d.near) return setJoined(true);
+    if (pkJoined && d.apart) return setJoined(false);
+    d.el.style.transition = ''; d.el.style.transform = '';   // not close enough: fly back
+  }
+  main.addEventListener('pointerdown', tixDown);
+  window.addEventListener('pointermove', tixMove, { passive: true });
+  window.addEventListener('pointerup', tixUp);
+  window.addEventListener('pointercancel', tixUp);
+  // while a ticket is held, the finger drags it instead of scrolling the page
+  main.addEventListener('touchmove', function (e) { if (tixDrag && tixDrag.on) e.preventDefault(); }, { passive: false });
+  main.addEventListener('contextmenu', function (e) { if (e.target.closest && e.target.closest('.ji-t')) e.preventDefault(); });
 
   function renderSite() {
     main.innerHTML = '<section id="journey" class="journey" aria-label="' + esc(plain(TOUR.title)) + '">' + renderHero() + renderJourney() + '</section>' + renderFooter();
@@ -705,6 +776,80 @@
   /* skip / close without having finished = same unlock, a little faster */
   function skip() { if (film.phase === 'film') unlock(true); }
 
+  /* ---------- booking form: package 1, 2 or both, a date and a message, sent by email ---------- */
+  var bookDraft = null;
+  function bookHTML() {
+    var B = S.booking, L = S.journey.labels, d = bookDraft || {};
+    var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+    var min = today.toISOString().slice(0, 10);
+    var opts = PKGS.map(function (p, i) { return { v: String(i + 1), k: t(L.pkgShort) + ' ' + (i + 1), n: t(p.tab), s: t(p.duration) }; });
+    if (PKGS.length > 1) opts.push({ v: 'both', k: t(B.both), n: PKGS.map(function (p) { return t(p.tab); }).join(' + '), s: t(B.bothNote) });
+    var sel = d.pkg || String((pkgI || 0) + 1);
+    var field = function (id, label, input) { return '<label class="bk-f" for="' + id + '"><span>' + esc(t(label)) + ' <b aria-hidden="true">*</b></span>' + input + '</label>'; };
+    return '<form class="bk" novalidate>' +
+      '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.title)) + '</h3>' +
+      '<p class="bk-lead">' + esc(t(B.lead)) + '</p>' +
+      '<fieldset class="bk-pk"><legend>' + esc(t(B.pkg)) + ' <b aria-hidden="true">*</b></legend>' + opts.map(function (o) {
+        return '<label class="bk-o"><input type="radio" name="pkg" value="' + o.v + '"' + (o.v === sel ? ' checked' : '') + '>' +
+          '<span class="bk-oc"><small>' + esc(o.k) + '</small><strong>' + esc(o.n) + '</strong><em>' + esc(o.s) + '</em></span></label>';
+      }).join('') + '</fieldset>' +
+      '<div class="bk-row">' +
+        field('bkDate', B.date, '<input id="bkDate" name="date" type="date" required min="' + min + '" value="' + esc(d.date || '') + '">') +
+        field('bkName', B.name, '<input id="bkName" name="name" type="text" required autocomplete="name" maxlength="80" value="' + esc(d.name || '') + '">') +
+        field('bkContact', B.contact, '<input id="bkContact" name="contact" type="text" required autocomplete="tel" maxlength="80" placeholder="' + esc(t(B.contactPh)) + '" value="' + esc(d.contact || '') + '">') +
+      '</div>' +
+      '<label class="bk-f bk-msg" for="bkMsg"><span>' + esc(t(B.message)) + '</span><textarea id="bkMsg" name="message" rows="4" maxlength="2000" placeholder="' + esc(t(B.messagePh)) + '">' + esc(d.message || '') + '</textarea></label>' +
+      '<input class="bk-hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '<p class="bk-err" role="alert" hidden></p>' +
+      '<div class="bk-go"><button type="submit" class="cta"><span>' + esc(t(B.send)) + '</span><i aria-hidden="true"></i></button>' +
+      '<a class="bk-tg" href="' + esc(B.telegram || TOUR.bookingUrl || '#') + '" target="_blank" rel="noopener">' + esc(t(B.tg)) + ' →</a></div>' +
+      '</form>';
+  }
+  function bookRead(f) {
+    var g = function (n) { var el = f.elements[n]; return el ? String(el.value || '').trim() : ''; };
+    var pk = f.querySelector('input[name="pkg"]:checked');
+    return { pkg: pk ? pk.value : '', date: g('date'), name: g('name'), contact: g('contact'), message: g('message') };
+  }
+  function openBook(pref) {
+    if (pref || pkJoined) bookDraft = Object.assign({}, bookDraft || {}, { pkg: pref || 'both' });
+    closeLightbox();
+    openLightbox(bookHTML());
+    $('#lightbox').classList.add('lb-pd', 'lb-bk');
+    var f = $('#lbBody .bk'); if (f) f.addEventListener('submit', sendBook);
+    f.addEventListener('input', function () { bookDraft = bookRead(f); });
+    f.addEventListener('change', function () { bookDraft = bookRead(f); });
+  }
+  function sendBook(e) {
+    e.preventDefault();
+    var f = e.currentTarget, B = S.booking, L = S.journey.labels, v = bookRead(f), err = $('.bk-err', f), btn = $('button[type="submit"]', f);
+    bookDraft = v;
+    $$('.bk-f', f).forEach(function (el) { el.classList.remove('bad'); });
+    var miss = ['date', 'name', 'contact'].filter(function (k) { return !v[k]; });
+    miss.forEach(function (k) { var el = f.elements[k]; if (el) el.closest('.bk-f').classList.add('bad'); });
+    if (miss.length || !v.pkg) { err.textContent = t(B.required); err.hidden = false; var first = f.elements[miss[0]]; first && first.focus(); return; }
+    if (f.elements._honey.value) return;
+    var pkgName = v.pkg === 'both' ? 'Оба пакета: ' + PKGS.map(function (p) { return p.tab.ru || t(p.tab); }).join(' + ')
+      : 'Пакет ' + v.pkg + ': ' + ((PKGS[+v.pkg - 1] || {}).tab || {}).ru;
+    var body = {
+      'Пакет': pkgName, 'Дата': v.date.split('-').reverse().join('.'), 'Имя': v.name, 'Контакт': v.contact,
+      'Сообщение': v.message || '—', 'Язык сайта': lang.toUpperCase(),
+      _subject: t(B.subject) + ' · ' + v.name, _template: 'table', _captcha: 'false'
+    };
+    err.hidden = true; btn.disabled = true; $('span', btn).textContent = t(B.sending);
+    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(B.to), {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body)
+    }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || r.status); }); })
+      .then(function () {
+        bookDraft = null;
+        f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
+          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul>';
+      })
+      .catch(function () {
+        btn.disabled = false; $('span', btn).textContent = t(B.send);
+        err.textContent = t(B.err); err.hidden = false;
+      });
+  }
+
   /* ---------- lightbox / credits ---------- */
   function openLightbox(html) {
     var lb = $('#lightbox');
@@ -715,7 +860,7 @@
   }
   function closeLightbox() {
     var lb = $('#lightbox'); if (lb.hidden) return;
-    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd'); details = null;
+    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd', 'lb-bk'); details = null;
     if (!film.open) root.classList.remove('lock');
   }
   function credits() {
@@ -750,6 +895,7 @@
     store('lot-lang', l);
     renderSite();
     if (details) $('#lbBody').innerHTML = detailsHTML();
+    else if ($('#lightbox').classList.contains('lb-bk') && $('#lbBody .bk input')) openBook();
     if (film.open && film.phase === 'film') renderPlayer();
     else if (film.open) { var u = $('.fm-unlock', ui); if (u) u.innerHTML = heroInner(true); }
     document.body.classList.add('unlocked');
@@ -777,7 +923,11 @@
     var hg = e.target.closest('[data-hx-go]'); if (hg) { heroGo(+hg.getAttribute('data-hx-go'), true); return; }
     var hp = e.target.closest('[data-hx-pkg]'); if (hp) { heroPkg = +hp.getAttribute('data-hx-pkg'); var bar = $('.hx-bar', main); if (bar) bar.innerHTML = heroBar(); return; }
     if (e.target.closest('[data-hx-open]')) { setPkg(heroPkg); jump('packages'); return; }
+    if (e.target.closest('[data-join]')) { setJoined(true); return; }
+    if (e.target.closest('[data-unjoin]')) { setJoined(false); return; }
+    if (e.target.closest('.ji-t') && Date.now() - tixNoClick < 400) return;
     var pg = e.target.closest('[data-pkg-go]'); if (pg) { setPkg(+pg.getAttribute('data-pkg-go')); jump('packages'); return; }
+    var bk = e.target.closest('[data-book]'); if (bk) { e.preventDefault(); openBook(bk.getAttribute('data-book-pkg')); return; }
     var db = e.target.closest('[data-details]'); if (db) { var dd = db.getAttribute('data-details-day'); openDetails(db.getAttribute('data-details'), dd == null ? null : +dd); return; }
     var pt = e.target.closest('[data-pdt]'); if (pt) { detailsTab(pt.getAttribute('data-pdt')); return; }
     var el = e.target.closest('[data-lang],[data-jump],[data-film],[data-act],#menuBtn,#themeBtn,#creditsBtn,[data-close],.wordmark');
