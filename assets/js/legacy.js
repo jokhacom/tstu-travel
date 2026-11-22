@@ -878,8 +878,15 @@
       _subject: t(B.subject) + ' · ' + v.name, _template: 'table', _captcha: 'false'
     };
     err.hidden = true; btn.disabled = true; $('span', btn).textContent = t(B.sending);
-    fetch('https://formsubmit.co/ajax/' + encodeURIComponent(B.to), {
-      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body)
+    // Web3Forms when an access key is set (no activation step), otherwise FormSubmit
+    var w3 = B.web3formsKey, svc = w3 ? 'Web3Forms' : 'FormSubmit', payload = body;
+    if (w3) {
+      payload = {};
+      Object.keys(body).forEach(function (k) { if (k.charAt(0) !== '_') payload[k] = body[k]; });
+      payload.access_key = w3; payload.subject = body._subject; payload.from_name = 'TSTU Travel · сайт';
+    }
+    fetch(w3 ? 'https://api.web3forms.com/submit' : 'https://formsubmit.co/ajax/' + encodeURIComponent(B.to), {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(payload)
     }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || String(r.status)); }); })
       .then(function () {
         bookDraft = null;
@@ -888,10 +895,15 @@
       })
       .catch(function (x) {
         var m = String((x && x.message) || '');
-        if (window.console) console.warn('[booking] FormSubmit:', m);
+        if (window.console) console.warn('[booking] ' + svc + ':', m);
         btn.disabled = false; $('span', btn).textContent = t(B.send);
         // FormSubmit answers "This form needs Activation…" until the owner confirms the address once
         err.textContent = t(/activat/i.test(m) && B.notActive ? B.notActive : B.err); err.hidden = false;
+        // a way that always works: the same request as a ready email in the visitor's own mail app
+        var mail = 'mailto:' + B.to + '?subject=' + encodeURIComponent(body._subject) + '&body=' + encodeURIComponent(
+          ['Пакет', 'Дата', 'Имя', 'Контакт', 'Сообщение'].map(function (k) { return k + ': ' + body[k]; }).join('\n'));
+        err.insertAdjacentHTML('beforeend', ' <a class="bk-mail" href="' + esc(mail) + '">' + esc(t(B.mail)) + ' →</a>' +
+          '<small class="bk-why">' + esc(m ? svc + ': ' + m.slice(0, 160) : t(B.offline)) + '</small>');
       });
   }
 

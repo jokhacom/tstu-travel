@@ -127,6 +127,8 @@ window.LEGACY.site = {
    * address below so the address is not visible in the page code. */
   booking: {
     to: 'mirkomilovjavohir562@gmail.com',
+    // Web3Forms access key (web3forms.com: enter the email, the key arrives by email). When set, it is used instead of FormSubmit.
+    web3formsKey: 'd0a9c1d3-a5f9-43b9-aca7-b79b5a7328d5',
     telegram: 'https://t.me/djavokhirmirzo',
     title: { ru: 'Заявка на тур', uz: 'Turga ariza', en: 'Book the tour' },
     lead: {
@@ -173,6 +175,8 @@ window.LEGACY.site = {
       uz: 'Forma hali faollashtirilmagan: sayt pochtasiga FormSubmit xati keldi, undagi «Activate Form» tugmasini bosing va arizani qayta yuboring.',
       en: 'The form is not activated yet: FormSubmit sent an email to the site address; press «Activate Form» in it and send the request again.'
     },
+    mail: { ru: 'Отправить письмом', uz: 'Xat orqali yuborish', en: 'Send by email' },
+    offline: { ru: 'нет связи с сервисом отправки', uz: 'yuborish xizmati bilan aloqa yo‘q', en: 'no connection to the sending service' },
     tg: { ru: 'Написать в Telegram', uz: 'Telegramda yozish', en: 'Write on Telegram' },
     required: { ru: 'Заполните отмеченные поля', uz: 'Belgilangan maydonlarni to‘ldiring', en: 'Please fill in the marked fields' },
     subject: { ru: 'Новая заявка на тур «По следам Тамерлана»', uz: 'Новая заявка на тур «По следам Тамерлана»', en: 'Новая заявка на тур «По следам Тамерлана»' }
