@@ -919,3 +919,9 @@ body { padding-left: var(--band); }
 @media (max-width: 760px) { .lb-ok .lb-close { top: 104px; color: #16130F; text-shadow: none; } html:not([data-theme="light"]) .lb-ok .lb-close { color: #F2E9DA; } }
 .bk-backw { margin: 30px 0 10px; display: flex; justify-content: center; }
 @media (max-width: 760px) { .lb-ok .bk-atlas { position: absolute; } }
+/* details header: the sticky tabs' cover strip only spans the gap it sticks into, so the subtitle above is never hidden */
+.pd-tabs, html[data-theme="light"] .pd-tabs { box-shadow: 0 -16px 0 var(--obsidian, #080A0F); }
+html[data-theme="light"] .pd-tabs { box-shadow: 0 -16px 0 #F6F0E6; }
+.pd-meta { margin-bottom: 30px; }
+/* phones, thank-you screen: the ✕ stays put at the top of the screen and scrolls away with it */
+@media (max-width: 760px) { .lb-ok .lb-close { position: absolute; } }
