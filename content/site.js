@@ -152,6 +152,7 @@ window.LEGACY.site = {
     send: { ru: 'Отправить заявку', uz: 'Arizani yuborish', en: 'Send the request' },
     sending: { ru: 'Отправляем…', uz: 'Yuborilmoqda…', en: 'Sending…' },
     okTitle: { ru: 'Спасибо!', uz: 'Rahmat!', en: 'Thank you!' },
+    okNational: { ru: 'Katta rahmat! · Большое спасибо по-узбекски', uz: 'Katta rahmat!', en: 'Katta rahmat! · a big thank you in Uzbek' },
     ok: {
       ru: 'Заявка отправлена. Мы свяжемся с вами в ближайшее время.',
       uz: 'Ariza yuborildi. Tez orada siz bilan bog‘lanamiz.',

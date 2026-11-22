@@ -267,7 +267,7 @@
   function openDetails(tab, day) {
     details = { tab: tab || 'hours', day: day == null ? null : day };
     openLightbox(detailsHTML());
-    $('#lightbox').classList.add('lb-pd');
+    $('#lightbox').classList.add('lb-pd'); atlasInto($('#lightbox'));
     if (day != null) { var d = document.getElementById('pd-day-' + day); if (d) { d.classList.add('hl'); $('#lightbox').scrollTop = d.getBoundingClientRect().top - 150; } }
   }
   function detailsTab(k) {
@@ -856,7 +856,7 @@
     if (pref || pkJoined) bookDraft = Object.assign({}, bookDraft || {}, { pkg: pref || 'both' });
     closeLightbox();
     openLightbox(bookHTML());
-    $('#lightbox').classList.add('lb-pd', 'lb-bk');
+    $('#lightbox').classList.add('lb-pd', 'lb-bk'); atlasInto($('#lightbox'));
     var f = $('#lbBody .bk'); if (f) f.addEventListener('submit', sendBook);
     f.addEventListener('input', function () { bookDraft = bookRead(f); });
     f.addEventListener('change', function () { bookDraft = bookRead(f); });
@@ -891,7 +891,10 @@
       .then(function () {
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
-          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul>';
+          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-guyw">' + rahmatVideo() + '</div>';
+        f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
+        var lb = $('#lightbox'); lb.classList.add('lb-ok'); atlasInto(lb); lb.scrollTop = 0;
+        confetti($('.bk-ros', f));
       })
       .catch(function (x) {
         var m = String((x && x.message) || '');
@@ -907,6 +910,82 @@
       });
   }
 
+  // the atlas edge on the left of the page (decorative, under the menu and the film)
+  setTimeout(function () { atlasSVG(); var d = document.createElement('div'); d.className = 'site-atlas'; d.setAttribute('aria-hidden', 'true');
+    if (ikatTile) { d.style.backgroundImage = 'url(' + ikatTile + ')'; root.style.setProperty('--ikat', 'url(' + ikatTile + ')'); } document.body.appendChild(d); }, 0);
+  /* ---------- «thank you» screen: atlas (ikat) band and a rosette ---------- */
+  // stepped lozenge, the way ikat threads draw a diamond
+  function stepD(cx, cy, rx, ry, n) {
+    var pts = [], i, sx = rx / n, sy = ry / n;
+    for (i = 0; i < n; i++) pts.push([cx + i * sx, cy - ry + i * sy], [cx + (i + 1) * sx, cy - ry + i * sy]);
+    for (i = 0; i < n; i++) pts.push([cx + rx - i * sx, cy + i * sy], [cx + rx - i * sx, cy + (i + 1) * sy]);
+    for (i = 0; i < n; i++) pts.push([cx - i * sx, cy + ry - i * sy], [cx - (i + 1) * sx, cy + ry - i * sy]);
+    for (i = 0; i < n; i++) pts.push([cx - rx + i * sx, cy - i * sy], [cx - rx + i * sx, cy - (i + 1) * sy]);
+    return pts.map(function (q) { return q[0].toFixed(1) + ',' + q[1].toFixed(1); }).join(' ');
+  }
+  /* ikat (atlas) colours, worked out per pixel so that every browser draws the same thing:
+     stepped lozenges in columns, each thread row shifted a little — the «bleed» of real abr fabric */
+  var IKAT = [[17, 28, 50], [230, 106, 50], [242, 233, 218], [36, 87, 216], [233, 185, 73], [158, 31, 63], [24, 166, 160]];
+  function ikatAt(u, v) {
+    var vv = ((v % 160) + 160) % 160, row = Math.floor(vv / 2);
+    // each 2 px thread row shifts sideways a little; periodic over the 160 px tile so the repeat is seamless
+    var jit = Math.sin(row * Math.PI * 2 * 9 / 80) * 2.2 + ((row * 7919 + 13) % 7) / 6 * 3.4 - 1.7;
+    var uu = u + jit, col = Math.floor(uu / 80), odd = ((col % 2) + 2) % 2;
+    var dx = Math.abs(uu - col * 80 - 40), dy = Math.abs(((vv + odd * 80) % 160) - 80);
+    dx = Math.floor(dx / 2) * 2; dy = Math.floor(dy / 3) * 3;     // fine stair steps
+    var d = dx / 36 + dy / 72;
+    if (d < .16) return 5; if (d < .36) return 4; if (d < .56) return 3; if (d < .76) return 2; if (d < 1) return 1;
+    var zz = ((u % 80) + 80) % 80, tri = Math.abs((vv % 20) - 10) / 10 * 5;   // turquoise zigzag thread between columns
+    return Math.abs(zz - 2 - tri) < 1.6 ? 6 : 0;
+  }
+  function ikatPaint(ctx, w, h, k) {   // k = device pixels per css pixel
+    var img = ctx.createImageData(w, h), px = img.data, i = 0;
+    for (var y = 0; y < h; y++) for (var x = 0; x < w; x++, i += 4) {
+      var c = IKAT[ikatAt(x / k, y / k)]; px[i] = c[0]; px[i + 1] = c[1]; px[i + 2] = c[2]; px[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+  }
+  var ikatTile = null;
+  function atlasSVG() {
+    if (!ikatTile) { try { var c = document.createElement('canvas'); c.width = c.height = 320; ikatPaint(c.getContext('2d'), 320, 320, 2); ikatTile = c.toDataURL('image/png'); } catch (x) { ikatTile = ''; } }
+    return '<div class="bk-atlas" aria-hidden="true"' + (ikatTile ? ' style="background-image:url(' + ikatTile + ')"' : '') + '></div>';
+  }
+  function atlasInto(lb) { if (lb && !$('.bk-atlas', lb)) lb.insertAdjacentHTML('afterbegin', atlasSVG()); }
+  /* Jokha's own animation: a young man in a chapan bows with his hand on his heart and says «Rahmat!» */
+  function rahmatVideo() {
+    return '<video class="bk-rah" autoplay muted loop playsinline preload="auto" poster="img/rahmat-poster.webp?v=2" aria-label="Rahmat!">' +
+      '<source src="video/rahmat.webm?v=3" type="video/webm"><source src="video/rahmat.mp4?v=3" type="video/mp4"></video>';
+  }
+  // eight-pointed star with petals, like the medallions on suzani and tiles
+  function rosetteSVG() {
+    var petals = '', i;
+    for (i = 0; i < 8; i++) petals += '<path class="r-p" d="M60 60 C52 44 52 26 60 12 C68 26 68 44 60 60Z" transform="rotate(' + (i * 45) + ' 60 60)"/>';
+    var star = stepStar(60, 60, 34, 24);
+    return '<svg class="bk-ros" viewBox="0 0 120 120" aria-hidden="true">' +
+      '<circle class="r-c" cx="60" cy="60" r="56"/>' + petals +
+      '<polygon class="r-s" points="' + star + '"/><circle class="r-d" cx="60" cy="60" r="9"/></svg>';
+  }
+  function stepStar(cx, cy, R, r) {
+    var pts = [], i, a;
+    for (i = 0; i < 16; i++) { a = Math.PI / 8 * i - Math.PI / 2; var d = i % 2 ? r : R; pts.push((cx + d * Math.cos(a)).toFixed(1) + ',' + (cy + d * Math.sin(a)).toFixed(1)); }
+    return pts.join(' ');
+  }
+  // small ikat diamonds scatter from the rosette and fall
+  function confetti(from) {
+    if (!from || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var cols = ['#E66A32', '#2457D8', '#18A6A0', '#E9B949', '#9E1F3F'], box = document.createElement('div');
+    box.className = 'bk-conf'; box.setAttribute('aria-hidden', 'true');
+    var r = from.getBoundingClientRect(), x0 = r.left + r.width / 2, y0 = r.top + r.height / 2, html = '';
+    for (var i = 0; i < 28; i++) {
+      var ang = Math.random() * Math.PI * 2, dist = 80 + Math.random() * 220;
+      html += '<i style="left:' + x0 + 'px;top:' + y0 + 'px;--dx:' + (Math.cos(ang) * dist).toFixed(0) + 'px;--dy:' + (Math.sin(ang) * dist * .6 - 60).toFixed(0) +
+        'px;--fall:' + (260 + Math.random() * 260).toFixed(0) + 'px;--rot:' + (Math.random() * 540 - 270).toFixed(0) + 'deg;--d:' + (Math.random() * .25).toFixed(2) +
+        's;--s:' + (6 + Math.random() * 7).toFixed(0) + 'px;background:' + cols[i % cols.length] + '"></i>';
+    }
+    box.innerHTML = html; $('#lightbox').appendChild(box);
+    setTimeout(function () { box.remove(); }, 3200);
+  }
+
   /* ---------- lightbox / credits ---------- */
   function openLightbox(html) {
     var lb = $('#lightbox');
@@ -917,7 +996,7 @@
   }
   function closeLightbox() {
     var lb = $('#lightbox'); if (lb.hidden) return;
-    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd', 'lb-bk'); details = null;
+    lb.hidden = true; $('#lbBody').innerHTML = ''; lb.classList.remove('lb-pd', 'lb-bk', 'lb-ok'); $$('.bk-atlas, .bk-conf', lb).forEach(function (x) { x.remove(); }); details = null;
     if (!film.open) root.classList.remove('lock');
   }
   function credits() {

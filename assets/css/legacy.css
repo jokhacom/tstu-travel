@@ -820,3 +820,90 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
 @media (min-width: 901px) { .tl .jd:last-child { min-height: calc(76vh + 6vh); } }
 .bk-mail { color: var(--orange); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 .bk-why { display: block; margin-top: 6px; font-size: 12px; color: var(--ivory-dim); word-break: break-word; }
+
+/* «thank you» screen: atlas (ikat) band on the left, rosette, falling diamonds */
+.lb-ok { --atlas: clamp(110px, 20vw, 320px); padding-left: calc(var(--atlas) + var(--gut)); }
+.bk-atlas { position: fixed; top: 0; bottom: 0; left: 0; width: var(--atlas); overflow: hidden; z-index: 0; background: #111C32 0 0 / 160px 160px repeat;
+  animation: atlasIn 1.1s cubic-bezier(.2,.7,.2,1) both, atlasDrift 24s linear infinite; }
+@keyframes atlasDrift { to { background-position: 0 160px; } }
+.bk-atlas::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 14px;
+  background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); opacity: .9; }
+@keyframes atlasIn { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.lb-ok .lb-body { position: relative; z-index: 1; }
+.bk-ros { display: block; width: 92px; height: 92px; margin: 0 0 14px; overflow: visible; }
+.bk-ros .r-c { fill: none; stroke: var(--orange); stroke-width: 1.5; stroke-dasharray: 352; stroke-dashoffset: 352; animation: rDraw 1.1s .2s ease-out forwards; }
+.bk-ros .r-p { fill: #2457D8; opacity: 0; transform-box: view-box; animation: rPetal .5s ease-out forwards; }
+.bk-ros .r-p:nth-of-type(odd) { fill: #18A6A0; }
+.bk-ros .r-s { fill: #E66A32; transform-origin: 60px 60px; transform: scale(0) rotate(-45deg); animation: rStar .7s .9s cubic-bezier(.3,1.6,.5,1) forwards; }
+.bk-ros .r-d { fill: #E9B949; stroke: #9E1F3F; stroke-width: 3; opacity: 0; animation: rFade .4s 1.3s forwards; }
+.bk-ros .r-p:nth-of-type(1) { animation-delay: 0.35s; }
+.bk-ros .r-p:nth-of-type(2) { animation-delay: 0.42s; }
+.bk-ros .r-p:nth-of-type(3) { animation-delay: 0.49s; }
+.bk-ros .r-p:nth-of-type(4) { animation-delay: 0.56s; }
+.bk-ros .r-p:nth-of-type(5) { animation-delay: 0.63s; }
+.bk-ros .r-p:nth-of-type(6) { animation-delay: 0.70s; }
+.bk-ros .r-p:nth-of-type(7) { animation-delay: 0.77s; }
+.bk-ros .r-p:nth-of-type(8) { animation-delay: 0.84s; }
+
+@keyframes rDraw { to { stroke-dashoffset: 0; } }
+@keyframes rPetal { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rStar { to { transform: scale(1) rotate(0); } }
+@keyframes rFade { to { opacity: 1; } }
+.bk-ros { animation: rSpin 40s 2s linear infinite; }
+@keyframes rSpin { to { transform: rotate(360deg); } }
+.bk-nat { margin: 0 0 18px; font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.4vw, 26px); color: var(--orange); }
+.bk-conf { position: fixed; inset: 0; pointer-events: none; z-index: 3; overflow: hidden; }
+.bk-conf i { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); transform: rotate(45deg) scale(.2); opacity: 0;
+  animation: confBurst .7s var(--d) cubic-bezier(.15,.7,.3,1) forwards, confFall 2s calc(var(--d) + .7s) ease-in forwards; }
+@keyframes confBurst { 0% { opacity: 0; transform: translate(0,0) rotate(45deg) scale(.2); } 20% { opacity: 1; } 100% { opacity: 1; transform: translate(var(--dx), var(--dy)) rotate(calc(45deg + var(--rot))) scale(1); } }
+@keyframes confFall { from { opacity: 1; transform: translate(var(--dx), var(--dy)) rotate(calc(45deg + var(--rot))) scale(1); } to { opacity: 0; transform: translate(var(--dx), calc(var(--dy) + var(--fall))) rotate(calc(45deg + var(--rot) * 2)) scale(.8); } }
+@media (max-width: 760px) {
+  .lb-ok { --atlas: 96px; padding-left: var(--gut); padding-top: calc(var(--atlas) + 40px); }
+  .bk-atlas { right: 0; bottom: auto; width: auto; height: var(--atlas); animation-name: atlasInX; }
+  .bk-atlas::after { inset: auto 0 0 0; width: auto; height: 10px; background: repeating-linear-gradient(90deg, #E9B949 0 6px, transparent 6px 12px); }
+  @keyframes atlasInX { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  .lb-ok .lb-close { color: #F2E9DA; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bk-atlas, .bk-ros, .bk-ros * { animation: none !important; }
+  .bk-ros .r-c { stroke-dashoffset: 0; } .bk-ros .r-p, .bk-ros .r-d { opacity: 1; } .bk-ros .r-s { transform: none; }
+}
+
+.bk-guyw { margin: 34px 0 0; display: flex; justify-content: center; }
+.bk-rah { display: block; width: min(100%, 440px); aspect-ratio: 1; height: auto; border-radius: 18px; box-shadow: 0 24px 60px rgba(22,19,15,.18); background: #EDE3D2; }
+@media (max-width: 760px) { .bk-rah { width: 100%; max-width: 360px; } .bk-guyw { margin-top: 26px; } }
+/* an atlas ribbon along the top of the hero's package card */
+.hx-pill { position: relative; overflow: hidden; padding-top: 22px; }
+.hx-pill::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: #111C32 var(--ikat, none) 0 0 / 20px 20px repeat-x; }
+@media (prefers-reduced-motion: reduce) { .bk-atlas { animation: none !important; } }
+
+/* atlas band on every screen: a slim edge on the page, a wider band on the overlay screens (details, booking) */
+.site-atlas { position: fixed; top: 0; bottom: 0; left: 0; width: 24px; z-index: 34; pointer-events: none;
+  background: #111C32 0 0 / 48px 48px repeat; animation: atlasDriftS 24s linear infinite; }
+@keyframes atlasDriftS { to { background-position: 0 48px; } }
+@keyframes atlasDriftXS { to { background-position: 0 24px; } }
+@media (max-width: 760px) { .site-atlas { width: 18px; background-size: 36px 36px; animation-name: atlasDriftM; } .site-atlas::after { width: 3px; } }
+@keyframes atlasDriftM { to { background-position: 0 36px; } }
+.site-atlas::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 4px; background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); }
+body.film-on .site-atlas, body.menu-open .site-atlas { opacity: 0; }
+.lb-pd { --atlas: clamp(40px, 7vw, 120px); padding-left: calc(var(--atlas) + var(--gut)); }
+.lb-pd.lb-ok { --atlas: clamp(110px, 20vw, 320px); }
+@media (max-width: 760px) {
+  .lb-pd { --atlas: 12px; padding-left: calc(var(--atlas) + var(--gut)); }
+  .lb-pd .bk-atlas { animation: atlasDrift 24s linear infinite; }
+  .lb-pd:not(.lb-ok) .bk-atlas { background-size: 24px 24px; animation-name: atlasDriftXS; }
+  .lb-pd .bk-atlas::after { width: 4px; }
+  .lb-pd:not(.lb-ok) .bk-atlas { right: auto; bottom: 0; width: var(--atlas); height: auto; }
+  .lb-pd:not(.lb-ok) .bk-atlas::after { inset: 0 0 0 auto; width: 3px; height: auto; background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); }
+  .lb-pd.lb-ok { --atlas: 96px; padding-left: var(--gut); }
+}
+@media (prefers-reduced-motion: reduce) { .site-atlas { animation: none; } }
+
+@media (max-width: 760px) { :root { --gut: 28px; } }
+
+/* keep page content clear of the atlas edge: the band is a column of its own */
+:root { --band: 24px; }
+@media (max-width: 760px) { :root { --band: 18px; } }
+body { padding-left: var(--band); }
+.site-atlas { width: var(--band); }
+.foot { display: grid; gap: 12px; padding: 40px var(--gut) 48px; border-top: 1px solid var(--line); }
