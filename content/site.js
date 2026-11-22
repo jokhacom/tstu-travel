@@ -128,7 +128,7 @@ window.LEGACY.site = {
   booking: {
     to: 'mirkomilovjavohir562@gmail.com',
     // Web3Forms access key (web3forms.com: enter the email, the key arrives by email). When set, it is used instead of FormSubmit.
-    web3formsKey: null,
+    web3formsKey: 'd0a9c1d3-a5f9-43b9-aca7-b79b5a7328d5',
     telegram: 'https://t.me/djavokhirmirzo',
     title: { ru: 'Заявка на тур', uz: 'Turga ariza', en: 'Book the tour' },
     lead: {
