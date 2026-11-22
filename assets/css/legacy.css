@@ -915,10 +915,7 @@ body { padding-left: var(--band); }
 @media (max-width: 1100px) { .lb-pd.lb-ok, .lb-ok { --atlas: 160px; } }
 @media (max-width: 760px) { .lb-pd { --atlas: 12px; } .lb-pd.lb-ok, .lb-ok { --atlas: 96px; } }
 
-/* close button on every overlay: a solid round button that stays visible over photos and the atlas band */
-.lightbox .lb-close { width: 48px; height: 48px; top: 14px; right: 14px; z-index: 6; font-size: 28px; color: #16130F !important; text-shadow: none !important;
-  background: #FFFAF2; border: 1.5px solid var(--orange); box-shadow: 0 6px 20px rgba(8,10,15,.28); }
-.lightbox .lb-close:hover, .lightbox .lb-close:focus-visible { background: var(--orange); color: #fff !important; }
-@media (max-width: 760px) { .lightbox .lb-close { width: 52px; height: 52px; top: 12px; right: 12px; } }
+/* phones, thank-you screen: the ✕ sits just below the atlas band, on the cream background */
+@media (max-width: 760px) { .lb-ok .lb-close { top: 104px; color: #16130F; text-shadow: none; } html:not([data-theme="light"]) .lb-ok .lb-close { color: #F2E9DA; } }
 .bk-backw { margin: 30px 0 10px; display: flex; justify-content: center; }
 @media (max-width: 760px) { .lb-ok .bk-atlas { position: absolute; } }
