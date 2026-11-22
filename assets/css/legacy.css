@@ -900,3 +900,10 @@ body.film-on .site-atlas, body.menu-open .site-atlas { opacity: 0; }
 @media (prefers-reduced-motion: reduce) { .site-atlas { animation: none; } }
 
 @media (max-width: 760px) { :root { --gut: 28px; } }
+
+/* keep page content clear of the atlas edge: the band is a column of its own */
+:root { --band: 24px; }
+@media (max-width: 760px) { :root { --band: 18px; } }
+body { padding-left: var(--band); }
+.site-atlas { width: var(--band); }
+.foot { display: grid; gap: 12px; padding: 40px var(--gut) 48px; border-top: 1px solid var(--line); }
