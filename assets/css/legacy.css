@@ -818,3 +818,5 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
 @media (max-width: 760px) { .pk-tabs.has-both { grid-template-columns: minmax(0, 1fr); gap: 10px; } }
 /* the last day can scroll up until its marker and title reach the top of the sticky photo */
 @media (min-width: 901px) { .tl .jd:last-child { min-height: calc(76vh + 6vh); } }
+.bk-mail { color: var(--orange); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.bk-why { display: block; margin-top: 6px; font-size: 12px; color: var(--ivory-dim); word-break: break-word; }

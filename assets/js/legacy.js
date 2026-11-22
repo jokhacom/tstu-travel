@@ -892,6 +892,11 @@
         btn.disabled = false; $('span', btn).textContent = t(B.send);
         // FormSubmit answers "This form needs Activation…" until the owner confirms the address once
         err.textContent = t(/activat/i.test(m) && B.notActive ? B.notActive : B.err); err.hidden = false;
+        // a way that always works: the same request as a ready email in the visitor's own mail app
+        var mail = 'mailto:' + B.to + '?subject=' + encodeURIComponent(body._subject) + '&body=' + encodeURIComponent(
+          ['Пакет', 'Дата', 'Имя', 'Контакт', 'Сообщение'].map(function (k) { return k + ': ' + body[k]; }).join('\n'));
+        err.insertAdjacentHTML('beforeend', ' <a class="bk-mail" href="' + esc(mail) + '">' + esc(t(B.mail)) + ' →</a>' +
+          '<small class="bk-why">' + esc(m ? 'FormSubmit: ' + m.slice(0, 160) : t(B.offline)) + '</small>');
       });
   }
 

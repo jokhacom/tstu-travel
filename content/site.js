@@ -173,6 +173,8 @@ window.LEGACY.site = {
       uz: 'Forma hali faollashtirilmagan: sayt pochtasiga FormSubmit xati keldi, undagi «Activate Form» tugmasini bosing va arizani qayta yuboring.',
       en: 'The form is not activated yet: FormSubmit sent an email to the site address; press «Activate Form» in it and send the request again.'
     },
+    mail: { ru: 'Отправить письмом', uz: 'Xat orqali yuborish', en: 'Send by email' },
+    offline: { ru: 'нет связи с сервисом отправки', uz: 'yuborish xizmati bilan aloqa yo‘q', en: 'no connection to the sending service' },
     tg: { ru: 'Написать в Telegram', uz: 'Telegramda yozish', en: 'Write on Telegram' },
     required: { ru: 'Заполните отмеченные поля', uz: 'Belgilangan maydonlarni to‘ldiring', en: 'Please fill in the marked fields' },
     subject: { ru: 'Новая заявка на тур «По следам Тамерлана»', uz: 'Новая заявка на тур «По следам Тамерлана»', en: 'Новая заявка на тур «По следам Тамерлана»' }
