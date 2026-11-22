@@ -914,3 +914,8 @@ body { padding-left: var(--band); }
 .lb-pd.lb-ok, .lb-ok { --atlas: 240px; }
 @media (max-width: 1100px) { .lb-pd.lb-ok, .lb-ok { --atlas: 160px; } }
 @media (max-width: 760px) { .lb-pd { --atlas: 12px; } .lb-pd.lb-ok, .lb-ok { --atlas: 96px; } }
+
+/* phones, thank-you screen: the ✕ sits just below the atlas band, on the cream background */
+@media (max-width: 760px) { .lb-ok .lb-close { top: 104px; color: #16130F; text-shadow: none; } html:not([data-theme="light"]) .lb-ok .lb-close { color: #F2E9DA; } }
+.bk-backw { margin: 30px 0 10px; display: flex; justify-content: center; }
+@media (max-width: 760px) { .lb-ok .bk-atlas { position: absolute; } }

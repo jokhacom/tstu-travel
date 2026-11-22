@@ -891,7 +891,8 @@
       .then(function () {
         bookDraft = null;
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
-          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-guyw">' + rahmatVideo() + '</div>';
+          '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-guyw">' + rahmatVideo() + '</div>' +
+          '<div class="bk-backw"><button type="button" class="cta bk-back" data-close><span>' + esc(t(B.back)) + '</span><i aria-hidden="true"></i></button></div>';
         f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
         var lb = $('#lightbox'); lb.classList.add('lb-ok'); atlasInto(lb); lb.scrollTop = 0;
         confetti($('.bk-ros', f));
