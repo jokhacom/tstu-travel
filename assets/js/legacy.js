@@ -953,8 +953,8 @@
   function atlasInto(lb) { if (lb && !$('.bk-atlas', lb)) lb.insertAdjacentHTML('afterbegin', atlasSVG()); }
   /* Jokha's own animation: a young man in a chapan bows with his hand on his heart and says «Rahmat!» */
   function rahmatVideo() {
-    return '<video class="bk-rah" autoplay muted loop playsinline preload="auto" poster="img/rahmat-poster.webp?v=1" aria-label="Rahmat!">' +
-      '<source src="video/rahmat.webm?v=2" type="video/webm"><source src="video/rahmat.mp4?v=2" type="video/mp4"></video>';
+    return '<video class="bk-rah" autoplay muted loop playsinline preload="auto" poster="img/rahmat-poster.webp?v=2" aria-label="Rahmat!">' +
+      '<source src="video/rahmat.webm?v=3" type="video/webm"><source src="video/rahmat.mp4?v=3" type="video/mp4"></video>';
   }
   // eight-pointed star with petals, like the medallions on suzani and tiles
   function rosetteSVG() {
