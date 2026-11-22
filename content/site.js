@@ -160,6 +160,14 @@ window.LEGACY.site = {
       uz: 'Arizani yuborib bo‘lmadi. Qayta urinib ko‘ring yoki bizga Telegramda yozing.',
       en: 'The request could not be sent. Please try again or write to us on Telegram.'
     },
+    joinHint: {
+      ru: 'Удерживайте билет и перетащите его на другой, чтобы соединить оба пакета',
+      uz: 'Ikkala paketni birlashtirish uchun chiptani bosib turing va boshqasiga suring',
+      en: 'Press and hold a ticket, then drag it onto the other to join both packages'
+    },
+    join: { ru: 'Соединить пакеты', uz: 'Paketlarni birlashtirish', en: 'Join the packages' },
+    unjoin: { ru: 'Разъединить', uz: 'Ajratish', en: 'Separate' },
+    bookBoth: { ru: 'Забронировать оба', uz: 'Ikkalasini band qilish', en: 'Book both' },
     tg: { ru: 'Написать в Telegram', uz: 'Telegramda yozish', en: 'Write on Telegram' },
     required: { ru: 'Заполните отмеченные поля', uz: 'Belgilangan maydonlarni to‘ldiring', en: 'Please fill in the marked fields' },
     subject: { ru: 'Новая заявка на тур «По следам Тамерлана»', uz: 'Новая заявка на тур «По следам Тамерлана»', en: 'Новая заявка на тур «По следам Тамерлана»' }
