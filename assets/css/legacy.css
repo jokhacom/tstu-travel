@@ -873,3 +873,24 @@ html[data-theme="light"] .bk-f input, html[data-theme="light"] .bk-f textarea { 
 .bk-weave canvas { display: block; width: 100%; height: 100%; }
 @media (max-width: 760px) { .bk-weave { height: 170px; margin-top: 30px; } }
 @media (prefers-reduced-motion: reduce) { .bk-atlas { animation: none !important; } }
+
+/* atlas band on every screen: a slim edge on the page, a wider band on the overlay screens (details, booking) */
+.site-atlas { position: fixed; top: 0; bottom: 0; left: 0; width: 24px; z-index: 34; pointer-events: none;
+  background: #111C32 0 0 / 48px 48px repeat; animation: atlasDriftS 24s linear infinite; }
+@keyframes atlasDriftS { to { background-position: 0 48px; } }
+@keyframes atlasDriftXS { to { background-position: 0 24px; } }
+@media (max-width: 760px) { .site-atlas { width: 12px; background-size: 24px 24px; animation-name: atlasDriftXS; } .site-atlas::after { width: 2px; } }
+.site-atlas::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 4px; background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); }
+body.film-on .site-atlas, body.menu-open .site-atlas { opacity: 0; }
+.lb-pd { --atlas: clamp(40px, 7vw, 120px); padding-left: calc(var(--atlas) + var(--gut)); }
+.lb-pd.lb-ok { --atlas: clamp(110px, 20vw, 320px); }
+@media (max-width: 760px) {
+  .lb-pd { --atlas: 12px; padding-left: calc(var(--atlas) + var(--gut)); }
+  .lb-pd .bk-atlas { animation: atlasDrift 24s linear infinite; }
+  .lb-pd:not(.lb-ok) .bk-atlas { background-size: 24px 24px; animation-name: atlasDriftXS; }
+  .lb-pd .bk-atlas::after { width: 4px; }
+  .lb-pd:not(.lb-ok) .bk-atlas { right: auto; bottom: 0; width: var(--atlas); height: auto; }
+  .lb-pd:not(.lb-ok) .bk-atlas::after { inset: 0 0 0 auto; width: 3px; height: auto; background: repeating-linear-gradient(180deg, #E9B949 0 6px, transparent 6px 12px); }
+  .lb-pd.lb-ok { --atlas: 96px; padding-left: var(--gut); }
+}
+@media (prefers-reduced-motion: reduce) { .site-atlas { animation: none; } }

@@ -267,7 +267,7 @@
   function openDetails(tab, day) {
     details = { tab: tab || 'hours', day: day == null ? null : day };
     openLightbox(detailsHTML());
-    $('#lightbox').classList.add('lb-pd');
+    $('#lightbox').classList.add('lb-pd'); atlasInto($('#lightbox'));
     if (day != null) { var d = document.getElementById('pd-day-' + day); if (d) { d.classList.add('hl'); $('#lightbox').scrollTop = d.getBoundingClientRect().top - 150; } }
   }
   function detailsTab(k) {
@@ -856,7 +856,7 @@
     if (pref || pkJoined) bookDraft = Object.assign({}, bookDraft || {}, { pkg: pref || 'both' });
     closeLightbox();
     openLightbox(bookHTML());
-    $('#lightbox').classList.add('lb-pd', 'lb-bk');
+    $('#lightbox').classList.add('lb-pd', 'lb-bk'); atlasInto($('#lightbox'));
     var f = $('#lbBody .bk'); if (f) f.addEventListener('submit', sendBook);
     f.addEventListener('input', function () { bookDraft = bookRead(f); });
     f.addEventListener('change', function () { bookDraft = bookRead(f); });
@@ -893,7 +893,7 @@
         f.innerHTML = '<p class="jd-l">' + esc(t(TOUR.title)) + '</p><h3 class="lb-title bk-title">' + esc(t(B.okTitle)) + '</h3><p class="bk-lead" role="status">' + esc(t(B.ok)) + '</p>' +
           '<ul class="bk-sum"><li><b>' + esc(t(B.pkg)) + '</b>' + esc(v.pkg === 'both' ? t(B.both) : t(L.pkgShort) + ' ' + v.pkg) + '</li><li><b>' + esc(t(B.date)) + '</b>' + esc(body['Дата']) + '</li></ul><div class="bk-weave" aria-hidden="true"><canvas></canvas></div>';
         f.insertAdjacentHTML('afterbegin', rosetteSVG() + (B.okNational ? '<p class="bk-nat">' + esc(t(B.okNational)) + '</p>' : ''));
-        var lb = $('#lightbox'); lb.classList.add('lb-ok'); lb.insertAdjacentHTML('afterbegin', atlasSVG()); lb.scrollTop = 0;
+        var lb = $('#lightbox'); lb.classList.add('lb-ok'); atlasInto(lb); lb.scrollTop = 0;
         confetti($('.bk-ros', f));
         weave($('.bk-weave', f));
       })
@@ -911,6 +911,9 @@
       });
   }
 
+  // the atlas edge on the left of the page (decorative, under the menu and the film)
+  setTimeout(function () { atlasSVG(); var d = document.createElement('div'); d.className = 'site-atlas'; d.setAttribute('aria-hidden', 'true');
+    if (ikatTile) d.style.backgroundImage = 'url(' + ikatTile + ')'; document.body.appendChild(d); }, 0);
   /* ---------- «thank you» screen: atlas (ikat) band and a rosette ---------- */
   // stepped lozenge, the way ikat threads draw a diamond
   function stepD(cx, cy, rx, ry, n) {
@@ -925,11 +928,12 @@
      stepped lozenges in columns, each thread row shifted a little — the «bleed» of real abr fabric */
   var IKAT = [[17, 28, 50], [230, 106, 50], [242, 233, 218], [36, 87, 216], [233, 185, 73], [158, 31, 63], [24, 166, 160]];
   function ikatAt(u, v) {
-    var vv = ((v % 160) + 160) % 160, row = Math.floor(vv / 4);
-    var jit = ((row * 7919 + 13) % 11) / 10 * 6 - 3;            // −3…3 px, the same on every repeat
+    var vv = ((v % 160) + 160) % 160, row = Math.floor(vv / 2);
+    // each 2 px thread row shifts sideways a little; periodic over the 160 px tile so the repeat is seamless
+    var jit = Math.sin(row * Math.PI * 2 * 9 / 80) * 2.2 + ((row * 7919 + 13) % 7) / 6 * 3.4 - 1.7;
     var uu = u + jit, col = Math.floor(uu / 80), odd = ((col % 2) + 2) % 2;
     var dx = Math.abs(uu - col * 80 - 40), dy = Math.abs(((vv + odd * 80) % 160) - 80);
-    dx = Math.floor(dx / 4) * 4; dy = Math.floor(dy / 6) * 6;     // stair steps
+    dx = Math.floor(dx / 2) * 2; dy = Math.floor(dy / 3) * 3;     // fine stair steps
     var d = dx / 36 + dy / 72;
     if (d < .16) return 5; if (d < .36) return 4; if (d < .56) return 3; if (d < .76) return 2; if (d < 1) return 1;
     var zz = ((u % 80) + 80) % 80, tri = Math.abs((vv % 20) - 10) / 10 * 5;   // turquoise zigzag thread between columns
@@ -947,6 +951,7 @@
     if (!ikatTile) { try { var c = document.createElement('canvas'); c.width = c.height = 320; ikatPaint(c.getContext('2d'), 320, 320, 2); ikatTile = c.toDataURL('image/png'); } catch (x) { ikatTile = ''; } }
     return '<div class="bk-atlas" aria-hidden="true"' + (ikatTile ? ' style="background-image:url(' + ikatTile + ')"' : '') + '></div>';
   }
+  function atlasInto(lb) { if (lb && !$('.bk-atlas', lb)) lb.insertAdjacentHTML('afterbegin', atlasSVG()); }
   /* the loop below the summary: an atlas being woven row by row, the shuttle running back and forth */
   function weave(box) {
     var cv = box && $('canvas', box); if (!cv) return;
