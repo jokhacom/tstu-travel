@@ -63,6 +63,14 @@ window.LEGACY.tour = {
     { ru: 'лучи «Звезды мастера» за каждый город', uz: 'har bir shahar uchun «Usta yulduzi» nurlari', en: 'a Master’s Star ray for every city' }
   ],
 
+  // shown when the two package tickets are joined: both programmes one after the other
+  both: {
+    tab: { ru: 'Оба пакета', uz: 'Ikkala paket', en: 'Both packages' },
+    name: { ru: 'Оба пакета · Самарканд, Шахрисабз, Ташкент и Бухара', uz: 'Ikkala paket · Samarqand, Shahrisabz, Toshkent va Buxoro', en: 'Both packages · Samarkand, Shahrisabz, Tashkent and Bukhara' },
+    lead: { ru: 'Два маршрута вместе: 6 дней, 4 города.', uz: 'Ikki yo‘nalish birga: 6 kun, 4 shahar.', en: 'Both routes together: 6 days, 4 cities.' },
+    duration: { ru: '6 дней: 2 пакета по 3 дня / 2 ночи', uz: '6 kun: 2 paket, har biri 3 kun / 2 kecha', en: '6 days: 2 packages of 3 days / 2 nights' },
+    tripExcluded: { ru: 'дорога из вашего города до Ташкента и обратно домой (оба маршрута по Узбекистану включены)', uz: 'o‘z shahringizdan Toshkentgacha kelish va uyga qaytish (O‘zbekiston bo‘ylab ikkala yo‘nalish kiritilgan)', en: 'getting from your home city to Tashkent and back home (both routes within Uzbekistan are included)' }
+  },
   packages: [
     {
       id: 'samarkand',

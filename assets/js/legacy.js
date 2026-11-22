@@ -162,7 +162,38 @@
   /* two student packages; the chosen one is shown below the tabs */
   var PKGS = TOUR.packages || [], pkgI = 0;
   (function () { var k = +store('lot-pkg'); if (PKGS[k]) pkgI = k; })();
-  function PKG() { return PKGS[pkgI] || TOUR; }
+  function PKG() { return pkJoined && PKGS.length > 1 ? bothPkg() : PKGS[pkgI] || TOUR; }
+  /* both packages as one programme: days, legs and lists one after the other; a fact that differs shows both values */
+  var BOTHP = null;
+  function bothPkg() {
+    if (BOTHP) return BOTHP;
+    var A = PKGS[0], Z = PKGS[1], X = TOUR.both || {}, SH = S.journey.labels.pkgShort || {};
+    var val = function (v, l) { return v == null ? null : typeof v === 'object' ? (v[l] || v.ru) : String(v); };
+    var mg = function (a, b) {
+      if (a == null && b == null) return null;
+      if (JSON.stringify(a) === JSON.stringify(b)) return a;
+      var r = {}; ['ru', 'uz', 'en'].forEach(function (l) {
+        var x = val(a, l), y = val(b, l), k = val(SH, l) || '';
+        r[l] = [x != null ? k + ' 1: ' + x : '', y != null ? k + ' 2: ' + y : ''].filter(Boolean).join(' · ');
+      });
+      return r;
+    };
+    var mo = function (a, b) { a = a || {}; b = b || {}; var r = {}; Object.keys(Object.assign({}, a, b)).forEach(function (k) { r[k] = mg(a[k], b[k]); }); return r; };
+    var cat = function (k) { return (A[k] || []).concat(Z[k] || []); };
+    var uniq = function (l) { var seen = {}; return l.filter(function (x) { var j = JSON.stringify(x); if (seen[j]) return false; seen[j] = 1; return true; }); };
+    BOTHP = {
+      both: true, tab: X.tab, name: X.name, lead: X.lead, duration: X.duration || mg(A.duration, Z.duration),
+      dates: mg(A.dates, Z.dates), start: mg(A.start, Z.start), route: cat('route'), brief: mo(A.brief, Z.brief),
+      legs: cat('legs'), hotel: mo(A.hotel, Z.hotel), transport: mo(A.transport, Z.transport),
+      meals: mg(A.meals, Z.meals), guides: mg(A.guides, Z.guides), tickets: mg(A.tickets, Z.tickets),
+      excursions: uniq(cat('excursions')), included: uniq(cat('included')),
+      excluded: (X.tripExcluded ? [X.tripExcluded] : []).concat(uniq((A.excluded || []).slice(1).concat((Z.excluded || []).slice(1)))),
+      days: cat('days')
+    };
+    var n1 = (A.hotel || {}).nights, n2 = (Z.hotel || {}).nights;   // nights add up across the two packages
+    if (typeof n1 === 'number' && typeof n2 === 'number') BOTHP.hotel.nights = n1 + n2;
+    return BOTHP;
+  }
   function uniq(arr) { var o = []; (arr || []).forEach(function (x) { if (!o.some(function (y) { return t(y) === t(x); })) o.push(x); }); return o; }
   function two(n) { return (n < 10 ? '0' : '') + n; }
   function fact(label, v, cls) { return '<div class="jf' + (cls ? ' ' + cls : '') + '"><dt>' + esc(t(label)) + '</dt><dd>' + (v != null && v !== '' ? esc(typeof v === 'object' ? t(v) : String(v)) : tbd()) + '</dd></div>'; }
@@ -267,10 +298,11 @@
         '<span class="city-days">' + esc(tag + t(L.day)) + ' ' + c.days.join(' · ') + '</span></button>';
     }).join('');
 
-    var tabs = PKGS.length > 1 ? '<div class="pk-tabs rv" role="tablist" aria-label="' + esc(t(L.packages)) + '">' + PKGS.map(function (p, i) {
-      return '<button type="button" role="tab" data-pkg="' + i + '" aria-selected="' + (i === pkgI) + '"><span class="pk-n">' + esc(t(L.pkgShort)) + ' ' + (i + 1) + '</span>' +
+    var tabs = PKGS.length > 1 ? '<div class="pk-tabs rv' + (TOUR.both ? ' has-both' : '') + '" role="tablist" aria-label="' + esc(t(L.packages)) + '">' + PKGS.map(function (p, i) {
+      return '<button type="button" role="tab" data-pkg="' + i + '" aria-selected="' + (i === pkgI && !pkJoined) + '"><span class="pk-n">' + esc(t(L.pkgShort)) + ' ' + (i + 1) + '</span>' +
         '<span class="pk-t">' + esc(t(p.tab || p.name)) + '</span><span class="pk-d">' + esc(t(p.duration)) + '</span></button>';
-    }).join('') + '</div>' : '';
+    }).join('') + (TOUR.both ? '<button type="button" role="tab" class="pk-both" data-pkg-both aria-selected="' + pkJoined + '"><span class="pk-n">' + esc(t(TOUR.both.tab)) + ' <i aria-hidden="true">✦</i></span>' +
+        '<span class="pk-t">' + esc(PKGS.map(function (p) { return t(p.tab); }).join(' + ')) + '</span><span class="pk-d">' + esc(t(S.booking && S.booking.bothNote)) + '</span></button>' : '') + '</div>' : '';
 
     var hl = (TOUR.highlights || []).filter(function (h) { return PH[h.image]; }).map(function (h, i) {
       return '<figure class="jh ir" data-tilt data-photo tabindex="0" style="--d:' + (i * 0.1) + 's">' + pic(h.image, { sizes: '(max-width:760px) 78vw, 40vw' }) +
@@ -304,7 +336,12 @@
   function setPkg(i) {
     if (!PKGS[i]) return;
     pkgI = i; store('lot-pkg', String(i));
-    $$('[data-pkg]', main).forEach(function (b) { b.setAttribute('aria-selected', String(+b.getAttribute('data-pkg') === i)); });
+    if (pkJoined) { setJoined(false); return; }   // picking one package separates the tickets (and redraws this block)
+    refreshPkg();
+  }
+  function refreshPkg() {
+    $$('[data-pkg]', main).forEach(function (b) { b.setAttribute('aria-selected', String(+b.getAttribute('data-pkg') === pkgI && !pkJoined)); });
+    var bb = $('[data-pkg-both]', main); if (bb) bb.setAttribute('aria-selected', String(pkJoined));
     var box_ = $('#pkg', main); if (!box_) return;
     box_.innerHTML = renderPkg(); curDay = -1; setDay(0);
     observeReveals();
@@ -342,12 +379,13 @@
       : '<p class="ji-hint"><span aria-hidden="true">⇄</span> ' + esc(t(B.joinHint)) + '</p><button type="button" class="ji-jb" data-join>' + esc(t(B.join)) + '</button>') + '</div>';
   }
   function setJoined(on) {
-    var box = $('.ji-tix', main); if (!box) { pkJoined = on; return; }
+    var box = $('.ji-tix', main); if (!box) { pkJoined = on; refreshPkg(); return; }
     var tix = $$('.ji-t', box), before = tix.map(function (el) { return el.getBoundingClientRect(); });
     pkJoined = on;
     tix.forEach(function (el) { el.style.transition = 'none'; el.style.transform = ''; el.classList.remove('lift', 'near'); });
     box.classList.toggle('joined', on);
     var bar = $('.ji-join', main); if (bar) bar.outerHTML = joinBar();
+    refreshPkg();
     if (reduce) { tix.forEach(function (el) { el.style.transition = ''; }); return; }
     tix.forEach(function (el, i) {   // FLIP: from where each ticket was to where it now sits
       var r = el.getBoundingClientRect(), b = before[i];
@@ -468,8 +506,12 @@
     });
     var list = $('.tl-list', main), line = $('.tl-line i', main);
     if (list && line) {
+      // the line ends at the last day's marker (the top of its photo), not at the bottom of the list
+      var last = $('.jt-days > li:last-child', list), end = list.offsetHeight;
+      if (last) end = last.offsetTop + (parseFloat(getComputedStyle(last, '::before').top) || 0) + 6;
+      line.parentNode.style.height = end + 'px';
       var r = list.getBoundingClientRect();
-      var p = Math.min(1, Math.max(0, (vh * 0.5 - r.top) / r.height));
+      var p = Math.min(1, Math.max(0, (vh * 0.5 - r.top) / end));
       line.style.transform = 'scaleY(' + p.toFixed(4) + ')';
     }
   }
@@ -919,6 +961,7 @@
     if (viewer) { if (!e.target.closest('.pv-cap')) closePhoto(); return; }
     var ph = e.target.closest('[data-photo]'); if (ph) { openPhoto(ph); return; }
     var cc = e.target.closest('[data-city-day]'); if (cc) { openCity(cc); return; }
+    if (e.target.closest('[data-pkg-both]')) { if (!pkJoined) setJoined(true); return; }
     var pb = e.target.closest('[data-pkg]'); if (pb) { setPkg(+pb.getAttribute('data-pkg')); return; }
     var hg = e.target.closest('[data-hx-go]'); if (hg) { heroGo(+hg.getAttribute('data-hx-go'), true); return; }
     var hp = e.target.closest('[data-hx-pkg]'); if (hp) { heroPkg = +hp.getAttribute('data-hx-pkg'); var bar = $('.hx-bar', main); if (bar) bar.innerHTML = heroBar(); return; }
